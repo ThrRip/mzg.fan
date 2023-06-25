@@ -1,0 +1,58 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+### JetBrains IDE
+.idea/*
+!.idea/dictionaries/
+!.idea/inspectionProfiles/
+!.idea/jsLinters/
+!.idea/icon.svg
+
+### Node.js
+# Logs
+*.log*
+
+# Dependency directories
+node_modules/
+
+# Node.js REPL history
+.node_repl_history
+
+# Nuxt development
+.nuxt
+
+# Nuxt app configuration
+app.config.ts
+
+# Nitro build output
+.output
+
+# ESLint cache
+.eslintcache
+
+### macOS
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
