@@ -7,3 +7,9 @@
 }
 
 @tailwind utilities;
+
+@layer utilities {
+  .bg-assets-areas {
+    background-image: url('/assets/img/background-areas.svg'); background-size: 100%
+  }
+}

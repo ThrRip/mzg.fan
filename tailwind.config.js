@@ -1,9 +1,23 @@
 module.exports = {
-  content: [
-    './components/**/*.vue',
-    './pages/**/*.vue'
-  ],
+  content: ['./app.vue'],
   theme: {
+    colors: {
+      inherit: 'inherit',
+      current: 'currentColor',
+      transparent: 'transparent',
+
+      blue: {
+        DEFAULT: '#89c1cf',
+        a: '#5194a7'
+      },
+      pink: {
+        t: '#fed3c8',
+        DEFAULT: '#f2beb1'
+      },
+      white: {
+        DEFAULT: '#fefaf7'
+      }
+    },
     extend: {
       boxShadow: {
         // Half Y offset

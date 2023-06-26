@@ -2,6 +2,8 @@
   <dictionary name="thrrip">
     <words>
       <w>appwrite</w>
+      <w>avif</w>
+      <w>bilibili</w>
       <w>fortawesome</w>
       <w>nuxtjs</w>
       <w>pinia</w>
