@@ -20,9 +20,6 @@ node_modules/
 # Nuxt development
 .nuxt
 
-# Nuxt app configuration
-app.config.ts
-
 # Nitro build output
 .output
 
