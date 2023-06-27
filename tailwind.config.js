@@ -15,7 +15,8 @@ module.exports = {
         DEFAULT: '#f2beb1'
       },
       white: {
-        DEFAULT: '#fefaf7'
+        DEFAULT: '#fefaf7',
+        alt: '#efeaf1'
       }
     },
     extend: {
