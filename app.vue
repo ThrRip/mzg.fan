@@ -116,6 +116,14 @@ const { data: biliApiRoomPlayInfo } = await useFetch(
 )
 const biliApiLiveStatus = ref(biliApiRoomPlayInfo.value.data.live_status)
 
+const viewPlaylist = ref(null)
+function scrollToPlaylist () {
+  window.scroll({
+    top: viewPlaylist.value.getBoundingClientRect().top,
+    behavior: 'smooth'
+  })
+}
+
 const backendClient = new Client()
 const backendDatabases = new Databases(backendClient)
 backendClient.setEndpoint(useAppConfig().backendBase)
@@ -134,12 +142,4 @@ backendDatabases.listDocuments('home', 'playlist')
       backendFetchPlaylistState.value = 'failed'
     }
   )
-
-const viewPlaylist = ref(null)
-function scrollToPlaylist () {
-  window.scroll({
-    top: viewPlaylist.value.getBoundingClientRect().top,
-    behavior: 'smooth'
-  })
-}
 </script>
