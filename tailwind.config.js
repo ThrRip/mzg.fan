@@ -7,12 +7,14 @@ module.exports = {
       transparent: 'transparent',
 
       blue: {
-        DEFAULT: '#89c1cf',
-        a: '#5194a7'
+        l: '#89c1cf',
+        DEFAULT: '#6caebf',
+        a: '#5194a7',
+        alt: '#3b7a91'
       },
       pink: {
-        t: '#fed3c8',
-        DEFAULT: '#f2beb1'
+        l: '#fed3c8',
+        la: '#f2beb1'
       },
       white: {
         DEFAULT: '#fefaf7',
@@ -20,6 +22,14 @@ module.exports = {
       }
     },
     extend: {
+      screens: {
+        '3xl': '2160px',
+        '5xl': '3840px'
+      },
+
+      outlineOffset: {
+        3: '3px'
+      },
       boxShadow: {
         // Half Y offset
         'sm-1/2y': '0 0.5px 2px 0 rgb(0 0 0 / 0.05)',

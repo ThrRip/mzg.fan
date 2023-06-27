@@ -1,7 +1,7 @@
 <template>
   <main
-    class="overflow-y-auto landscape:grid landscape:grid-cols-[36vw_1fr] landscape:h-screen
-    bg-cover bg-assets-areas portrait:bg-assets-areas-vertical"
+    class="overflow-y-auto landscape:grid landscape:grid-cols-[36vw_1fr] landscape:3xl:px-40 landscape:5xl:px-64 landscape:h-screen
+    bg-center bg-cover bg-assets-areas portrait:bg-assets-areas-vertical"
   >
     <section class="flex flex-col max-xl:landscape:gap-y-4 gap-y-14 justify-center items-center portrait:h-screen">
       <picture class="aspect-square max-xl:landscape:w-1/3 w-1/2 2xl:max-w-[15rem]">
@@ -17,7 +17,8 @@
           target="_blank"
           class="flex flex-row gap-x-2 justify-between items-center
           max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
-          text-white bg-blue-a rounded-xl transition-transform duration-100 active:scale-95"
+          text-white bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
+          transition active:scale-95"
         >
           <span class="aspect-square flex flex-row justify-center items-center h-8">
             <ClientOnly>
@@ -36,7 +37,8 @@
           target="_blank"
           class="flex flex-row gap-x-2 justify-between items-center
           max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
-          text-white bg-blue-a rounded-xl transition-transform duration-100 active:scale-95"
+          text-white bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
+          transition active:scale-95"
         >
           <span v-if="!biliApiLiveStatus" class="aspect-square flex flex-row justify-center items-center h-8">
             <ClientOnly>
@@ -65,7 +67,8 @@
           target="_blank"
           class="flex flex-row gap-x-2 justify-between items-center
           max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
-          text-white bg-blue-a rounded-xl transition-transform duration-100 active:scale-95"
+          text-white bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
+          transition active:scale-95"
         >
           <span class="aspect-square flex flex-row justify-center items-center h-8">
             <ClientOnly>
@@ -82,7 +85,8 @@
         <button
           class="landscape:hidden flex flex-row gap-x-2 justify-between items-center
           max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
-          text-white bg-blue-a rounded-xl transition-transform duration-100 active:scale-95"
+          text-white bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
+          transition active:scale-95"
           @click="scrollToPlaylist"
         >
           <span class="aspect-square flex flex-row justify-center items-center h-8">
