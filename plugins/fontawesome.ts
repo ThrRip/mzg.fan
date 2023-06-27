@@ -5,7 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faPodcast,
   faVideo,
-  faArrowUpRightFromSquare
+  faList,
+  faArrowUpRightFromSquare,
+  faArrowDown
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faBilibili
@@ -16,7 +18,9 @@ config.autoAddCss = false
 library.add(
   faPodcast,
   faVideo,
+  faList,
   faArrowUpRightFromSquare,
+  faArrowDown,
   faBilibili
 )
 

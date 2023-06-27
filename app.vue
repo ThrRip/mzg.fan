@@ -12,9 +12,8 @@
         洺知-故犯
       </h1>
       <div class="flex flex-col max-xl:landscape:gap-y-1 gap-y-4">
-        <a
-          href="https://space.bilibili.com/32159860"
-          rel="noopener"
+        <NuxtLink
+          to="https://space.bilibili.com/32159860"
           target="_blank"
           class="flex flex-row gap-x-2 justify-between items-center
           max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
@@ -31,10 +30,9 @@
               <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
             </ClientOnly>
           </span>
-        </a>
-        <a
-          href="https://live.bilibili.com/1267105"
-          rel="noopener"
+        </NuxtLink>
+        <NuxtLink
+          to="https://live.bilibili.com/1267105"
           target="_blank"
           class="flex flex-row gap-x-2 justify-between items-center
           max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
@@ -61,10 +59,9 @@
               <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
             </ClientOnly>
           </span>
-        </a>
-        <a
-          href="https://space.bilibili.com/391500490"
-          rel="noopener"
+        </NuxtLink>
+        <NuxtLink
+          to="https://space.bilibili.com/391500490"
           target="_blank"
           class="flex flex-row gap-x-2 justify-between items-center
           max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
@@ -81,10 +78,28 @@
               <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
             </ClientOnly>
           </span>
-        </a>
+        </NuxtLink>
+        <button
+          class="landscape:hidden flex flex-row gap-x-2 justify-between items-center
+          max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
+          text-white bg-blue-a rounded-xl transition-transform duration-100 active:scale-95"
+          @click="scrollToPlaylist"
+        >
+          <span class="aspect-square flex flex-row justify-center items-center h-8">
+            <ClientOnly>
+              <font-awesome-icon :icon="['fas', 'list']" />
+            </ClientOnly>
+          </span>
+          歌单
+          <span class="aspect-square flex flex-row justify-center items-center h-8">
+            <ClientOnly>
+              <font-awesome-icon :icon="['fas', 'arrow-down']" />
+            </ClientOnly>
+          </span>
+        </button>
       </div>
     </section>
-    <section class="flex flex-col portrait:h-screen" />
+    <section ref="viewPlaylist" class="flex flex-col portrait:h-screen" />
   </main>
 </template>
 
@@ -115,4 +130,12 @@ backendDatabases.listDocuments('home', 'playlist')
       backendFetchPlaylistState.value = 'failed'
     }
   )
+
+const viewPlaylist = ref(null)
+function scrollToPlaylist () {
+  window.scroll({
+    top: viewPlaylist.value.getBoundingClientRect().top,
+    behavior: 'smooth'
+  })
+}
 </script>
