@@ -10,6 +10,9 @@
 
 @layer utilities {
   .bg-assets-areas {
-    background-image: url('/assets/img/background-areas.svg'); background-size: 100%
+    background-image: url('/assets/img/background-areas.svg');
+  }
+  .bg-assets-areas-vertical {
+    background-image: url('/assets/img/background-areas-vertical.svg');
   }
 }

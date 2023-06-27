@@ -1,6 +1,7 @@
 <template>
   <main
-    class="overflow-y-auto landscape:grid landscape:grid-cols-[36vw_1fr] landscape:h-screen bg-blue landscape:bg-assets-areas"
+    class="overflow-y-auto landscape:grid landscape:grid-cols-[36vw_1fr] landscape:h-screen
+    bg-cover bg-assets-areas portrait:bg-assets-areas-vertical"
   >
     <section class="flex flex-col max-xl:landscape:gap-y-4 gap-y-14 justify-center items-center portrait:h-screen">
       <picture class="aspect-square max-xl:landscape:w-1/3 w-1/2 2xl:max-w-[15rem]">
