@@ -25,8 +25,8 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
       - name: Setup utilities
         run: |
-          apt-get update
-          apt-get -y install zstd
+          sudo apt-get update
+          sudo apt-get -y install zstd
       - name: Show versions of environment components (debug)
         run: |
           echo "Node.js: $(node -v)"
@@ -59,8 +59,8 @@ jobs:
     steps:
       - name: Setup utilities
         run: |
-          apt-get update
-          apt-get -y install rsync
+          sudo apt-get update
+          sudo apt-get -y install rsync
       - name: Show versions of environment components (debug)
         run: |
           echo "rsync: $(rsync -V)"
