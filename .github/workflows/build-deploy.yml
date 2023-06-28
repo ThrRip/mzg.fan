@@ -70,7 +70,11 @@ jobs:
         with:
           name: build-${{ github.ref_name }}-${{ github.sha }}
       - name: Retrieve the SSH key
-        run: echo -n "$PROD_CLOUD_SSH_KEY" > $PROD_CLOUD_SSH_KEY_PATH
+        run: |
+          mkdir ~/.ssh
+          chmod 700 ~/.ssh
+          echo -n "$PROD_CLOUD_SSH_KEY" > $PROD_CLOUD_SSH_KEY_PATH
+          chmod 600 $PROD_CLOUD_SSH_KEY_PATH
       - name: Upload to the server
         run: |
           rsync -ahP \
