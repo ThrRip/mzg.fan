@@ -74,14 +74,14 @@ jobs:
             -o StrictHostKeyChecking=no \
             -p ${{ secrets.PROD_CLOUD_SSH_PORT }} \
             ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
-              shopt -s extglob
-              cd "${{ secrets.PROD_CLOUD_PROJECT_ROOT }}"
-              pm2 stop mzg.fan
-              pm2 delete mzg.fan
-              rm -fr !(build.tar.zst)
-              zstd -d build.tar.zst
-              tar -xvf build.tar
-              rm -f build.tar.zst build.tar
-              pm2 start ecosystem.config.js
-              pm2 save
+            shopt -s extglob
+            cd "${{ secrets.PROD_CLOUD_PROJECT_ROOT }}"
+            pm2 stop mzg.fan
+            pm2 delete mzg.fan
+            rm -fr !(build.tar.zst)
+            zstd -d build.tar.zst
+            tar -xvf build.tar
+            rm -f build.tar.zst build.tar
+            pm2 start ecosystem.config.js
+            pm2 save
             END
