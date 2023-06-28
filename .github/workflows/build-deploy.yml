@@ -59,19 +59,19 @@ jobs:
         run: |
           mkdir ~/.ssh
           chmod 700 ~/.ssh
-          echo "${{ vars.PROD_CLOUD_SSH_KEY_DEBUG }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          cat ~/.ssh/id_ed25519
+          echo "${{ vars.PROD_CLOUD_SSH_KEY_DEBUG }}" > ~/.ssh/id_ecdsa
+          chmod 600 ~/.ssh/id_ecdsa
+          cat ~/.ssh/id_ecdsa
       - name: Upload to the server
         run: |
           rsync -ahP \
-            -e "ssh -vvv -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p ${{ secrets.PROD_CLOUD_SSH_PORT }}" \
+            -e "ssh -vvv -i ~/.ssh/id_ecdsa -o StrictHostKeyChecking=no -p ${{ secrets.PROD_CLOUD_SSH_PORT }}" \
             build.tar.zst \
             ${{ secrets.PROD_CLOUD_SSH_URI }}:"${{ secrets.PROD_CLOUD_PROJECT_ROOT }}"
       - name: Replace the last build
         run: |
           ssh \
-            -i ~/.ssh/id_ed25519 \
+            -i ~/.ssh/id_ecdsa \
             -o StrictHostKeyChecking=no \
             -p ${{ secrets.PROD_CLOUD_SSH_PORT }} \
             ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
