@@ -1,14 +1,14 @@
 <template>
   <main
     class="overflow-y-auto landscape:grid landscape:grid-cols-[36vw_1fr] landscape:3xl:px-40 landscape:5xl:px-64 landscape:h-screen
-    bg-center bg-cover bg-assets-areas portrait:bg-assets-areas-vertical"
+    bg-white-alt bg-center bg-cover bg-inline-areas portrait:bg-inline-areas-vertical"
   >
     <section class="flex flex-col max-xl:landscape:gap-y-4 gap-y-14 justify-center items-center portrait:h-screen">
       <picture class="aspect-square max-xl:landscape:w-1/3 w-1/2 2xl:max-w-[15rem]">
         <source srcset="~/assets/img/profile-pic.avif" type="image/avif">
         <img src="~/assets/img/profile-pic.webp" alt="洺知-故犯的头像" class="rounded-[15%]">
       </picture>
-      <h1 class="max-xl:landscape:text-4xl portrait:text-6xl text-7xl font-light text-white">
+      <h1 class="max-xl:landscape:text-4xl portrait:text-6xl text-7xl font-light text-white-alt">
         洺知-故犯
       </h1>
       <div class="flex flex-col max-xl:landscape:gap-y-1 gap-y-4">
