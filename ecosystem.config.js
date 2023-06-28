@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'mzg.fan',
+      name: 'mzg.fan-home',
       port: 22320,
       exec_mode: 'cluster',
       instances: 'max',
