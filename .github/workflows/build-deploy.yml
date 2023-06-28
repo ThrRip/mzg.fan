@@ -59,7 +59,7 @@ jobs:
         run: |
           mkdir ~/.ssh
           chmod 700 ~/.ssh
-          echo -n "${{ vars.PROD_CLOUD_SSH_KEY_DEBUG }}" > ~/.ssh/id_ed25519
+          echo "${{ vars.PROD_CLOUD_SSH_KEY_DEBUG }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           cat ~/.ssh/id_ed25519
       - name: Upload to the server
