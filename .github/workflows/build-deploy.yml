@@ -43,7 +43,7 @@ jobs:
       - name: Upload the build
         uses: actions/upload-artifact@v3
         with:
-          name: build
+          name: build-${{ github.ref_name }}-${{ github.sha }}
           path: build.tar.zst
 
   deploy-prod:
@@ -54,6 +54,7 @@ jobs:
     env:
       PROD_CLOUD_SSH_URI: ${{ secrets.PROD_CLOUD_SSH_URI }}
       PROD_CLOUD_SSH_PORT: ${{ secrets.PROD_CLOUD_SSH_PORT }}
+      PROD_CLOUD_SSH_KEY: ${{ secrets.PROD_CLOUD_SSH_KEY }}
       PROD_CLOUD_SSH_KEY_PATH: ${{ secrets.PROD_CLOUD_SSH_KEY_PATH }}
       PROD_CLOUD_PROJECT_ROOT: ${{ secrets.PROD_CLOUD_PROJECT_ROOT }}
     steps:
@@ -67,9 +68,9 @@ jobs:
       - name: Download the build
         uses: actions/download-artifact@v3
         with:
-          name: build
+          name: build-${{ github.ref_name }}-${{ github.sha }}
       - name: Retrieve the SSH key
-        run: echo -n
+        run: echo -n "$PROD_CLOUD_SSH_KEY" > $PROD_CLOUD_SSH_KEY_PATH
       - name: Upload to the server
         run: |
           rsync -ahP \
