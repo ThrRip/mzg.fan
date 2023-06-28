@@ -27,11 +27,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get -y install zstd
-      - name: Show versions of environment components (debug)
-        run: |
-          echo "Node.js: $(node -v)"
-          echo "pnpm: $(pnpm -v)"
-          echo "zstd: $(zstd -V)"
       - name: Install dependencies
         run: pnpm install
       - name: Build standalone server
@@ -61,9 +56,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get -y install rsync
-      - name: Show versions of environment components (debug)
-        run: |
-          echo "rsync: $(rsync -V)"
       - name: Download the build
         uses: actions/download-artifact@v3
         with:
