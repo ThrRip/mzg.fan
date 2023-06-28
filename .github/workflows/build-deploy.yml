@@ -46,11 +46,6 @@ jobs:
     if: github.repository == 'ThrRip/mzg.fan' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-22.04
-    env:
-      PROD_CLOUD_SSH_URI: ${{ secrets.PROD_CLOUD_SSH_URI }}
-      PROD_CLOUD_SSH_PORT: ${{ secrets.PROD_CLOUD_SSH_PORT }}
-      PROD_CLOUD_SSH_KEY: ${{ secrets.PROD_CLOUD_SSH_KEY }}
-      PROD_CLOUD_PROJECT_ROOT: ${{ secrets.PROD_CLOUD_PROJECT_ROOT }}
     steps:
       - name: Setup utilities
         run: |
@@ -64,24 +59,24 @@ jobs:
         run: |
           mkdir ~/.ssh
           chmod 700 ~/.ssh
-          echo -n "${{ secrets.PROD_CLOUD_SSH_KEY }}" > ~/.ssh/id_ed25519
+          echo -n "${{ env.PROD_CLOUD_SSH_KEY_DEBUG }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           cat ~/.ssh/id_ed25519
       - name: Upload to the server
         run: |
           rsync -ahP \
-            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p $PROD_CLOUD_SSH_PORT" \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p ${{ secrets.PROD_CLOUD_SSH_PORT }}" \
             build.tar.zst \
-            $PROD_CLOUD_SSH_URI:"$PROD_CLOUD_PROJECT_ROOT"
+            ${{ secrets.PROD_CLOUD_SSH_URI }}:"${{ secrets.PROD_CLOUD_PROJECT_ROOT }}"
       - name: Replace the last build
         run: |
           ssh \
             -i ~/.ssh/id_ed25519 \
             -o StrictHostKeyChecking=no \
-            -p $PROD_CLOUD_SSH_PORT \
-            $PROD_CLOUD_SSH_URI <<END
+            -p ${{ PROD_CLOUD_SSH_PORT }} \
+            ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
               shopt -s extglob
-              cd "$PROD_CLOUD_PROJECT_ROOT"
+              cd "${{ secrets.PROD_CLOUD_PROJECT_ROOT }}"
               pm2 stop mzg.fan
               pm2 delete mzg.fan
               rm -fr !(build.tar.zst)
