@@ -55,7 +55,7 @@ jobs:
       PROD_CLOUD_SSH_URI: ${{ secrets.PROD_CLOUD_SSH_URI }}
       PROD_CLOUD_SSH_PORT: ${{ secrets.PROD_CLOUD_SSH_PORT }}
       PROD_CLOUD_SSH_KEY: ${{ secrets.PROD_CLOUD_SSH_KEY }}
-      PROD_CLOUD_SSH_KEY_PATH: ${{ env.PROD_CLOUD_SSH_KEY_PATH_DEBUG }}
+#      PROD_CLOUD_SSH_KEY_PATH: ${{ secrets.PROD_CLOUD_SSH_KEY_PATH }}
       PROD_CLOUD_PROJECT_ROOT: ${{ secrets.PROD_CLOUD_PROJECT_ROOT }}
     steps:
       - name: Setup utilities
@@ -73,7 +73,7 @@ jobs:
         run: |
           mkdir ~/.ssh
           chmod 700 ~/.ssh
-          echo -n "$PROD_CLOUD_SSH_KEY" > $PROD_CLOUD_SSH_KEY_PATH
+          echo -n "$PROD_CLOUD_SSH_KEY" > $PROD_CLOUD_SSH_KEY_PATH_DEBUG
           chmod 600 $PROD_CLOUD_SSH_KEY_PATH
       - name: Upload to the server
         run: |
