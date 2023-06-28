@@ -65,7 +65,7 @@ jobs:
       - name: Upload to the server
         run: |
           rsync -ahP \
-            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p ${{ secrets.PROD_CLOUD_SSH_PORT }}" \
+            -e "ssh -vvv -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p ${{ secrets.PROD_CLOUD_SSH_PORT }}" \
             build.tar.zst \
             ${{ secrets.PROD_CLOUD_SSH_URI }}:"${{ secrets.PROD_CLOUD_PROJECT_ROOT }}"
       - name: Replace the last build
