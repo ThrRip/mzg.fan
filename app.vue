@@ -1,7 +1,9 @@
 <template>
   <main
-    class="overflow-y-auto landscape:grid landscape:grid-cols-[36vw_1fr] landscape:3xl:px-40 landscape:5xl:px-64 landscape:h-screen
-    bg-white-alt bg-center bg-cover bg-inline-areas portrait:bg-inline-areas-vertical"
+    class="overflow-y-auto landscape:grid landscape:grid-cols-[36vw_1fr]
+    gap-x-14 lg:gap-x-16 xl:gap-x-28 2xl:gap-x-40 3xl:gap-x-6
+    landscape:3xl:px-40 landscape:5xl:px-64 landscape:py-7 landscape:2xl:py-16 landscape:5xl:py-28
+    landscape:h-screen bg-white-alt bg-center bg-cover bg-inline-areas portrait:bg-inline-areas-vertical"
   >
     <section class="flex flex-col max-xl:landscape:gap-y-4 gap-y-14 justify-center items-center portrait:h-screen">
       <picture class="aspect-square max-xl:landscape:w-1/3 w-1/2 2xl:max-w-[15rem]">
@@ -103,7 +105,24 @@
         </button>
       </div>
     </section>
-    <section ref="viewPlaylist" class="flex flex-col portrait:h-screen" />
+    <section
+      ref="viewPlaylist"
+      class="grid grid-cols-[auto_1fr] portrait:grid-cols-1 grid-rows-[auto_1fr] portrait:grid-rows-[auto_auto_1fr]
+      justify-center portrait:p-8 portrait:pt-12
+      landscape:pr-10 landscape:xl:pr-12 landscape:2xl:pr-20 landscape:3xl:pr-0 portrait:h-screen"
+    >
+      <header
+        class="aspect-square grid grid-areas-[playlist-hero] place-items-center
+        portrait:w-full h-36 landscape:h-20 landscape:xl:h-36 landscape:2xl:h-40 landscape:3xl:h-48 landscape:5xl:h-52"
+      >
+        <ClientOnly>
+          <font-awesome-icon :icon="['fas', 'music']" class="!h-full text-pink-l" />
+        </ClientOnly>
+        <span class="-mr-2 max-xl:landscape:text-3xl portrait:text-5xl text-6xl font-light tracking-wider text-brown">歌单</span>
+      </header>
+      <div />
+      <div class="landscape:col-span-2" />
+    </section>
   </main>
 </template>
 
@@ -143,3 +162,13 @@ backendDatabases.listDocuments('home', 'playlist')
     }
   )
 </script>
+
+<style scoped>
+.grid-areas-\[playlist-hero\] {
+  grid-template-areas: "playlist-hero";
+}
+
+.grid-areas-\[playlist-hero\] > * {
+  grid-area: playlist-hero;
+}
+</style>

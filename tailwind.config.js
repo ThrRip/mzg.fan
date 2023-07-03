@@ -16,6 +16,9 @@ module.exports = {
         l: '#fed3c8',
         la: '#f2beb1'
       },
+      brown: {
+        DEFAULT: '#493437'
+      },
       white: {
         DEFAULT: '#fefaf7',
         alt: '#efeaf1'

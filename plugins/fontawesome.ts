@@ -7,7 +7,8 @@ import {
   faVideo,
   faList,
   faArrowUpRightFromSquare,
-  faArrowDown
+  faArrowDown,
+  faMusic
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faBilibili
@@ -21,7 +22,8 @@ library.add(
   faList,
   faArrowUpRightFromSquare,
   faArrowDown,
-  faBilibili
+  faBilibili,
+  faMusic
 )
 
 export default defineNuxtPlugin((nuxtApp) => {
