@@ -49,10 +49,10 @@
           </span>
           <span v-if="biliApiLiveStatus" class="aspect-square flex flex-col justify-center items-center h-8">
             <ClientOnly>
-              <span class="overflow-hidden max-h-[1.125rem]">
+              <span class="overflow-hidden max-h-[1.2rem]">
                 <font-awesome-icon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
               </span>
-              <span class="text-[0.5rem]">
+              <span class="text-[0.5rem] leading-snug">
                 直播中
               </span>
             </ClientOnly>
