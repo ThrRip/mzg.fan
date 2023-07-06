@@ -130,8 +130,11 @@
 import { Client, Databases } from 'appwrite'
 
 const { data: biliApiRoomPlayInfo } = await useFetch(
-  'https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo?room_id=1267105',
-  { pick: ['data'] }
+  useAppConfig().biliApiRoomPlayInfoEndpoint,
+  {
+    query: useAppConfig().biliApiRoomPlayInfoEndpointQueries,
+    pick: ['data']
+  }
 )
 const biliApiLiveStatus = ref(biliApiRoomPlayInfo.value.data.live_status)
 
