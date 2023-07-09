@@ -13,8 +13,7 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' }
       ],
       link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-        { rel: 'alternate icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', href: '/favicon.ico', sizes: '48x48 32x32 16x16' },
         { rel: 'apple-touch-icon', type: 'image/png', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/site.webmanifest' }
       ]
