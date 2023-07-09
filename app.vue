@@ -118,7 +118,9 @@
         <ClientOnly>
           <font-awesome-icon :icon="['fas', 'music']" class="min-h-full text-pink-l" />
         </ClientOnly>
-        <span class="-mr-2 max-xl:landscape:text-3xl portrait:text-5xl text-6xl font-light tracking-wider text-brown">歌单</span>
+        <h2 class="-mr-2 max-xl:landscape:text-3xl portrait:text-5xl text-6xl font-light tracking-wider text-brown">
+          歌单
+        </h2>
       </header>
       <div class="overflow-y-hidden grid grid-rows-[auto_1fr] landscape:col-span-2 h-full text-black rounded-2xl">
         <div
