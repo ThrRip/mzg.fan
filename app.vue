@@ -112,11 +112,11 @@
       landscape:pr-10 landscape:xl:pr-12 landscape:2xl:pr-20 landscape:3xl:pr-0 portrait:h-screen"
     >
       <header
-        class="aspect-square grid grid-areas-stack place-items-center
-        portrait:w-full h-36 landscape:h-20 landscape:xl:h-36 landscape:2xl:h-40 landscape:3xl:h-48 landscape:5xl:h-52"
+        class="grid grid-areas-stack place-items-center
+        h-36 landscape:h-20 landscape:xl:h-36 landscape:2xl:h-40 landscape:3xl:h-48 landscape:5xl:h-52"
       >
         <ClientOnly>
-          <font-awesome-icon :icon="['fas', 'music']" class="!h-full text-pink-l" />
+          <font-awesome-icon :icon="['fas', 'music']" class="min-h-full text-pink-l" />
         </ClientOnly>
         <span class="-mr-2 max-xl:landscape:text-3xl portrait:text-5xl text-6xl font-light tracking-wider text-brown">歌单</span>
       </header>
