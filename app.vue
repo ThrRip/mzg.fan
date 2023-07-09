@@ -126,35 +126,42 @@
   </main>
 </template>
 
-<script setup>
-import { Client, Databases } from 'appwrite'
+<script setup lang="ts">
+import { Client, Databases, Query } from 'appwrite'
 
-const { data: biliApiRoomPlayInfo } = await useFetch(
-  useAppConfig().biliApiRoomPlayInfoEndpoint,
-  {
-    query: useAppConfig().biliApiRoomPlayInfoEndpointQueries,
-    pick: ['data']
+// Live status
+const { data: biliApiRoomPlayInfo } = await useFetch<{
+  data: {
+    live_status: 0 | 1
+    [key: string]: any
   }
+}>(
+  useAppConfig().biliApiRoomPlayInfoEndpoint,
+  { query: useAppConfig().biliApiRoomPlayInfoEndpointQueries }
 )
-const biliApiLiveStatus = ref(biliApiRoomPlayInfo.value.data.live_status)
+const biliApiLiveStatus = ref<0 | 1 | undefined>(biliApiRoomPlayInfo.value?.data.live_status)
 
-const viewPlaylist = ref(null)
-function scrollToPlaylist () {
-  window.scroll({
-    top: viewPlaylist.value.getBoundingClientRect().top,
-    behavior: 'smooth'
-  })
-}
-
+// Backend
 const backendClient = new Client()
 const backendDatabases = new Databases(backendClient)
 backendClient.setEndpoint(useAppConfig().backendBase)
   .setProject(useAppConfig().backendProjectId)
 
-const backendPlaylist = ref([])
-const backendFetchPlaylistState = ref('processing')
+interface Song {
+  hidden?: false
+  name?: string
+  artist?: string
+  language?: string
+  payment_required?: boolean
+  $id: string
+  $createdAt: string
+}
+type Playlist = Array<Song>
 
-backendDatabases.listDocuments('home', 'playlist')
+const backendPlaylist = ref<Playlist>([])
+const backendFetchPlaylistState = ref<'processing' | 'succeeded' | 'failed'>('processing')
+
+backendDatabases.listDocuments('home', 'playlist', [Query.limit(1000)])
   .then(
     (res) => {
       backendFetchPlaylistState.value = 'succeeded'
@@ -164,6 +171,15 @@ backendDatabases.listDocuments('home', 'playlist')
       backendFetchPlaylistState.value = 'failed'
     }
   )
+
+// View
+const viewPlaylist = ref()
+function scrollToPlaylist () {
+  window.scroll({
+    top: viewPlaylist.value.getBoundingClientRect().top,
+    behavior: 'smooth'
+  })
+}
 </script>
 
 <style scoped>
