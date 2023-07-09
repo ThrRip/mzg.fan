@@ -20,6 +20,9 @@ dependencies:
   pinia:
     specifier: ^2.1.4
     version: 2.1.4(typescript@5.1.6)(vue@3.3.4)
+  pinyin-pro:
+    specifier: ^3.15.4
+    version: 3.15.4
 
 devDependencies:
   '@fortawesome/free-brands-svg-icons':
@@ -49,6 +52,9 @@ devDependencies:
   postcss:
     specifier: ^8.4.25
     version: 8.4.25
+  tailwind-scrollbar:
+    specifier: ^3.0.4
+    version: 3.0.4(tailwindcss@3.3.2)
   tailwindcss:
     specifier: ^3.3.2
     version: 3.3.2
@@ -4918,6 +4924,10 @@ packages:
       vue-demi: 0.14.5(vue@3.3.4)
     dev: false
 
+  /pinyin-pro@3.15.4:
+    resolution: {integrity: sha512-v438qrWYcjhMNHxBvreNLU3i378GZrz2Za5KeWZDIH9YCwa3AOXsp4VrufnBur5tSLb79Hqc4rX9LHK7hxUFiw==}
+    dev: false
+
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
@@ -5879,6 +5889,15 @@ packages:
     dependencies:
       '@pkgr/utils': 2.4.2
       tslib: 2.6.0
+    dev: true
+
+  /tailwind-scrollbar@3.0.4(tailwindcss@3.3.2):
+    resolution: {integrity: sha512-X/QBsn/C5u9x6/YvTc1Zo7b09Gqs5BfDe0UK/8LDQUv8IEBKF+p2ISTRwvAr50MH0hn/wTyCEOann7uXoa1/2Q==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      tailwindcss: 3.x
+    dependencies:
+      tailwindcss: 3.3.2
     dev: true
 
   /tailwindcss@3.3.2:

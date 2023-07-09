@@ -21,7 +21,15 @@ module.exports = {
       },
       white: {
         DEFAULT: '#fefaf7',
-        alt: '#efeaf1'
+        alt: '#efeaf1',
+        alta: '#f3f1f6'
+      },
+      gray: {
+        DEFAULT: '#e7e2e9'
+      },
+      black: {
+        DEFAULT: '#433a47',
+        a: '#352939'
       }
     },
     extend: {
@@ -44,5 +52,8 @@ module.exports = {
         'inner-1/2y': 'inset 0 1px 4px 0 rgb(0 0 0 / 0.05)'
       }
     }
-  }
+  },
+  plugins: [
+    require('tailwind-scrollbar')
+  ]
 }

@@ -21,7 +21,8 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@pinia/nuxt": "^0.4.11",
     "appwrite": "^11.0.0",
-    "pinia": "^2.1.4"
+    "pinia": "^2.1.4",
+    "pinyin-pro": "^3.15.4"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
@@ -33,6 +34,7 @@
     "eslint-plugin-nuxt": "^4.0.0",
     "nuxt": "^3.6.2",
     "postcss": "^8.4.25",
+    "tailwind-scrollbar": "^3.0.4",
     "tailwindcss": "^3.3.2"
   }
 }
