@@ -281,7 +281,8 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   if (viewPlaylistSortingColumn.value === null || column !== viewPlaylistSortingColumn.value) {
     viewPlaylistSortingColumn.value = column
     viewPlaylistSortingOrder.value = 'ascending'
-  } else if (viewPlaylistSortingOrder.value === 'ascending') {
+  } else
+  if (viewPlaylistSortingOrder.value === 'ascending') {
     viewPlaylistSortingOrder.value = 'descending'
   } else {
     viewPlaylistSortingColumn.value = null
@@ -306,12 +307,11 @@ const viewPlaylistData = computed<Playlist>(() => {
       while (currentSong !== 0) {
         const targetSong = Math.floor(Math.random() * currentSong)
         currentSong--
-        const targetSongBackup = Object.assign({}, playlist[targetSong])
+        const targetSongBackup = { ...playlist[targetSong] }
         playlist[targetSong] = playlist[currentSong]
         playlist[currentSong] = targetSongBackup
       }
-    }
-    if (viewPlaylistSortingColumn.value !== null) {
+    } else {
       const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
       // Sort by name or artist in alphabetical order
       if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
@@ -327,12 +327,13 @@ const viewPlaylistData = computed<Playlist>(() => {
           // @ts-ignore
           if (a[`${viewPlaylistSortingColumn.value}Pinyin`] < b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
             return -1 * orderModifier
-          }
+          } else
           // @ts-ignore
           if (a[`${viewPlaylistSortingColumn.value}Pinyin`] > b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
             return 1 * orderModifier
+          } else {
+            return 0
           }
-          return 0
         })
       }
     }
