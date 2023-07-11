@@ -209,19 +209,21 @@
                 <span class="flex flex-row gap-x-3 items-center px-4 portrait:px-3 portrait:py-0.5 portrait:leading-snug h-full">
                   {{ song.name }}
                   <transition-group
+                    tag="span"
+                    class="grid grid-areas-stack"
                     enter-from-class="opacity-0"
                     enter-active-class="transition-opacity"
                     leave-active-class="transition-opacity duration-300"
                     leave-to-class="opacity-0"
                   >
                     <font-awesome-icon
-                      v-if="viewPlaylistCopyingFailedSongs.includes(song.$id)"
-                      :icon="['fas', 'clipboard-question']"
+                      v-if="viewPlaylistCopiedSongs.includes(song.$id)"
+                      :icon="['fas', 'clipboard-check']"
                       class="!h-5"
                     />
                     <font-awesome-icon
-                      v-if="viewPlaylistCopiedSongs.includes(song.$id)"
-                      :icon="['fas', 'clipboard-check']"
+                      v-if="viewPlaylistCopyingFailedSongs.includes(song.$id)"
+                      :icon="['fas', 'clipboard-question']"
                       class="!h-5"
                     />
                   </transition-group>
@@ -439,23 +441,30 @@ const viewPlaylistCopiedSongs = ref<Array<Song['$id']>>([])
 const viewPlaylistCopyingFailedSongs = ref<Array<Song['$id']>>([])
 function viewPlaylistCopySong (id: Song['$id']) {
   // @ts-ignore
-  navigator.clipboard.writeText(`点歌 ${backendPlaylist.value.find(song => song.$id === id).name}`)
-    .then(
-      () => {
-        viewPlaylistCopiedSongs.value.push(id)
-        setTimeout(() => viewPlaylistCopiedSongs.value.splice(
-          viewPlaylistCopiedSongs.value.findIndex(songId => songId === id), 1),
-        2000
-        )
-      },
-      () => {
-        viewPlaylistCopyingFailedSongs.value.push(id)
-        setTimeout(() => viewPlaylistCopyingFailedSongs.value.splice(
-          viewPlaylistCopyingFailedSongs.value.findIndex(songId => songId === id), 1),
-        2000
+  const clipboardWritePromise = navigator.clipboard.writeText(`点歌 ${backendPlaylist.value.find(song => song.$id === id).name}`)
+  setTimeout(() => { if (!viewPlaylistCopiedSongs.value.includes(id)) { viewPlaylistCopyingFailedSongs.value.push(id) } }, 500)
+  clipboardWritePromise.then(
+    () => {
+      if (viewPlaylistCopyingFailedSongs.value.includes(id)) {
+        viewPlaylistCopyingFailedSongs.value.splice(
+          viewPlaylistCopyingFailedSongs.value.findIndex(songId => songId === id),
+          1
         )
       }
-    )
+      if (!viewPlaylistCopiedSongs.value.includes(id)) { viewPlaylistCopiedSongs.value.push(id) }
+      setTimeout(() => viewPlaylistCopiedSongs.value.splice(
+        viewPlaylistCopiedSongs.value.findIndex(songId => songId === id),
+        1
+      ), 2000)
+    },
+    () => {
+      if (!viewPlaylistCopyingFailedSongs.value.includes(id)) { viewPlaylistCopyingFailedSongs.value.push(id) }
+      setTimeout(() => viewPlaylistCopyingFailedSongs.value.splice(
+        viewPlaylistCopyingFailedSongs.value.findIndex(songId => songId === id),
+        1
+      ), 5000)
+    }
+  )
 }
 
 const viewPlaylistCountTotal = computed<number>(() => backendPlaylist.value.length)
