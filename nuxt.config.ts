@@ -10,7 +10,9 @@ export default defineNuxtConfig({
       title: '洺知-故犯',
       meta: [
         { name: 'description', content: '' },
-        { name: 'format-detection', content: 'telephone=no' }
+        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'theme-color', content: '#89c1cf', media: '(prefers-color-scheme: light)' },
+        { name: 'theme-color', content: '#89c1cf', media: '(prefers-color-scheme: dark)' }
       ],
       link: [
         { rel: 'icon', href: '/favicon.ico', sizes: '48x48 32x32 16x16' },
