@@ -5,7 +5,7 @@
     landscape:3xl:px-40 landscape:5xl:px-64 landscape:py-7 landscape:2xl:py-16 landscape:5xl:py-28
     landscape:h-screen bg-white-alt bg-center bg-cover bg-inline-areas portrait:bg-inline-areas-vertical"
   >
-    <section class="flex flex-col max-xl:landscape:gap-y-4 gap-y-14 justify-center items-center portrait:h-screen">
+    <section class="flex flex-col max-xl:landscape:gap-y-4 gap-y-14 justify-center items-center portrait:h-sscreen">
       <picture class="aspect-square max-xl:landscape:w-1/3 w-1/2 2xl:max-w-[15rem]">
         <source srcset="~/assets/img/profile-pic.avif" type="image/avif">
         <img src="~/assets/img/profile-pic.webp" alt="洺知-故犯的头像" class="rounded-[15%]">
