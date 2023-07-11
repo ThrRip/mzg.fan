@@ -10,6 +10,8 @@ import {
   faArrowDown,
   faMusic,
   faCaretUp,
+  faClipboardQuestion,
+  faClipboardCheck,
   faCommentDollar,
   faDice
 } from '@fortawesome/free-solid-svg-icons'
@@ -28,6 +30,8 @@ library.add(
   faBilibili,
   faMusic,
   faCaretUp,
+  faClipboardQuestion,
+  faClipboardCheck,
   faCommentDollar,
   faDice
 )

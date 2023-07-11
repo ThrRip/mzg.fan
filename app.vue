@@ -203,10 +203,28 @@
                 v-for="song in viewPlaylistData"
                 :key="song.$id"
                 class="grid grid-cols-[0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[1fr_3.5rem_4.5rem]
-              grid-rows-1 portrait:grid-rows-[auto_auto] px-2"
+                grid-rows-1 portrait:grid-rows-[auto_auto] px-2"
+                @click="viewPlaylistCopySong(song.$id)"
               >
-                <span class="flex flex-row items-center px-4 portrait:px-3 py-2 portrait:py-0.5 portrait:leading-snug h-full">
+                <span class="flex flex-row gap-x-3 items-center px-4 portrait:px-3 portrait:py-0.5 portrait:leading-snug h-full">
                   {{ song.name }}
+                  <transition-group
+                    enter-from-class="opacity-0"
+                    enter-active-class="transition-opacity"
+                    leave-active-class="transition-opacity duration-300"
+                    leave-to-class="opacity-0"
+                  >
+                    <font-awesome-icon
+                      v-if="viewPlaylistCopyingFailedSongs.includes(song.$id)"
+                      :icon="['fas', 'clipboard-question']"
+                      class="!h-5"
+                    />
+                    <font-awesome-icon
+                      v-if="viewPlaylistCopiedSongs.includes(song.$id)"
+                      :icon="['fas', 'clipboard-check']"
+                      class="!h-5"
+                    />
+                  </transition-group>
                 </span>
                 <span class="flex flex-row portrait:order-4 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs">
                   {{ song.artist }}
@@ -415,6 +433,29 @@ function viewPlaylistReshuffle () {
   viewPlaylistSortingColumn.value = null
   viewPlaylistSortingOrder.value = 'ascending'
   viewPlaylistShuffles.value++
+}
+
+const viewPlaylistCopiedSongs = ref<Array<Song['$id']>>([])
+const viewPlaylistCopyingFailedSongs = ref<Array<Song['$id']>>([])
+function viewPlaylistCopySong (id: Song['$id']) {
+  // @ts-ignore
+  navigator.clipboard.writeText(`点歌 ${backendPlaylist.value.find(song => song.$id === id).name}`)
+    .then(
+      () => {
+        viewPlaylistCopiedSongs.value.push(id)
+        setTimeout(() => viewPlaylistCopiedSongs.value.splice(
+          viewPlaylistCopiedSongs.value.findIndex(songId => songId === id), 1),
+        2000
+        )
+      },
+      () => {
+        viewPlaylistCopyingFailedSongs.value.push(id)
+        setTimeout(() => viewPlaylistCopyingFailedSongs.value.splice(
+          viewPlaylistCopyingFailedSongs.value.findIndex(songId => songId === id), 1),
+        2000
+        )
+      }
+    )
 }
 
 const viewPlaylistCountTotal = computed<number>(() => backendPlaylist.value.length)
