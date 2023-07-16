@@ -163,7 +163,7 @@
             </button>
             <button
               class="flex flex-row portrait:row-span-2 gap-x-2 items-center px-4 portrait:px-3 h-full"
-              @click="viewPlaylistToggleSorting('payment_required')"
+              @click="viewPlaylistToggleSorting('payment_amount')"
             >
               SC
               <ClientOnly>
@@ -171,7 +171,7 @@
                   :icon="['fas', 'caret-up']"
                   class="mt-px opacity-0 transition"
                   :class="{
-                    'opacity-100': viewPlaylistSortingColumn === 'payment_required',
+                    'opacity-100': viewPlaylistSortingColumn === 'payment_amount',
                     'transition-opacity rotate-180': viewPlaylistSortingOrder === 'descending'
                   }"
                 />
@@ -232,8 +232,13 @@
                 <span class="flex flex-row portrait:order-4 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs">
                   {{ song.artist }}
                 </span>
-                <span class="flex flex-row portrait:row-span-2 items-center px-4 portrait:px-3 h-full">
-                  <font-awesome-icon v-if="song.payment_required" :icon="['fas', 'comment-dollar']" class="!h-5" />
+                <span class="flex flex-row portrait:row-span-2 px-4 portrait:px-3 h-full">
+                  <span class="flex flex-col justify-center items-center">
+                    <font-awesome-icon v-if="song.payment_required" :icon="['fas', 'comment-dollar']" class="!h-5" />
+                    <span v-if="song.payment_amount" class="text-[0.625rem] leading-snug">
+                      ¥{{ song.payment_amount }}
+                    </span>
+                  </span>
                 </span>
                 <span class="flex flex-row portrait:row-span-2 items-center pl-4 portrait:pl-3 py-2 h-full">
                   {{ song.language }}
@@ -295,6 +300,7 @@ interface Song {
   artist?: string
   language?: string
   payment_required?: boolean
+  payment_amount?: number
   $id: string
   $createdAt: string
 }
@@ -345,12 +351,12 @@ function scrollToPlaylist () {
   })
 }
 
-type PlaylistColumn = 'name' | 'artist' | 'payment_required' | 'language'
+type PlaylistColumn = 'name' | 'artist' | 'payment_amount' | 'language'
 type PlaylistSortingOrder = 'ascending' | 'descending'
 const viewPlaylistSortingColumn = ref<null | PlaylistColumn>(null)
 const viewPlaylistSortingOrder = ref<PlaylistSortingOrder>('ascending')
 const viewPlaylistSortingOrderOptions = computed<Array<PlaylistSortingOrder>>(() => {
-  return viewPlaylistSortingColumn.value === 'payment_required' ?
+  return viewPlaylistSortingColumn.value === 'payment_amount' ?
       ['descending', 'ascending'] :
       ['ascending', 'descending']
 })
@@ -413,10 +419,13 @@ const viewPlaylistData = computed<Playlist>(() => {
     } else
 
     // Sort by payment requirement
-    if (viewPlaylistSortingColumn.value === 'payment_required') {
+    if (viewPlaylistSortingColumn.value === 'payment_amount') {
       playlist = backendPlaylistShuffled.value.slice()
       playlist.sort((a, b) => {
-        return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
+        if (a.payment_required === false || b.payment_required === false) {
+          return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
+        }
+        return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
       })
     } else
 
