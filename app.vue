@@ -131,6 +131,12 @@
           >
             <button
               class="flex flex-row gap-x-2 items-center px-4 portrait:px-3 py-2 portrait:py-0.5 portrait:leading-snug h-full"
+              title="按歌名排序"
+              :aria-label="`按歌名排序${viewPlaylistSortingColumn === 'name' ?
+                viewPlaylistSortingOrder === 'ascending' ? ' - 当前按歌名升序排序' :
+                viewPlaylistSortingOrder === 'descending' ? ' - 当前按歌名降序排序' : '' :
+                ''
+              }`"
               @click="viewPlaylistToggleSorting('name')"
             >
               歌名
@@ -147,6 +153,12 @@
             </button>
             <button
               class="flex flex-row portrait:order-4 gap-x-2 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs"
+              title="按歌手排序"
+              :aria-label="`按歌手排序${viewPlaylistSortingColumn === 'artist' ?
+                viewPlaylistSortingOrder === 'ascending' ? ' - 当前按歌手升序排序' :
+                viewPlaylistSortingOrder === 'descending' ? ' - 当前按歌手降序排序' : '' :
+                ''
+              }`"
               @click="viewPlaylistToggleSorting('artist')"
             >
               歌手
@@ -163,6 +175,12 @@
             </button>
             <button
               class="flex flex-row portrait:row-span-2 gap-x-2 items-center px-4 portrait:px-3 h-full"
+              title="按 SC 要求排序"
+              :aria-label="`按 SC 要求排序${viewPlaylistSortingColumn === 'payment_amount' ?
+                viewPlaylistSortingOrder === 'descending' ? ' - 当前按 SC 要求降序排序' :
+                viewPlaylistSortingOrder === 'ascending' ? ' - 当前按 SC 要求升序排序' : '' :
+                ''
+              }`"
               @click="viewPlaylistToggleSorting('payment_amount')"
             >
               SC
@@ -179,6 +197,12 @@
             </button>
             <button
               class="flex flex-row portrait:row-span-2 gap-x-2 items-center pl-4 portrait:pl-3 py-2 h-full"
+              title="按语言排序"
+              :aria-label="`按语言排序${viewPlaylistSortingColumn === 'language' ?
+                viewPlaylistSortingOrder === 'ascending' ? ' - 当前按语言升序排序' :
+                viewPlaylistSortingOrder === 'descending' ? ' - 当前按语言降序排序' : '' :
+                ''
+              }`"
               @click="viewPlaylistToggleSorting('language')"
             >
               语言
@@ -195,6 +219,25 @@
             </button>
           </div>
           <div class="overflow-y-hidden grid grid-areas-stack h-full">
+            <div
+              class="flex flex-row order-2 justify-between items-center self-end pl-6 pr-2.5 py-1.5 h-12
+              bg-white-alta/75 border-t border-gray backdrop-blur"
+            >
+              共 {{ viewPlaylistCountTotal }} 首歌
+              <span v-if="viewPlaylistCountTotal !== viewPlaylistCountDisplayed">
+                ，已显示 {{ viewPlaylistCountDisplayed }} 首
+              </span>
+              <button
+                class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
+                transition active:scale-95 duration-200"
+                title="随机排列"
+                @click="viewPlaylistReshuffle"
+              >
+                <ClientOnly>
+                  <font-awesome-icon :icon="['fas', 'dice']" />
+                </ClientOnly>
+              </button>
+            </div>
             <transition-group
               tag="div"
               move-class="transition-transform duration-[1300ms]"
@@ -233,8 +276,12 @@
                   {{ song.artist }}
                 </span>
                 <span class="flex flex-row portrait:row-span-2 px-4 portrait:px-3 h-full">
-                  <span class="flex flex-col justify-center items-center">
-                    <font-awesome-icon v-if="song.payment_required" :icon="['fas', 'comment-dollar']" class="!h-5" />
+                  <span
+                    v-if="song.payment_required"
+                    class="flex flex-col justify-center items-center"
+                    :title="song.payment_amount === null ? '需要 SC' : `需要 ${song.payment_amount} 元 SC`"
+                  >
+                    <font-awesome-icon :icon="['fas', 'comment-dollar']" class="!h-5" />
                     <span v-if="song.payment_amount" class="text-[0.625rem] leading-snug">
                       ¥{{ song.payment_amount }}
                     </span>
@@ -245,24 +292,6 @@
                 </span>
               </div>
             </transition-group>
-            <div
-              class="flex flex-row justify-between items-center self-end pl-6 pr-2.5 py-1.5 h-12
-              bg-white-alta/75 border-t border-gray backdrop-blur"
-            >
-              共 {{ viewPlaylistCountTotal }} 首歌
-              <span v-if="viewPlaylistCountTotal !== viewPlaylistCountDisplayed">
-                ，已显示 {{ viewPlaylistCountDisplayed }} 首
-              </span>
-              <button
-                class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
-                transition active:scale-95 duration-200"
-                @click="viewPlaylistReshuffle"
-              >
-                <ClientOnly>
-                  <font-awesome-icon :icon="['fas', 'dice']" />
-                </ClientOnly>
-              </button>
-            </div>
           </div>
         </div>
       </section>
@@ -300,7 +329,7 @@ interface Song {
   artist?: string
   language?: string
   payment_required?: boolean
-  payment_amount?: number
+  payment_amount?: null | number
   $id: string
   $createdAt: string
 }
