@@ -240,14 +240,17 @@
                 </span>
               </div>
             </transition-group>
-            <div class="flex flex-row justify-between items-center self-end pl-6 pr-2.5 py-1.5 h-12 bg-white-alta/75 border-t border-gray backdrop-blur">
+            <div
+              class="flex flex-row justify-between items-center self-end pl-6 pr-2.5 py-1.5 h-12
+              bg-white-alta/75 border-t border-gray backdrop-blur"
+            >
               共 {{ viewPlaylistCountTotal }} 首歌
               <span v-if="viewPlaylistCountTotal !== viewPlaylistCountDisplayed">
                 ，已显示 {{ viewPlaylistCountDisplayed }} 首
               </span>
               <button
                 class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
-              transition active:scale-95 duration-200"
+                transition active:scale-95 duration-200"
                 @click="viewPlaylistReshuffle"
               >
                 <ClientOnly>
