@@ -333,11 +333,11 @@ const backendPlaylistShuffled = computed<Playlist>(() => {
 })
 
 // View
-const contentRoot = ref()
-const viewPlaylistArea = ref()
+const contentRoot = ref<HTMLDivElement>()
+const viewPlaylistArea = ref<HTMLElement>()
 function scrollToPlaylist () {
-  contentRoot.value.scroll({
-    top: viewPlaylistArea.value.getBoundingClientRect().top,
+  contentRoot.value?.scroll({
+    top: viewPlaylistArea.value?.getBoundingClientRect().top,
     behavior: 'smooth'
   })
 }
