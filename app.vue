@@ -50,7 +50,7 @@
             </span>
             <span v-if="biliApiLiveStatus" class="aspect-square flex flex-col justify-center items-center h-8">
               <ClientOnly>
-                <span class="overflow-hidden max-h-[1.2rem]">
+                <span class="overflow-hidden min-h-[1.2rem] max-h-[1.2rem]">
                   <font-awesome-icon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
                 </span>
                 <span class="text-[0.5rem] leading-snug">
@@ -108,9 +108,9 @@
       </section>
       <section
         ref="viewPlaylistArea"
-        class="overflow-y-hidden grid grid-cols-1 grid-rows-[auto_1fr] portrait:grid-rows-[auto_auto_1fr]
-        gap-y-8 portrait:gap-y-6 portrait:px-6 portrait:py-1 justify-items-stretch portrait:pt-10
-        landscape:pr-10 landscape:xl:pr-12 landscape:2xl:pr-20 landscape:3xl:pr-0 portrait:h-dscreen"
+        class="overflow-y-hidden grid grid-cols-1 grid-rows-[auto_1fr] portrait:grid-rows-[auto_1fr]
+        gap-y-8 portrait:gap-y-6 justify-items-stretch portrait:px-6 portrait:pt-10
+        landscape:pr-10 landscape:xl:pr-12 landscape:2xl:pr-20 landscape:3xl:pr-0 portrait:pb-6 portrait:h-dscreen"
       >
         <header
           class="grid grid-areas-stack place-items-center
@@ -125,7 +125,7 @@
         </header>
         <div class="overflow-y-hidden grid grid-rows-[auto_1fr] landscape:col-span-2 h-full text-black rounded-2xl">
           <div
-            class="overflow-y-scroll grid grid-cols-[0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[1fr_3.5rem_4.5rem]
+            class="landscape:overflow-y-scroll grid grid-cols-[0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[1fr_3.5rem_4.5rem]
             grid-rows-1 portrait:grid-rows-[1.625rem_1rem] content-center
             px-2 h-12 portrait:h-16 bg-gray scrollbar scrollbar-thumb-transparent scrollbar-track-transparent"
           >
@@ -198,7 +198,7 @@
             <transition-group
               tag="div"
               move-class="transition-transform duration-[1300ms]"
-              class="overflow-y-auto flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta"
+              class="overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta"
             >
               <div
                 v-for="song in viewPlaylistData"
