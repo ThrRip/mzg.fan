@@ -1,0 +1,23 @@
+name: Build & Deploy / [all]
+run-name: Build & Deploy (${{ github.ref_name }}/[all])
+
+on:
+  push:
+    paths-ignore:
+      - '.idea/**'
+      - '.run/**'
+      - 'packages/**'
+      - '.editorconfig'
+      - '.eslintrc.js'
+
+concurrency: build-deploy-[all]-${{ github.ref }}
+
+jobs:
+  build-deploy:
+    strategy:
+      matrix:
+        package: [home]
+    uses: ./.github/workflows/build-deploy.yml
+    with:
+      package: ${{ matrix.package }}
+    secrets: inherit
