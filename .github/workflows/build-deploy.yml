@@ -50,7 +50,7 @@ jobs:
       - name: Store the build as an artifact
         uses: actions/upload-artifact@v3
         with:
-          name: build-${{ inputs.package }}-${{ github.ref }}-${{ github.sha }}
+          name: build-${{ github.ref_name }}_${{ inputs.package }}-${{ github.sha }}
           path: packages/${{ inputs.package }}/build.tar.zst
 
   deploy-prod:
@@ -68,7 +68,7 @@ jobs:
       - name: Retrieve the build
         uses: actions/download-artifact@v3
         with:
-          name: build-${{ inputs.package }}-${{ github.ref }}-${{ github.sha }}
+          name: build-${{ github.ref_name }}_${{ inputs.package }}-${{ github.sha }}
       - name: Retrieve the SSH key
         run: |
           mkdir ~/.ssh
