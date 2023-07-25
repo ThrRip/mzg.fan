@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ inputs.package }}-${{ github.ref }}-${{ github.sha }}
-          path: build.tar.zst
+          path: packages/${{ inputs.package }}/build.tar.zst
 
   deploy-prod:
     name: Deploy to production
