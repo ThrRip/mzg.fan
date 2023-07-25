@@ -1,5 +1,5 @@
 {
-  "name": "mzg.fan",
+  "name": "home",
   "version": "0.0.0",
   "license": "UNLICENSED",
   "repository": {
@@ -8,14 +8,6 @@
   },
   "author": "ThrRip <coding@thrrip.space>",
   "private": true,
-  "scripts": {
-    "build": "pnpm -r exec nuxt build",
-    "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
-    "postinstall": "nuxt prepare && pnpm -r exec nuxt prepare",
-    "dev:home": "pnpm -F home exec nuxt dev",
-    "build:home": "pnpm -F home exec nuxt build",
-    "preview:home": "pnpm -F home exec nuxt preview"
-  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",

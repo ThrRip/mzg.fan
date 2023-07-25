@@ -1,0 +1,17 @@
+name: Build & Deploy / home
+run-name: Build & Deploy (${{ github.ref_name }}/home)
+
+on:
+  push:
+    paths:
+      - 'packages/home/**'
+
+concurrency: build-deploy-home-${{ github.ref }}
+
+jobs:
+  build-deploy-home:
+    name: Build & Deploy
+    uses: ./.github/workflows/build-deploy.yml
+    with:
+      package: home
+    secrets: inherit

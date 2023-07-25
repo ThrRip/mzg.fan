@@ -1,9 +1,20 @@
-name: Build & Deploy
-run-name: Build & Deploy (${{ github.ref_name }})
-
-on: push
-
-concurrency: build-deploy-${{ github.ref }}
+on:
+  workflow_call:
+    inputs:
+      package:
+        required: true
+        type: string
+    secrets:
+      PROD_CLOUD_SSH_URI:
+        required: true
+      PROD_CLOUD_SSH_HOST:
+        required: true
+      PROD_CLOUD_SSH_PORT:
+        required: true
+      PROD_CLOUD_SSH_KEY:
+        required: true
+      PROD_CLOUD_PROJECT_ROOT:
+        required: true
 
 jobs:
   build:
@@ -28,17 +39,18 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install zstd
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm -F ${{ inputs.package }} install
       - name: Build standalone server
-        run: pnpm run build
+        run: 'pnpm run build:${{ inputs.package }}'
       - name: Package the build
         run: |
+          cd package/${{ inputs.package }}
           tar -cvf build.tar .output ecosystem.config.js
           zstd -11 -T0 build.tar
       - name: Store the build as an artifact
         uses: actions/upload-artifact@v3
         with:
-          name: build-${{ github.ref_name }}-${{ github.sha }}
+          name: build-${{ inputs.package }}-${{ github.ref }}-${{ github.sha }}
           path: build.tar.zst
 
   deploy-prod:
@@ -56,7 +68,7 @@ jobs:
       - name: Retrieve the build
         uses: actions/download-artifact@v3
         with:
-          name: build-${{ github.ref_name }}-${{ github.sha }}
+          name: build-${{ inputs.package }}-${{ github.ref }}-${{ github.sha }}
       - name: Retrieve the SSH key
         run: |
           mkdir ~/.ssh
@@ -68,7 +80,7 @@ jobs:
           rsync -ahP \
             -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p ${{ secrets.PROD_CLOUD_SSH_PORT }}" \
             build.tar.zst \
-            ${{ secrets.PROD_CLOUD_SSH_URI }}:"${{ secrets.PROD_CLOUD_PROJECT_ROOT }}"
+            ${{ secrets.PROD_CLOUD_SSH_URI }}:"${{ secrets.PROD_CLOUD_PROJECT_ROOT }}/${{ inputs.package }}"
       - name: Replace the last build
         run: |
           ssh \
@@ -77,9 +89,9 @@ jobs:
             -p ${{ secrets.PROD_CLOUD_SSH_PORT }} \
             ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
           shopt -s extglob
-          cd "${{ secrets.PROD_CLOUD_PROJECT_ROOT }}"
-          pm2 stop mzg.fan
-          pm2 delete mzg.fan
+          cd "${{ secrets.PROD_CLOUD_PROJECT_ROOT }}/${{ inputs.package }}"
+          pm2 stop mzg.fan-${{ inputs.package }}
+          pm2 delete mzg.fan-${{ inputs.package }}
           rm -fr !(build.tar.zst)
           zstd -d build.tar.zst
           tar -xvf build.tar
