@@ -14,6 +14,7 @@ concurrency: build-deploy-[all]-${{ github.ref }}
 
 jobs:
   build-deploy:
+    name: Build & Deploy / ${{ matrix.package }}
     strategy:
       matrix:
         package: [home]
