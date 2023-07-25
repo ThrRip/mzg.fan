@@ -44,7 +44,7 @@ jobs:
         run: 'pnpm run build:${{ inputs.package }}'
       - name: Package the build
         run: |
-          cd package/${{ inputs.package }}
+          cd packages/${{ inputs.package }}
           tar -cvf build.tar .output ecosystem.config.js
           zstd -11 -T0 build.tar
       - name: Store the build as an artifact
