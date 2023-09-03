@@ -386,8 +386,8 @@ const viewPlaylistSortingColumn = ref<null | PlaylistColumn>(null)
 const viewPlaylistSortingOrder = ref<PlaylistSortingOrder>('ascending')
 const viewPlaylistSortingOrderOptions = computed<Array<PlaylistSortingOrder>>(() => {
   return viewPlaylistSortingColumn.value === 'payment_amount' ?
-      ['descending', 'ascending'] :
-      ['ascending', 'descending']
+    ['descending', 'ascending'] :
+    ['ascending', 'descending']
 })
 function viewPlaylistToggleSorting (column: PlaylistColumn) {
   // Enable sorting or switch to another column
