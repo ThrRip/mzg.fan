@@ -338,16 +338,18 @@ type Playlist = Array<Song>
 const backendPlaylist = ref<Playlist>([])
 const backendFetchPlaylistState = ref<'processing' | 'succeeded' | 'failed'>('processing')
 
-backendDatabases.listDocuments('home', 'playlist', [Query.limit(1000)])
-  .then(
-    (res) => {
-      backendFetchPlaylistState.value = 'succeeded'
-      backendPlaylist.value = res.documents
-    },
-    () => {
-      backendFetchPlaylistState.value = 'failed'
-    }
-  )
+onBeforeMount(() => {
+  backendDatabases.listDocuments('home', 'playlist', [Query.limit(1000)])
+    .then(
+      (res) => {
+        backendFetchPlaylistState.value = 'succeeded'
+        backendPlaylist.value = res.documents
+      },
+      () => {
+        backendFetchPlaylistState.value = 'failed'
+      }
+    )
+})
 
 const backendPlaylistShuffled = computed<Playlist>(() => {
   if (backendPlaylist.value.length !== 0) {
