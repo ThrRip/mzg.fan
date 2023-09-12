@@ -5,9 +5,7 @@ module.exports = {
       script: './.output/server/index.mjs',
       interpreter: 'bun',
       port: 22320,
-      exec_mode: 'cluster',
-      instances: 'max',
-      max_memory_restart: '150M',
+      max_memory_restart: '300M',
       env: {
         'NITRO_PORT': 22320
       }
