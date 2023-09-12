@@ -3,6 +3,7 @@ module.exports = {
     {
       name: 'mzg.fan-home',
       script: './.output/server/index.mjs',
+      interpreter: 'bun',
       port: 22320,
       exec_mode: 'cluster',
       instances: 'max',
