@@ -408,11 +408,11 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   } else {
     const sortingOrderOptionIndex: number =
       viewPlaylistSortingOrderOptions.value.findIndex(
-        (option: PlaylistSortingOrder) => { return viewPlaylistSortingOrder.value === option }
+        (option: PlaylistSortingOrder) => viewPlaylistSortingOrder.value === option
       ) + 1 > viewPlaylistSortingOrderOptions.value.length - 1 ?
         0 :
         viewPlaylistSortingOrderOptions.value.findIndex(
-          (option: PlaylistSortingOrder) => { return viewPlaylistSortingOrder.value === option }
+          (option: PlaylistSortingOrder) => viewPlaylistSortingOrder.value === option
         ) + 1
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[sortingOrderOptionIndex]
   }
@@ -462,7 +462,6 @@ const viewPlaylistData = computed<Playlist>(() => {
         return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
       })
     } else
-
     // Sort by language
     if (viewPlaylistSortingColumn.value === 'language') {
       playlist = backendPlaylistShuffled.value.slice()
@@ -489,27 +488,28 @@ const viewPlaylistCopiedSongs = ref<Array<Song['$id']>>([])
 const viewPlaylistCopyingFailedSongs = ref<Array<Song['$id']>>([])
 function viewPlaylistCopySong (id: Song['$id']) {
   const clipboardWritePromise = navigator.clipboard.writeText(
-    `点歌 ${backendPlaylist.value.find((song: Song) => { return song.$id === id }).name}`
+    // @ts-ignore
+    `点歌 ${backendPlaylist.value.find((song: Song) => song.$id === id).name}`
   )
   setTimeout(() => { if (!viewPlaylistCopiedSongs.value.includes(id)) { viewPlaylistCopyingFailedSongs.value.push(id) } }, 500)
   clipboardWritePromise.then(
     () => {
       if (viewPlaylistCopyingFailedSongs.value.includes(id)) {
         viewPlaylistCopyingFailedSongs.value.splice(
-          viewPlaylistCopyingFailedSongs.value.findIndex((songId: Song['$id']) => { return songId === id }),
+          viewPlaylistCopyingFailedSongs.value.findIndex((songId: Song['$id']) => songId === id),
           1
         )
       }
       if (!viewPlaylistCopiedSongs.value.includes(id)) { viewPlaylistCopiedSongs.value.push(id) }
       setTimeout(() => viewPlaylistCopiedSongs.value.splice(
-        viewPlaylistCopiedSongs.value.findIndex((songId: Song['$id']) => { return songId === id }),
+        viewPlaylistCopiedSongs.value.findIndex((songId: Song['$id']) => songId === id),
         1
       ), 2000)
     },
     () => {
       if (!viewPlaylistCopyingFailedSongs.value.includes(id)) { viewPlaylistCopyingFailedSongs.value.push(id) }
       setTimeout(() => viewPlaylistCopyingFailedSongs.value.splice(
-        viewPlaylistCopyingFailedSongs.value.findIndex((songId: Song['$id']) => { return songId === id }),
+        viewPlaylistCopyingFailedSongs.value.findIndex((songId: Song['$id']) => songId === id),
         1
       ), 5000)
     }
