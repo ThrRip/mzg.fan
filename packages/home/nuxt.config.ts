@@ -31,10 +31,6 @@ export default defineNuxtConfig({
     host: '0.0.0.0'
   },
 
-  modules: [
-    '@pinia/nuxt'
-  ],
-
   postcss: {
     plugins: {
       'tailwindcss': {},
