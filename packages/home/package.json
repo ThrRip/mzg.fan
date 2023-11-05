@@ -1,13 +1,5 @@
 {
   "name": "home",
-  "version": "0.0.0",
-  "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ThrRip/mzg.fan.git"
-  },
-  "author": "ThrRip <coding@thrrip.space>",
-  "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/vue-fontawesome": "^3.0.3",
