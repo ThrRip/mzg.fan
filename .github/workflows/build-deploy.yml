@@ -19,18 +19,18 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8.6
+          version: 8
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18.16
+          node-version: lts
           check-latest: true
           cache: 'pnpm'
           cache-dependency-path: pnpm-lock.yaml
@@ -57,7 +57,7 @@ jobs:
     name: Deploy to production
     if: github.repository == 'ThrRip/mzg.fan' && github.ref == 'refs/heads/main'
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       MASKING_PROD_CLOUD_SSH_HOST: ${{ secrets.PROD_CLOUD_SSH_HOST }}
     steps:
