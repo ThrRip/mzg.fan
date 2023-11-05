@@ -30,7 +30,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: lts
+          node-version: lts/*
           check-latest: true
           cache: 'pnpm'
           cache-dependency-path: pnpm-lock.yaml
