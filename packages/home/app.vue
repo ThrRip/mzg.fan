@@ -435,7 +435,7 @@ const viewPlaylistData = computed<Playlist>(() => {
         song[`${viewPlaylistSortingColumn.value}Pinyin`] =
           // @ts-ignore
           pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
-            .replace('/ /g', '')
+            .replace(' ', '')
         playlist.push(song)
       })
       playlist.sort((a, b) => {
@@ -462,6 +462,7 @@ const viewPlaylistData = computed<Playlist>(() => {
         return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
       })
     } else
+
     // Sort by language
     if (viewPlaylistSortingColumn.value === 'language') {
       playlist = backendPlaylistShuffled.value.slice()
