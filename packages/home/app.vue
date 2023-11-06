@@ -435,7 +435,7 @@ const viewPlaylistData = computed<Playlist>(() => {
         song[`${viewPlaylistSortingColumn.value}Pinyin`] =
           // @ts-ignore
           pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
-            .replace(' ', '')
+            .replaceAll(' ', '')
         playlist.push(song)
       })
       playlist.sort((a, b) => {
