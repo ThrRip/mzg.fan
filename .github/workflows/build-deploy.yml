@@ -4,6 +4,9 @@ on:
       package:
         required: true
         type: string
+      package_cap:
+        required: true
+        type: string
     secrets:
       PROD_CLOUD_SSH_URI:
         required: true
@@ -15,6 +18,8 @@ on:
         required: true
       PROD_CLOUD_PROJECT_ROOT:
         required: true
+      PROD_HOME_PM2_CONF_ENV:
+      PROD_ADMIN_PM2_CONF_ENV:
 
 jobs:
   build:
@@ -42,6 +47,19 @@ jobs:
         run: pnpm -F ${{ inputs.package }} install
       - name: Build standalone server
         run: 'pnpm run build:${{ inputs.package }}'
+      - name: Replace environment variables
+        run: |
+          [ -z "${{ secrets[format('PROD_{0}_PM2_CONF_ENV', inputs.package_cap)] }}" ] || (
+            echo "${{ secrets[format('PROD_{0}_PM2_CONF_ENV', inputs.package_cap)] }}" |
+              awk '
+                /env: {/,/}/ {
+                  if (/env: {/ || /}/) print;
+                  while((getline < "/dev/stdin") > 0) print;
+                  next
+                }
+                { print }
+              ' packages/${{ inputs.package }}/ecosystem.config.js
+          )
       - name: Package the build
         run: |
           cd packages/${{ inputs.package }}

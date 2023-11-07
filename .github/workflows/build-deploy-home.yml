@@ -14,4 +14,5 @@ jobs:
     uses: ./.github/workflows/build-deploy.yml
     with:
       package: home
+      package_cap: HOME
     secrets: inherit

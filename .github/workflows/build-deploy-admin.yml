@@ -1,0 +1,18 @@
+name: Build & Deploy / admin
+run-name: Build & Deploy (${{ github.ref_name }}/admin)
+
+on:
+  push:
+    paths:
+      - 'packages/admin/**'
+
+concurrency: build-deploy-admin-${{ github.ref }}
+
+jobs:
+  build-deploy-admin:
+    name: Build & Deploy
+    uses: ./.github/workflows/build-deploy.yml
+    with:
+      package: admin
+      package_cap: ADMIN
+    secrets: inherit

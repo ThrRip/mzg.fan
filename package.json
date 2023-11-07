@@ -16,7 +16,10 @@
     "postinstall": "nuxt prepare && pnpm -r exec nuxt prepare",
     "dev:home": "pnpm -F home exec nuxt dev",
     "build:home": "pnpm -F home exec nuxt build",
-    "preview:home": "pnpm -F home exec nuxt preview"
+    "preview:home": "pnpm -F home exec nuxt preview",
+    "dev:admin": "pnpm -F admin exec nuxt dev",
+    "build:admin": "pnpm -F admin exec nuxt build",
+    "preview:admin": "pnpm -F admin exec nuxt preview"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
