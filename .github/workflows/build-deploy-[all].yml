@@ -25,4 +25,5 @@ jobs:
     uses: ./.github/workflows/build-deploy.yml
     with:
       package: ${{ matrix.package }}
+      package_cap: ${{ matrix.package_cap }}
     secrets: inherit
