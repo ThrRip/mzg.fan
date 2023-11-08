@@ -50,6 +50,7 @@ jobs:
       - name: Replace environment variables
         run: |
           [ -z "${{ secrets[format('PROD_{0}_PM2_CONF_ENV', inputs.package_cap)] }}" ] || (
+            temp=$(mktemp)
             echo "${{ secrets[format('PROD_{0}_PM2_CONF_ENV', inputs.package_cap)] }}" |
               awk '
                 /env: {/,/}/ {
@@ -58,7 +59,9 @@ jobs:
                   next
                 }
                 { print }
-              ' packages/${{ inputs.package }}/ecosystem.config.js
+              ' packages/${{ inputs.package }}/ecosystem.config.js > "$temp"
+            cp --no-preserve=all "$temp" packages/${{ inputs.package }}/ecosystem.config.js
+            rm -f "$temp"
           )
       - name: Package the build
         run: |
