@@ -37,6 +37,10 @@ jobs:
           path: mzg.fan-assets
       - name: Copy the assets out
         run: cp -r mzg.fan-assets/* .
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -44,10 +48,6 @@ jobs:
           check-latest: true
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
       - name: Setup utilities
         run: |
           sudo apt-get update
