@@ -27,18 +27,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: actions/checkout@v4
+      - name: Checkout assets
+        uses: actions/checkout@v4
         with:
-          version: 8
+          repository: ThrRip/mzg.fan-assets
+          path: mzg.fan-assets
+      - name: Copy the assets out
+        run: cp -r mzg.fan-assets/* .
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: lts/*
           check-latest: true
-          cache: 'pnpm'
+          cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - name: Setup utilities
         run: |
           sudo apt-get update
