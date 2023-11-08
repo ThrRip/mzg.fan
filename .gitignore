@@ -1,14 +1,15 @@
 # Created by .ignore support plugin (hsz.mobi)
 
+### Project
+# Dotenv
+.env
+
 ### JetBrains IDE
 .idea/*
 !.idea/dictionaries/
 !.idea/inspectionProfiles/
 !.idea/jsLinters/
 !.idea/icon.svg
-
-### Dotenv
-.env
 
 ### Node.js
 # Logs
