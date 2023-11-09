@@ -4,7 +4,12 @@ export default defineNuxtRouteMiddleware(async (to) => {
   if (process.client) { return }
 
   const entryTokenQuery = to.query.entrytoken
-  const entryTokenCookie = useCookie('admin_entry_token')
+  const entryTokenCookie = useCookie('admin_entry_token', {
+    maxAge: 2592000,
+    path: useAppConfig().appAdminBasePath,
+    sameSite: 'strict',
+    secure: useRuntimeConfig().appSecureContext
+  })
   let entryToken = entryTokenQuery ?? entryTokenCookie.value
   if (!String(entryToken).match(/[A-Za-z0-9]{32}/)) { entryToken = null }
 

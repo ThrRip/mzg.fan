@@ -41,6 +41,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    appSecureContext: true,
     backendApiKey: ''
   }
 })

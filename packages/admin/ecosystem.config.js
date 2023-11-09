@@ -8,6 +8,7 @@ module.exports = {
       max_memory_restart: '200M',
       env: {
         'NITRO_PORT': 22321,
+        'NUXT_APP_SECURE_CONTEXT': true,
         'NUXT_BACKEND_API_KEY': ''
       }
     }
