@@ -1,6 +1,14 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 ### Project
+# Proprietary assets
+/packages/home/assets/img/profile-pic.avif
+/packages/home/assets/img/profile-pic.webp
+/packages/home/public/android-chrome-192x192.png
+/packages/home/public/android-chrome-512x512.png
+/packages/home/public/apple-touch-icon.png
+/packages/home/public/favicon.ico
+
 # Dotenv
 .env
 
