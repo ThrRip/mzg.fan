@@ -1,5 +1,9 @@
 module.exports = {
-  content: ['./app.vue'],
+  content: [
+    './app.vue',
+    './pages/**/*.vue',
+    './components/**/*.vue'
+  ],
   theme: {
     colors: {
       inherit: 'inherit',
