@@ -1,8 +1,8 @@
 <template>
   <div class="overflow-clip grid grid-areas-stack h-dscreen">
     <nav
-      class="z-40 grid grid-rows-[auto_1fr_auto] max-lg:landscape:gap-y-2 gap-y-4 self-center px-12 max-lg:landscape:py-2 py-7
-      w-screen sm:w-[26rem] h-5/6 lg:h-[calc(100dvh_-_14rem)]
+      class="z-50 grid grid-rows-[auto_1fr_auto] max-lg:landscape:gap-y-2 gap-y-4 self-center
+      px-12 max-lg:landscape:py-2 py-7 w-screen sm:w-[26rem] h-5/6 lg:h-[calc(100dvh_-_14rem)]
       text-white transition-[margin-left] duration-300"
       :class="{ '-ml-[16.5rem]': !showFullNavigationBar }"
     >
@@ -88,6 +88,14 @@
         </button>
       </section>
     </nav>
+    <transition
+      enter-from-class="opacity-0"
+      enter-active-class="transition-opacity duration-300"
+      leave-active-class="transition-opacity duration-300"
+      leave-to-class="opacity-0"
+    >
+      <div v-if="showFullNavigationBar" class="z-40 h-full backdrop-blur-[2rem]" />
+    </transition>
     <div
       class="z-10 grid grid-areas-stack justify-items-center items-center
       -ml-[13.5rem] sm:-ml-[13rem] w-[52rem] h-full transition-[margin-left] duration-300"
