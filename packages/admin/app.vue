@@ -88,14 +88,6 @@
         </button>
       </section>
     </nav>
-    <transition
-      enter-from-class="opacity-0"
-      enter-active-class="transition-opacity duration-300"
-      leave-active-class="transition-opacity duration-300"
-      leave-to-class="opacity-0"
-    >
-      <div v-if="showFullNavigationBar" class="z-40 h-full backdrop-blur-[2rem]" />
-    </transition>
     <div
       class="z-10 grid grid-areas-stack justify-items-center items-center
       -ml-[13.5rem] sm:-ml-[13rem] w-[52rem] h-full transition-[margin-left] duration-300"
@@ -104,8 +96,8 @@
       <div class="w-full h-full backdrop-blur-[3rem]" />
       <div class="w-[85vw] sm:w-1/2 h-5/6 lg:h-[calc(100dvh_-_14rem)] bg-blue-l" />
     </div>
-    <main class="h-full bg-white-alt">
-      <NuxtPage />
+    <main class="overflow-x-clip overflow-y-auto grid grid-cols-[1fr] grid-rows-[1fr] h-full bg-white-alt">
+      <NuxtPage class="z-20 transition-opacity duration-300" :class="{ 'opacity-0': showFullNavigationBar }" />
     </main>
   </div>
 </template>
