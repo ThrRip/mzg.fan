@@ -406,13 +406,10 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   // Rotate between ordering options
   } else {
     const sortingOrderOptionIndex: number =
-      viewPlaylistSortingOrderOptions.value.findIndex(
-        (option: PlaylistSortingOrder) => viewPlaylistSortingOrder.value === option
-      ) + 1 > viewPlaylistSortingOrderOptions.value.length - 1 ?
+      viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1 >
+      viewPlaylistSortingOrderOptions.value.length - 1 ?
         0 :
-        viewPlaylistSortingOrderOptions.value.findIndex(
-          (option: PlaylistSortingOrder) => viewPlaylistSortingOrder.value === option
-        ) + 1
+        viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[sortingOrderOptionIndex]
   }
 }
@@ -429,7 +426,7 @@ const viewPlaylistData = computed<Playlist>(() => {
 
     // Sort by song name or artist in alphabetical order
     if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
-      playlist = backendPlaylist.value.map((song: SortingSong) => {
+      playlist = backendPlaylist.value.map((song) => {
         // @ts-ignore
         song[`${viewPlaylistSortingColumn.value}Pinyin`] =
           // @ts-ignore
@@ -489,7 +486,7 @@ const viewPlaylistCopyingFailedSongs = ref<Set<Song['$id']>>(new Set())
 function viewPlaylistCopySong (id: Song['$id']) {
   const clipboardWritePromise = navigator.clipboard.writeText(
     // @ts-ignore
-    `点歌 ${backendPlaylist.value.find((song: Song) => song.$id === id).name}`
+    `点歌 ${backendPlaylist.value.find(song => song.$id === id).name}`
   )
   setTimeout(() => { if (!viewPlaylistCopiedSongs.value.has(id)) { viewPlaylistCopyingFailedSongs.value.add(id) } }, 500)
   clipboardWritePromise.then(
