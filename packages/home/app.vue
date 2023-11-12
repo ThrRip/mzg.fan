@@ -331,7 +331,6 @@ interface Song {
   payment_required?: boolean
   payment_amount?: null | number
   $id: string
-  $createdAt: string
 }
 type Playlist = Array<Song>
 
