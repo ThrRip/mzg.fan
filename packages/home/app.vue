@@ -430,13 +430,13 @@ const viewPlaylistData = computed<Playlist>(() => {
 
     // Sort by song name or artist in alphabetical order
     if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
-      backendPlaylist.value.forEach((song: SortingSong) => {
+      playlist = backendPlaylist.value.map((song: SortingSong) => {
         // @ts-ignore
         song[`${viewPlaylistSortingColumn.value}Pinyin`] =
           // @ts-ignore
           pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
             .replaceAll(' ', '')
-        playlist.push(song)
+        return song
       })
       playlist.sort((a, b) => {
         // @ts-ignore
