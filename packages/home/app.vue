@@ -261,12 +261,12 @@
                     leave-to-class="opacity-0"
                   >
                     <font-awesome-icon
-                      v-if="viewPlaylistCopiedSongs.includes(song.$id)"
+                      v-if="viewPlaylistCopiedSongs.has(song.$id)"
                       :icon="['fas', 'clipboard-check']"
                       class="!h-5"
                     />
                     <font-awesome-icon
-                      v-if="viewPlaylistCopyingFailedSongs.includes(song.$id)"
+                      v-if="viewPlaylistCopyingFailedSongs.has(song.$id)"
                       :icon="['fas', 'clipboard-question']"
                       class="!h-5"
                     />
@@ -485,34 +485,23 @@ function viewPlaylistReshuffle () {
   viewPlaylistShuffles.value++
 }
 
-const viewPlaylistCopiedSongs = ref<Array<Song['$id']>>([])
-const viewPlaylistCopyingFailedSongs = ref<Array<Song['$id']>>([])
+const viewPlaylistCopiedSongs = ref<Set<Song['$id']>>(new Set())
+const viewPlaylistCopyingFailedSongs = ref<Set<Song['$id']>>(new Set())
 function viewPlaylistCopySong (id: Song['$id']) {
   const clipboardWritePromise = navigator.clipboard.writeText(
     // @ts-ignore
     `点歌 ${backendPlaylist.value.find((song: Song) => song.$id === id).name}`
   )
-  setTimeout(() => { if (!viewPlaylistCopiedSongs.value.includes(id)) { viewPlaylistCopyingFailedSongs.value.push(id) } }, 500)
+  setTimeout(() => { if (!viewPlaylistCopiedSongs.value.has(id)) { viewPlaylistCopyingFailedSongs.value.add(id) } }, 500)
   clipboardWritePromise.then(
     () => {
-      if (viewPlaylistCopyingFailedSongs.value.includes(id)) {
-        viewPlaylistCopyingFailedSongs.value.splice(
-          viewPlaylistCopyingFailedSongs.value.findIndex((songId: Song['$id']) => songId === id),
-          1
-        )
-      }
-      if (!viewPlaylistCopiedSongs.value.includes(id)) { viewPlaylistCopiedSongs.value.push(id) }
-      setTimeout(() => viewPlaylistCopiedSongs.value.splice(
-        viewPlaylistCopiedSongs.value.findIndex((songId: Song['$id']) => songId === id),
-        1
-      ), 2000)
+      if (viewPlaylistCopyingFailedSongs.value.has(id)) { viewPlaylistCopyingFailedSongs.value.delete(id) }
+      if (!viewPlaylistCopiedSongs.value.has(id)) { viewPlaylistCopiedSongs.value.add(id) }
+      setTimeout(() => viewPlaylistCopiedSongs.value.delete(id), 2000)
     },
     () => {
-      if (!viewPlaylistCopyingFailedSongs.value.includes(id)) { viewPlaylistCopyingFailedSongs.value.push(id) }
-      setTimeout(() => viewPlaylistCopyingFailedSongs.value.splice(
-        viewPlaylistCopyingFailedSongs.value.findIndex((songId: Song['$id']) => songId === id),
-        1
-      ), 5000)
+      if (!viewPlaylistCopyingFailedSongs.value.has(id)) { viewPlaylistCopyingFailedSongs.value.add(id) }
+      setTimeout(() => viewPlaylistCopyingFailedSongs.value.delete(id), 5000)
     }
   )
 }
