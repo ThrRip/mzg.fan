@@ -6,8 +6,19 @@ import {
   faHouse,
   faPenToSquare,
   faChartColumn,
-  faAngleRight
+  faAngleRight,
+  faCaretUp,
+  faSquareMinus,
+  faSquareCheck,
+  faCommentDollar,
+  faPlus,
+  faMinus,
+  faRotateLeft,
+  faCloudArrowUp
 } from '@fortawesome/free-solid-svg-icons'
+import {
+  faSquare
+} from '@fortawesome/free-regular-svg-icons'
 
 config.autoAddCss = false
 
@@ -15,7 +26,16 @@ library.add(
   faHouse,
   faPenToSquare,
   faChartColumn,
-  faAngleRight
+  faAngleRight,
+  faCaretUp,
+  faSquare,
+  faSquareMinus,
+  faSquareCheck,
+  faCommentDollar,
+  faPlus,
+  faMinus,
+  faRotateLeft,
+  faCloudArrowUp
 )
 
 export default defineNuxtPlugin((nuxtApp) => {

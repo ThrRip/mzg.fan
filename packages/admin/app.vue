@@ -1,12 +1,12 @@
 <template>
   <div class="overflow-clip grid grid-areas-stack h-dscreen">
     <nav
-      class="z-50 grid grid-rows-[auto_1fr_auto] max-lg:landscape:gap-y-2 gap-y-4 self-center
-      px-12 max-lg:landscape:py-2 py-7 w-screen sm:w-[26rem] h-5/6 lg:h-[calc(100dvh_-_14rem)]
+      class="grid grid-rows-[auto_1fr_auto] max-lg:landscape:gap-y-2 gap-y-4 self-center
+      px-12 max-lg:landscape:py-2 py-7 w-screen sm:w-[26rem] h-2/3 lg:h-[calc(100dvh_-_14rem)]
       text-white transition-[margin-left] duration-300"
-      :class="{ '-ml-[16.5rem]': !showFullNavigationBar }"
+      :class="{ '-ml-[16.5rem]': !showFullNavigationBar, 'z-50': showFullNavigationBar }"
     >
-      <section class="flex flex-row max-lg:landscape:gap-y-2 gap-y-4 justify-between items-center">
+      <section class="z-50 flex flex-row max-lg:landscape:gap-y-2 gap-y-4 justify-between items-center">
         <h1 class="min-w-max text-xl sm:text-2xl text-white-alt transition-opacity" :class="{ 'opacity-0': !showFullNavigationBar }">
           管理面板｜洺知-故犯
         </h1>
@@ -24,7 +24,7 @@
           </ClientOnly>
         </NuxtLink>
       </section>
-      <section class="flex flex-col max-lg:landscape:gap-y-2 gap-y-4 items-end">
+      <section class="z-50 flex flex-col max-lg:landscape:gap-y-2 gap-y-4 items-end">
         <NuxtLink
           to="/playlist"
           class="overflow-clip flex flex-row gap-x-1 items-center px-2 h-14 w-full max-w-full
@@ -66,7 +66,7 @@
           </span>
         </NuxtLink>
       </section>
-      <section class="flex flex-row justify-end">
+      <section class="z-50 flex flex-row justify-end">
         <button
           :title="showFullNavigationBar ? '收起导航栏' : '展开导航栏'"
           class="aspect-square flex flex-row justify-center items-center h-14
@@ -94,10 +94,10 @@
       :class="{ '!-ml-[30rem] sm:!-ml-[29rem]': !showFullNavigationBar }"
     >
       <div class="w-full h-full backdrop-blur-[3rem]" />
-      <div class="w-[85vw] sm:w-1/2 h-5/6 lg:h-[calc(100dvh_-_14rem)] bg-blue-l" />
+      <div class="w-[85vw] sm:w-1/2 h-2/3 lg:h-[calc(100dvh_-_14rem)] bg-blue-l" />
     </div>
-    <main class="overflow-x-clip overflow-y-auto grid grid-cols-[1fr] grid-rows-[1fr] h-full bg-white-alt">
-      <NuxtPage class="z-20 transition-opacity duration-300" :class="{ 'opacity-0': showFullNavigationBar }" />
+    <main class="overflow-x-clip overflow-y-auto lg:overflow-y-hidden grid grid-cols-[1fr] grid-rows-[1fr] h-full bg-white-alt">
+      <NuxtPage class="z-20 transition-opacity duration-300 delay-150" :class="{ 'opacity-0 !delay-0': showFullNavigationBar }" />
     </main>
   </div>
 </template>
