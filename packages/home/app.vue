@@ -279,7 +279,7 @@
                   <span
                     v-if="song.payment_required"
                     class="flex flex-col justify-center items-center"
-                    :title="song.payment_amount === null ? '需要 SC' : `需要 ${song.payment_amount} 元 SC`"
+                    :title="song.payment_amount ? `需要 ${song.payment_amount} 元 SC` : ''"
                   >
                     <font-awesome-icon :icon="['fas', 'comment-dollar']" class="!h-5" />
                     <span v-if="song.payment_amount" class="text-[0.625rem] leading-snug">
