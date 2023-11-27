@@ -2,17 +2,15 @@
   "name": "home",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
-    "@fortawesome/vue-fontawesome": "^3.0.3",
-    "appwrite": "^13.0.0",
-    "pinyin-pro": "^3.17.0"
+    "@fortawesome/vue-fontawesome": "^3.0.5",
+    "appwrite": "^13.0.1",
+    "pinyin-pro": "^3.18.2"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
-    "@nuxtjs/eslint-config-typescript": "^12.1.0",
-    "@types/node": "^18.18.8",
-    "autoprefixer": "^10.4.15",
-    "nuxt": "^3.8.0",
+    "autoprefixer": "^10.4.16",
+    "nuxt": "^3.8.2",
     "postcss": "^8.4.31",
     "tailwind-scrollbar": "^3.0.5",
     "tailwindcss": "^3.3.5"
