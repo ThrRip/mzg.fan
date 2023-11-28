@@ -236,7 +236,7 @@
               :enter-active-class="props.type === 'main' ? 'transition-opacity' : ''"
               :leave-active-class="props.type === 'main' ? 'transition-opacity delay-75' : ''"
               :leave-to-class="props.type === 'main' ? 'opacity-0' : ''"
-              @click="modifyingTarget.id = song.$id; modifyingTarget.field = 'name'; modifying = true"
+              @click="modifyStart({ id: song.$id, field: 'name' })"
             >
               <input
                 v-if="props.type === 'main' && modifyingTarget.id === song.$id && modifyingTarget.field === 'name'"
@@ -246,11 +246,13 @@
                 class="z-30 w-full h-2/3 bg-white
                 rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
                 :value="song.name"
-                @blur="modifying = false; modifyingTarget.id = null; modifyingTarget.field = null;
-                       // @ts-ignore
-                       emit('stageChanges', { $id: song.$id, name: $event.target.value })"
-                @keydown.enter="modifying = false"
-                @keydown.esc="modifying = false"
+                @blur="// @ts-ignore
+                  modifyFinish({ $id: song.$id, name: $event.target.value })"
+                @keydown.enter="// @ts-ignore
+                  $event.target.blur()"
+                @keydown.esc="// @ts-ignore
+                  $event.target.blur()"
+                @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'name' })"
               >
               <span
                 :key="`${song.$id}-name`"
@@ -287,7 +289,7 @@
               :enter-active-class="props.type === 'main' ? 'transition-opacity' : ''"
               :leave-active-class="props.type === 'main' ? 'transition-opacity delay-75' : ''"
               :leave-to-class="props.type === 'main' ? 'opacity-0' : ''"
-              @click="modifyingTarget.id = song.$id; modifyingTarget.field = 'artist'; modifying = true"
+              @click="modifyStart({ id: song.$id, field: 'artist' })"
             >
               <input
                 v-if="props.type === 'main' && modifyingTarget.id === song.$id && modifyingTarget.field === 'artist'"
@@ -297,11 +299,13 @@
                 class="z-30 w-full h-2/3 bg-white
                 rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
                 :value="song.artist"
-                @blur="modifying = false; modifyingTarget.id = null; modifyingTarget.field = null;
-                       // @ts-ignore
-                       emit('stageChanges', { $id: song.$id, artist: $event.target.value })"
-                @keydown.enter="modifying = false"
-                @keydown.esc="modifying = false"
+                @blur="// @ts-ignore
+                  modifyFinish({ $id: song.$id, artist: $event.target.value })"
+                @keydown.enter="// @ts-ignore
+                  $event.target.blur()"
+                @keydown.esc="// @ts-ignore
+                  $event.target.blur()"
+                @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'artist' })"
               >
               <span
                 :key="`${song.$id}-artist`"
@@ -338,7 +342,7 @@
               :enter-active-class="props.type === 'main' ? 'transition-opacity' : ''"
               :leave-active-class="props.type === 'main' ? 'transition-opacity delay-75' : ''"
               :leave-to-class="props.type === 'main' ? 'opacity-0' : ''"
-              @click="modifyingTarget.id = song.$id; modifyingTarget.field = 'payment_amount'; modifying = true"
+              @click="modifyStart({ id: song.$id, field: 'payment_amount' })"
             >
               <input
                 v-if="props.type === 'main' && modifyingTarget.id === song.$id && modifyingTarget.field === 'payment_amount'"
@@ -347,13 +351,14 @@
                 type="text"
                 class="z-30 w-full h-2/3 text-center bg-white
                 rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
-                :class="{ '': props.type === 'main' }"
                 :value="song.payment_amount"
-                @blur="modifying = false; modifyingTarget.id = null; modifyingTarget.field = null;
-                       // @ts-ignore
-                       emit('stageChanges', { $id: song.$id, payment_amount: $event.target.value })"
-                @keydown.enter="modifying = false"
-                @keydown.esc="modifying = false"
+                @blur="// @ts-ignore
+                  modifyFinish({ $id: song.$id, payment_amount: $event.target.value === '' ? null : $event.target.value })"
+                @keydown.enter="// @ts-ignore
+                  $event.target.blur()"
+                @keydown.esc="// @ts-ignore
+                  $event.target.blur()"
+                @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'payment_amount' })"
               >
               <span
                 :key="`${song.$id}-payment_amount`"
@@ -398,7 +403,7 @@
               :enter-active-class="props.type === 'main' ? 'transition-opacity' : ''"
               :leave-active-class="props.type === 'main' ? 'transition-opacity delay-75' : ''"
               :leave-to-class="props.type === 'main' ? 'opacity-0' : ''"
-              @click="modifyingTarget.id = song.$id; modifyingTarget.field = 'language'; modifying = true"
+              @click="modifyStart({ id: song.$id, field: 'language' })"
             >
               <input
                 v-if="props.type === 'main' && modifyingTarget.id === song.$id && modifyingTarget.field === 'language'"
@@ -408,11 +413,12 @@
                 class="z-30 w-full h-2/3 bg-white
                 rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
                 :value="song.language"
-                @blur="modifying = false; modifyingTarget.id = null; modifyingTarget.field = null;
-                       // @ts-ignore
-                       emit('stageChanges', { $id: song.$id, language: $event.target.value })"
-                @keydown.enter="modifying = false"
-                @keydown.esc="modifying = false"
+                @blur="// @ts-ignore
+                  modifyFinish({ $id: song.$id, language: $event.target.value })"
+                @keydown.enter="// @ts-ignore
+                  $event.target.blur()"
+                @keydown.esc="// @ts-ignore
+                  $event.target.blur()"
               >
               <span
                 :key="`${song.$id}-language`"
@@ -489,20 +495,36 @@ function scrollList (position: 'top' | 'bottom') {
 
 const selectedIds = ref<Set<string>>(new Set())
 
-const modifying = ref<Boolean>(false)
+interface ModifyTarget {
+  id: Song['$id']
+  field: 'name' | 'artist' | 'payment_amount' | 'language'
+}
 const modifyingTarget = ref<{
-  id: Song['$id'] | null
-  field: 'name' | 'artist' | 'payment_amount' | 'language' | null
+  // eslint-disable-next-line no-use-before-define
+  [P in keyof ModifyTarget]: ModifyTarget[P] | null
 }>({
   id: null,
   field: null
 })
 const modifyingInput = ref<Array<HTMLInputElement>>()
-watch(modifying, (value) => {
-  value ?
-    nextTick(() => modifyingInput.value?.[0]?.focus()) :
-    nextTick(() => modifyingInput.value?.[0]?.blur())
-})
+
+function modifyStart (target: ModifyTarget) {
+  modifyingTarget.value.id = target.id
+  modifyingTarget.value.field = target.field
+  nextTick(() => modifyingInput.value?.[0]?.focus())
+}
+function modifyFinish (changes: Song) {
+  modifyingTarget.value.id = null
+  modifyingTarget.value.field = null
+  emit('stageChanges', changes)
+}
+function modifyNext (currentTarget: ModifyTarget) {
+  const fields: Array<ModifyTarget['field']> = ['name', 'artist', 'payment_amount', 'language']
+  modifyingInput.value?.[0]?.blur()
+  modifyingTarget.value.id = currentTarget.id
+  modifyingTarget.value.field = fields[fields.findIndex(field => field === currentTarget.field) + 1]
+  nextTick(() => modifyingInput.value?.[0]?.focus())
+}
 
 function create () {
   const id = crypto.randomUUID()
@@ -510,6 +532,6 @@ function create () {
   setTimeout(() => scrollList('bottom'), 50)
   modifyingTarget.value.id = id
   modifyingTarget.value.field = 'name'
-  setTimeout(() => { modifying.value = true }, 2000)
+  setTimeout(() => modifyingInput.value?.[0]?.focus(), 2000)
 }
 </script>
