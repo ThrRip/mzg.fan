@@ -205,7 +205,7 @@ function viewPlaylistStageChanges (changes: Song) {
   if (
     viewPlaylistData.value.some(song => song.$id === changes.$id) &&
     Object.keys(changes).length === 1 &&
-    Object.keys(changes)[0] === '$id'
+    changes.$id
   ) {
     if (viewPlaylistChangesData.value.some(song => song.$id === changes.$id)) {
       viewPlaylistChangesData.value.splice(viewPlaylistChangesData.value.findIndex(song => song.$id === changes.$id), 1)
