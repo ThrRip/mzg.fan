@@ -143,7 +143,7 @@
     </div>
     <div class="overflow-y-hidden grid grid-areas-stack h-full">
       <div
-        class="flex flex-row order-2 justify-between items-center self-end px-6 pr-2 py-1.5 h-12
+        class="z-40 flex flex-row order-2 justify-between items-center self-end px-6 pr-2 py-1.5 h-12
         bg-white-alta/75 border-t border-gray backdrop-blur"
       >
         <span v-if="props.type === 'main'">
@@ -201,11 +201,10 @@
         class="overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta"
       >
         <transition-group
-          :enter-from-class="props.type === 'changes' ? 'opacity-0 translate-y-[500%]' : ''"
-          :enter-active-class="props.type === 'changes' ? 'transition-all duration-700' : ''"
-          :leave-to-class="props.type === 'main' ? 'opacity-0 -translate-y-[200%]' : 'opacity-0 translate-y-[500%]'"
-          leave-active-class="transition"
-          move-class="transition-transform duration-[1300ms]"
+          :enter-from-class="props.type === 'changes' ? 'opacity-0 -translate-x-full' : ''"
+          enter-active-class="transition duration-700"
+          leave-active-class="transition duration-700"
+          :leave-to-class="props.type === 'main' ? 'opacity-0 translate-x-full' : 'opacity-0 -translate-x-full'"
         >
           <div
             v-for="song in props.type === 'main' ? props.data : props.dataChanges"
@@ -380,7 +379,7 @@
                   </span>
                   <span
                     v-if="props.type === 'changes' && props.data.find(unmodified => unmodified.$id === song.$id)?.payment_amount !== song.payment_amount"
-                    class="flex flex-col gap-y-1 text-sm"
+                    class="flex flex-col gap-y-1 py-0.5 text-sm"
                   >
                     <span
                       v-if="props.data.find(unmodified => unmodified.$id === song.$id)?.payment_amount"
@@ -436,7 +435,7 @@
                 </span>
                 <span
                   v-if="props.type === 'changes' && props.data.find(unmodified => unmodified.$id === song.$id)?.language !== song.language"
-                  class="flex flex-row gap-x-1.5"
+                  class="flex flex-col gap-y-1 py-0.5"
                 >
                   <span v-if="props.data.some(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
                     <s>{{ props.data.find(unmodified => unmodified.$id === song.$id)?.language }}</s>
@@ -480,16 +479,16 @@ const listArea = ref<HTMLDivElement>()
 function scrollList (position: 'top' | 'bottom') {
   switch (position) {
     case 'top':
-      listArea.value?.scroll({
+      nextTick(() => listArea.value?.scroll({
         top: 0,
         behavior: 'smooth'
-      })
+      }))
       break
     case 'bottom':
-      listArea.value?.scroll({
+      nextTick(() => listArea.value?.scroll({
         top: listArea.value?.scrollHeight,
         behavior: 'smooth'
-      })
+      }))
   }
 }
 
@@ -529,9 +528,9 @@ function modifyNext (currentTarget: ModifyTarget) {
 function create () {
   const id = crypto.randomUUID()
   emit('stageChanges', { $id: id, hidden: false, name: '', artist: '', payment_amount: null, language: '' })
-  setTimeout(() => scrollList('bottom'), 50)
+  scrollList('bottom')
   modifyingTarget.value.id = id
   modifyingTarget.value.field = 'name'
-  setTimeout(() => modifyingInput.value?.[0]?.focus(), 2000)
+  nextTick(() => modifyingInput.value?.[0]?.focus({ preventScroll: true }))
 }
 </script>
