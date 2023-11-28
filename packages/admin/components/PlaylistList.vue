@@ -21,27 +21,36 @@
               new Set() :
               new Set(props.dataChanges?.map(song => song.$id))"
         >
-        <ClientOnly>
-          <span class="grid place-items-center w-5">
-            <font-awesome-icon
-              v-if="selectedIds.size === 0"
-              :icon="['far', 'square']"
-              class="!h-5 rounded-lg transition group-active:scale-90"
-            />
+        <span class="grid place-items-center w-5">
+          <ClientOnly>
+            <svg class="hidden">
+              <symbol id="far-square">
+                <font-awesome-icon :icon="['far', 'square']" />
+              </symbol>
+            </svg>
+            <svg class="hidden">
+              <symbol id="fas-square-check">
+                <font-awesome-icon :icon="['fas', 'square-check']" />
+              </symbol>
+            </svg>
+            <svg v-if="selectedIds.size === 0" class="!h-5 rounded-lg transition group-active:scale-90">
+              <use href="#far-square" />
+            </svg>
             <font-awesome-icon
               v-if="selectedIds.size !== 0 &&
                 selectedIds.size !== (props.type === 'main' ? props.data.length : props.dataChanges?.length)"
               :icon="['fas', 'square-minus']"
               class="!h-5 text-blue group-hover:text-blue-a rounded-lg transition group-active:scale-90"
             />
-            <font-awesome-icon
+            <svg
               v-if="(props.type === 'main' ? props.data.length : props.dataChanges?.length) !== 0 &&
                 selectedIds.size === (props.type === 'main' ? props.data.length : props.dataChanges?.length)"
-              :icon="['fas', 'square-check']"
               class="!h-5 text-blue group-hover:text-blue-a rounded-lg transition group-active:scale-90"
-            />
-          </span>
-        </ClientOnly>
+            >
+              <use href="#fas-square-check" />
+            </svg>
+          </ClientOnly>
+        </span>
       </label>
       <button
         class="flex flex-row gap-x-2 items-center px-4 portrait:px-3 py-2 portrait:py-0.5 portrait:leading-snug h-full"
@@ -211,16 +220,12 @@
             >
               <input type="checkbox" class="hidden" @click="selectedIds.has(song.$id) ? selectedIds.delete(song.$id) : selectedIds.add(song.$id)">
               <ClientOnly>
-                <font-awesome-icon
-                  v-if="!selectedIds.has(song.$id)"
-                  :icon="['far', 'square']"
-                  class="!h-5 rounded-lg transition group-active:scale-90"
-                />
-                <font-awesome-icon
-                  v-if="selectedIds.has(song.$id)"
-                  :icon="['fas', 'square-check']"
-                  class="!h-5 text-blue group-hover:text-blue-a rounded-lg transition group-active:scale-90"
-                />
+                <svg v-if="!selectedIds.has(song.$id)" class="!h-5 rounded-lg transition group-active:scale-90">
+                  <use href="#far-square" />
+                </svg>
+                <svg v-if="selectedIds.has(song.$id)" class="!h-5 text-blue group-hover:text-blue-a rounded-lg transition group-active:scale-90">
+                  <use href="#fas-square-check" />
+                </svg>
               </ClientOnly>
             </label>
             <transition-group
