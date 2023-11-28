@@ -180,7 +180,7 @@ function viewPlaylistStageChanges (changes: Song) {
 
   // Modify song
   if (viewPlaylistData.value.some(song => song.$id === changes.$id) && Object.keys(changes).length > 1) {
-    const song = viewPlaylistData.value.find(song => song.$id === changes.$id)
+    const song = viewPlaylistData.value.find(_ => _.$id === changes.$id)
     let changesValid = false
     for (const field in changes) {
       // @ts-ignore
