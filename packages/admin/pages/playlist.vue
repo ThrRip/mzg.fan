@@ -217,11 +217,13 @@ function viewPlaylistStageChanges (changes: Song) {
   }
 }
 
-function viewPlaylistUndoChanges (changesId: Song['$id']) {
-  viewPlaylistChangesData.value.splice(
-    viewPlaylistChangesData.value.findIndex(changes => changes.$id === changesId),
-    1
-  )
+function viewPlaylistUndoChanges (changesIds: Set<Song['$id']>) {
+  changesIds.forEach((changesId) => {
+    viewPlaylistChangesData.value.splice(
+      viewPlaylistChangesData.value.findIndex(changes => changes.$id === changesId),
+      1
+    )
+  })
 }
 
 const viewPlaylistData = computed<Playlist>(() => {

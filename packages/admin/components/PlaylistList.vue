@@ -179,7 +179,7 @@
             class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
             transition active:scale-95 duration-200"
             title="撤销改动"
-            @click="selectedIds.forEach(id => { emit('undoChanges', id); selectedIds.delete(id) })"
+            @click="emit('undoChanges', selectedIds); selectedIds.clear()"
           >
             <ClientOnly>
               <font-awesome-icon :icon="['fas', 'rotate-left']" />
@@ -472,7 +472,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   toggleSorting: [PlaylistColumn],
   stageChanges: [changes: Song],
-  undoChanges: [changesId: Song['$id']]
+  undoChanges: [changesIds: Set<Song['$id']>]
 }>()
 
 const listArea = ref<HTMLDivElement>()
