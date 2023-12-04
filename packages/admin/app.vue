@@ -57,12 +57,10 @@
           <ClientOnly>
             <font-awesome-icon
               :icon="['fas', 'angle-right']"
-              class="max-lg:landscape:!h-4 !h-5"
-              :class="{
-                'transition-transform duration-300': viewToggleFullNavigationBarAnimation !== '',
-                'rotate-180': viewShowFullNavigationBar === true && viewToggleFullNavigationBarAnimation === 'collapsing',
-                'rotate-[360deg]': viewShowFullNavigationBar === false && viewToggleFullNavigationBarAnimation === 'collapsing',
-              }"
+              class="max-lg:landscape:!h-4 !h-5 transition-transform duration-300"
+              :style="[ viewShowFullNavigationBarToggles === 0 ?
+                '' :
+                `transform: rotate(${180 * viewShowFullNavigationBarToggles}deg)` ]"
             />
           </ClientOnly>
         </button>
@@ -79,8 +77,11 @@
     <main class="overflow-x-clip overflow-y-auto lg:overflow-y-hidden grid grid-cols-[1fr] grid-rows-[1fr] h-full bg-white-alt">
       <NuxtPage
         :backend-client="backendClient"
-        class="z-20 transition-opacity duration-300 delay-150"
-        :class="{ 'opacity-0 !delay-0': viewShowFullNavigationBar }"
+        class="z-20 transition-opacity duration-300"
+        :class="{
+          'opacity-0': !viewShowPageContent,
+          'hidden': viewShowFullNavigationBar && viewShowFullNavigationBarRealState
+        }"
       />
     </main>
   </div>
@@ -104,17 +105,18 @@ backendClient.setEndpoint(useAppConfig().backendBase)
 
 // View
 const viewShowFullNavigationBar = ref<Boolean>(false)
-const viewToggleFullNavigationBarAnimation = ref<'' | 'expanding' | 'collapsing'>('expanding')
+const viewShowFullNavigationBarToggles = ref<number>(0)
+const viewShowFullNavigationBarRealState = ref<Boolean>(false)
+const viewShowPageContent = ref<Boolean>(true)
 watch(viewShowFullNavigationBar, (value) => {
+  viewShowFullNavigationBarToggles.value++
+  setTimeout(() => {
+    viewShowFullNavigationBarRealState.value = value
+  }, 300)
   if (value) {
-    viewToggleFullNavigationBarAnimation.value = 'collapsing'
+    viewShowPageContent.value = !value
   } else {
-    setTimeout(() => {
-      viewToggleFullNavigationBarAnimation.value = ''
-    }, 300)
-    setTimeout(() => {
-      viewToggleFullNavigationBarAnimation.value = 'expanding'
-    }, 350)
+    setTimeout(() => { viewShowPageContent.value = !value }, 150)
   }
 })
 </script>
