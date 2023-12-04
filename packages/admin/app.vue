@@ -45,26 +45,6 @@
             歌单编辑
           </span>
         </NuxtLink>
-        <NuxtLink
-          to="/stats"
-          class="overflow-clip flex flex-row gap-x-1 items-center px-2 h-14 w-full max-w-full
-          bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
-          transition-all duration-300 active:scale-95"
-          :class="{
-            '!px-0 !max-w-[3.5rem]': !showFullNavigationBar,
-            'bg-blue-a': route.path === '/stats'
-          }"
-          @click="showFullNavigationBar = false"
-        >
-          <span class="aspect-square flex flex-row justify-center items-center h-14">
-            <ClientOnly>
-              <font-awesome-icon :icon="['fas', 'chart-column']" class="max-lg:landscape:!h-5 !h-6" />
-            </ClientOnly>
-          </span>
-          <span class="min-w-max">
-            统计数据
-          </span>
-        </NuxtLink>
       </section>
       <section class="z-50 flex flex-row justify-end">
         <button

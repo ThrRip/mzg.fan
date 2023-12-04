@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faHouse,
   faPenToSquare,
-  faChartColumn,
   faAngleRight,
   faCaretUp,
   faSquareMinus,
@@ -25,7 +24,6 @@ config.autoAddCss = false
 library.add(
   faHouse,
   faPenToSquare,
-  faChartColumn,
   faAngleRight,
   faCaretUp,
   faSquare,
