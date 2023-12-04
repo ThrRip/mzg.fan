@@ -1,6 +1,7 @@
 {
   "name": "mzg.fan",
   "version": "0.0.0",
+  "type": "module",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
@@ -12,7 +13,7 @@
     "dev": "pnpm -r exec nuxt dev",
     "build": "pnpm -r exec nuxt build",
     "preview": "pnpm -r exec nuxt preview",
-    "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
+    "lint": "eslint --ext .js,.cjs,.ts,.vue --ignore-path .gitignore .",
     "postinstall": "nuxt prepare && pnpm -r exec nuxt prepare",
     "dev:home": "pnpm -F home exec nuxt dev",
     "build:home": "pnpm -F home exec nuxt build",
