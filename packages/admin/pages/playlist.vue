@@ -36,15 +36,16 @@
 import { Client, Databases, Query } from 'appwrite'
 import { pinyin } from 'pinyin-pro'
 
+const props = defineProps<{
+  backendClient: Client
+}>()
+
 useHead({
   title: '歌单编辑 - 管理面板 | 洺知-故犯'
 })
 
 // Backend
-const backendClient = new Client()
-const backendDatabases = new Databases(backendClient)
-backendClient.setEndpoint(useAppConfig().backendBase)
-  .setProject(useAppConfig().backendProjectId)
+const backendDatabases = new Databases(props.backendClient)
 
 export interface Song {
   hidden?: boolean
