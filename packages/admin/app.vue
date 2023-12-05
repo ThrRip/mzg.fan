@@ -66,14 +66,6 @@
         </button>
       </section>
     </nav>
-    <div
-      class="z-10 grid grid-areas-stack justify-items-center items-center
-      -ml-[13.5rem] sm:-ml-[13rem] w-[52rem] h-full transition-[margin-left] duration-300"
-      :class="{ '!-ml-[30rem] sm:!-ml-[29rem]': !viewShowFullNavigationBar }"
-    >
-      <div class="w-full h-full backdrop-blur-[3rem]" />
-      <div class="w-[85vw] sm:w-1/2 h-2/3 lg:h-[calc(100dvh_-_14rem)] bg-blue-l" />
-    </div>
     <main class="overflow-x-clip overflow-y-auto lg:overflow-y-hidden grid grid-cols-[1fr] grid-rows-[1fr] h-full bg-white-alt">
       <NuxtPage
         :backend-client="backendClient"
@@ -84,6 +76,15 @@
         }"
       />
     </main>
+    <div class="-z-10 w-full backdrop-blur-[3rem]" />
+    <div
+      class="-z-20 grid grid-areas-stack justify-items-center items-center
+      -ml-[13.5rem] sm:-ml-[13rem] w-[52rem] h-full transition-[margin-left] duration-300"
+      :class="{ '!-ml-[30rem] sm:!-ml-[29rem]': !viewShowFullNavigationBar }"
+    >
+      <div class="w-[85vw] sm:w-1/2 h-2/3 lg:h-[calc(100dvh_-_14rem)] bg-blue-l" />
+    </div>
+    <div class="-z-50 w-full bg-white-alt" />
   </div>
 </template>
 

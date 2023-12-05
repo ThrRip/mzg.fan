@@ -143,7 +143,7 @@
     </div>
     <div class="overflow-y-hidden grid grid-areas-stack h-full">
       <div
-        class="z-40 flex flex-row order-2 justify-between items-center self-end px-6 pr-2 py-1.5 h-12
+        class="z-20 flex flex-row order-2 justify-between items-center self-end px-6 pr-2 py-1.5 h-12
         bg-white-alta/75 border-t border-gray backdrop-blur"
       >
         <span v-if="props.type === 'main'">
@@ -242,7 +242,7 @@
                 key="input"
                 ref="modifyingInput"
                 type="text"
-                class="z-30 w-full h-2/3 bg-white
+                class="z-10 w-full h-2/3 bg-white
                 rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
                 :value="song.name"
                 @blur="// @ts-ignore
@@ -295,7 +295,7 @@
                 key="input"
                 ref="modifyingInput"
                 type="text"
-                class="z-30 w-full h-2/3 bg-white
+                class="z-10 w-full h-2/3 bg-white
                 rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
                 :value="song.artist"
                 @blur="// @ts-ignore
@@ -348,7 +348,7 @@
                 key="input"
                 ref="modifyingInput"
                 type="text"
-                class="z-30 w-full h-2/3 text-center bg-white
+                class="z-10 w-full h-2/3 text-center bg-white
                 rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
                 :value="song.payment_amount"
                 @blur="// @ts-ignore
@@ -409,7 +409,7 @@
                 key="input"
                 ref="modifyingInput"
                 type="text"
-                class="z-30 w-full h-2/3 bg-white
+                class="z-10 w-full h-2/3 bg-white
                 rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
                 :value="song.language"
                 @blur="// @ts-ignore
