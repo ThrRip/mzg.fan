@@ -262,11 +262,13 @@
                   >
                     <font-awesome-icon
                       v-if="viewPlaylistCopiedSongs.has(song.$id)"
+                      key="copied"
                       :icon="['fas', 'clipboard-check']"
                       class="!h-5"
                     />
                     <font-awesome-icon
                       v-if="viewPlaylistCopyingFailedSongs.has(song.$id)"
+                      key="copying-failed"
                       :icon="['fas', 'clipboard-question']"
                       class="!h-5"
                     />

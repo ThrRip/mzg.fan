@@ -239,7 +239,7 @@
             >
               <input
                 v-if="props.type === 'main' && modifyingTarget.id === song.$id && modifyingTarget.field === 'name'"
-                :key="`${song.$id}-modifyingInput-name`"
+                key="input"
                 ref="modifyingInput"
                 type="text"
                 class="z-30 w-full h-2/3 bg-white
@@ -254,7 +254,7 @@
                 @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'name' })"
               >
               <span
-                :key="`${song.$id}-name`"
+                key="text"
                 class="flex flex-row items-center w-full"
                 :class="{
                   '!h-2/3 rounded ring-2 ring-white-alta group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta \
@@ -292,7 +292,7 @@
             >
               <input
                 v-if="props.type === 'main' && modifyingTarget.id === song.$id && modifyingTarget.field === 'artist'"
-                :key="`${song.$id}-modifyingInput-artist`"
+                key="input"
                 ref="modifyingInput"
                 type="text"
                 class="z-30 w-full h-2/3 bg-white
@@ -307,7 +307,7 @@
                 @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'artist' })"
               >
               <span
-                :key="`${song.$id}-artist`"
+                key="text"
                 class="flex flex-row items-center w-full"
                 :class="{
                   '!h-2/3 rounded ring-2 ring-white-alta group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta \
@@ -345,7 +345,7 @@
             >
               <input
                 v-if="props.type === 'main' && modifyingTarget.id === song.$id && modifyingTarget.field === 'payment_amount'"
-                :key="`${song.$id}-modifyingInput-payment_amount`"
+                key="input"
                 ref="modifyingInput"
                 type="text"
                 class="z-30 w-full h-2/3 text-center bg-white
@@ -360,7 +360,7 @@
                 @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'payment_amount' })"
               >
               <span
-                :key="`${song.$id}-payment_amount`"
+                key="text"
                 class="flex flex-col justify-center items-center h-full"
                 :class="{
                   '!h-2/3 rounded ring-2 ring-white-alta group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta \
@@ -406,7 +406,7 @@
             >
               <input
                 v-if="props.type === 'main' && modifyingTarget.id === song.$id && modifyingTarget.field === 'language'"
-                :key="`${song.$id}-modifyingInput-language`"
+                key="input"
                 ref="modifyingInput"
                 type="text"
                 class="z-30 w-full h-2/3 bg-white
@@ -420,7 +420,7 @@
                   $event.target.blur()"
               >
               <span
-                :key="`${song.$id}-language`"
+                key="text"
                 class="flex flex-row items-center w-full h-full"
                 :class="{
                   '!h-2/3 rounded ring-2 ring-white-alta group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta \
