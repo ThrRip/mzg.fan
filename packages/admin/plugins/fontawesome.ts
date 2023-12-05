@@ -3,8 +3,12 @@ import { library, config } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import {
+  faCircleNotch,
+  faCheck,
+  faCircleExclamation,
   faHouse,
   faPenToSquare,
+  faRightFromBracket,
   faAngleRight,
   faCaretUp,
   faSquareMinus,
@@ -22,8 +26,12 @@ import {
 config.autoAddCss = false
 
 library.add(
+  faCircleNotch,
+  faCheck,
+  faCircleExclamation,
   faHouse,
   faPenToSquare,
+  faRightFromBracket,
   faAngleRight,
   faCaretUp,
   faSquare,

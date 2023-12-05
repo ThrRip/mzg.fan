@@ -4,7 +4,11 @@
       class="grid grid-rows-[auto_1fr_auto] max-lg:landscape:gap-y-2 gap-y-4 self-center
       px-12 max-lg:landscape:py-2 py-7 w-screen sm:w-[26rem] h-2/3 lg:h-[calc(100dvh_-_14rem)]
       text-white transition-[margin-left] duration-300"
-      :class="{ '-ml-[16.5rem]': !viewShowFullNavigationBar, 'z-50': viewShowFullNavigationBar }"
+      :class="{
+        '-ml-[26rem]': !backendLoggedIn,
+        '-ml-[16.5rem]': !viewShowFullNavigationBar,
+        'z-50': viewShowFullNavigationBar
+      }"
     >
       <section class="z-50 flex flex-row max-lg:landscape:gap-y-2 gap-y-4 justify-between items-center">
         <h1 class="min-w-max text-xl sm:text-2xl text-white-alt transition-opacity" :class="{ 'opacity-0': !viewShowFullNavigationBar }">
@@ -46,7 +50,62 @@
           </span>
         </NuxtLink>
       </section>
-      <section class="z-50 flex flex-row justify-end">
+      <section class="z-50 flex flex-row gap-x-12 justify-between">
+        <button
+          class="flex flex-row gap-x-1 items-center px-2 w-full h-14
+          bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
+          transition duration-300 active:scale-95"
+          @click="backendLogout"
+        >
+          <ClientOnly>
+            <transition-group
+              tag="span"
+              class="aspect-square grid grid-areas-stack place-items-center pl-0.5 h-14"
+              enter-from-class="opacity-0"
+              enter-active-class="transition-opacity duration-200"
+              leave-active-class="transition-opacity duration-200"
+              leave-to-class="opacity-0"
+            >
+              <font-awesome-icon
+                v-if="backendAuthState === ''"
+                key="idle"
+                :icon="['fas', 'right-from-bracket']"
+                class="max-lg:landscape:!h-5 !h-6"
+              />
+              <font-awesome-icon
+                v-if="backendAuthState === 'processing'"
+                key="processing"
+                :icon="['fas', 'circle-notch']"
+                spin
+                class="max-lg:landscape:!h-5 !h-6"
+              />
+              <font-awesome-icon
+                v-if="backendAuthState === 'succeeded'"
+                key="succeeded"
+                :icon="['fas', 'check']"
+                class="max-lg:landscape:!h-5 !h-6"
+              />
+              <font-awesome-icon
+                v-if="backendAuthState === 'failed'"
+                key="failed"
+                :icon="['fas', 'circle-exclamation']"
+                class="max-lg:landscape:!h-5 !h-6"
+              />
+            </transition-group>
+          </ClientOnly>
+          <transition-group
+            tag="span"
+            class="grid grid-areas-stack justify-items-start"
+            enter-from-class="opacity-0"
+            enter-active-class="transition-opacity duration-200"
+            leave-active-class="transition-opacity duration-200"
+            leave-to-class="opacity-0"
+          >
+            <span v-if="backendAuthState === 'succeeded'" key="succeeded">已退出登录</span>
+            <span v-else-if="backendAuthState === 'failed'" key="failed">请重试</span>
+            <span v-else key="idle">退出登录</span>
+          </transition-group>
+        </button>
         <button
           :title="viewShowFullNavigationBar ? '收起导航栏' : '展开导航栏'"
           class="aspect-square flex flex-row justify-center items-center h-14
@@ -66,10 +125,17 @@
         </button>
       </section>
     </nav>
-    <main class="overflow-x-clip overflow-y-auto lg:overflow-y-hidden grid grid-cols-[1fr] grid-rows-[1fr] h-full bg-white-alt">
+    <main class="overflow-x-clip overflow-y-auto lg:overflow-y-hidden grid grid-cols-[1fr] grid-rows-[1fr] h-full">
+      <LoginModal
+        v-if="!backendLoggedInChecking && !backendLoggedIn"
+        :visible="viewShowLoginModal"
+        :auth-state="backendAuthState"
+        @submit="backendLogin"
+      />
       <NuxtPage
+        v-if="backendLoggedIn"
         :backend-client="backendClient"
-        class="z-20 transition-opacity duration-300"
+        class="transition-opacity duration-300"
         :class="{
           'opacity-0': !viewShowPageContent,
           'hidden': viewShowFullNavigationBar && viewShowFullNavigationBarRealState
@@ -80,7 +146,10 @@
     <div
       class="-z-20 grid grid-areas-stack justify-items-center items-center
       -ml-[13.5rem] sm:-ml-[13rem] w-[52rem] h-full transition-[margin-left] duration-300"
-      :class="{ '!-ml-[30rem] sm:!-ml-[29rem]': !viewShowFullNavigationBar }"
+      :class="{
+        '!-ml-[52rem] sm:!-ml-[52rem]': !backendLoggedIn,
+        '!-ml-[30rem] sm:!-ml-[29rem]': !viewShowFullNavigationBar
+      }"
     >
       <div class="w-[85vw] sm:w-1/2 h-2/3 lg:h-[calc(100dvh_-_14rem)] bg-blue-l" />
     </div>
@@ -89,7 +158,7 @@
 </template>
 
 <script setup lang="ts">
-import { Client } from 'appwrite'
+import { Account, Client } from 'appwrite'
 
 const route = useRoute()
 
@@ -103,8 +172,66 @@ if (route.query.entrytoken) {
 const backendClient = new Client()
 backendClient.setEndpoint(useAppConfig().backendBase)
   .setProject(useAppConfig().backendProjectId)
+const backendAccount = new Account(backendClient)
+
+const backendLoggedIn = ref<Boolean>(false)
+const backendLoggedInChecking = ref<Boolean>(true)
+onBeforeMount(() => {
+  backendAccount.get()
+    .then(
+      () => {
+        backendLoggedIn.value = true
+        backendLoggedInChecking.value = false
+      },
+      async () => {
+        await navigateTo('/')
+        backendLoggedInChecking.value = false
+        viewShowLoginModal.value = true
+      }
+    )
+})
+
+export type BackendAuthState = '' | 'processing' | 'succeeded' | 'failed'
+const backendAuthState = ref<BackendAuthState>('')
+
+function backendLogin (email: string, password: string) {
+  backendAuthState.value = 'processing'
+  backendAccount.createEmailSession(email, password)
+    .then(
+      () => {
+        backendAuthState.value = 'succeeded'
+        setTimeout(() => {
+          viewShowLoginModal.value = false
+        }, 1000)
+        setTimeout(() => {
+          backendAuthState.value = ''
+          backendLoggedIn.value = true
+        }, 1300)
+      },
+      () => { backendAuthState.value = 'failed' }
+    )
+}
+
+function backendLogout () {
+  backendAuthState.value = 'processing'
+  backendAccount.deleteSession('current')
+    .then(
+      () => {
+        backendAuthState.value = 'succeeded'
+        setTimeout(() => {
+          viewShowFullNavigationBar.value = false
+          backendAuthState.value = ''
+          backendLoggedIn.value = false
+          nextTick(() => { viewShowLoginModal.value = true })
+        }, 1000)
+      },
+      () => { backendAuthState.value = 'failed' }
+    )
+}
 
 // View
+const viewShowLoginModal = ref<Boolean>(false)
+
 const viewShowFullNavigationBar = ref<Boolean>(false)
 const viewShowFullNavigationBarToggles = ref<number>(0)
 const viewShowFullNavigationBarRealState = ref<Boolean>(false)
