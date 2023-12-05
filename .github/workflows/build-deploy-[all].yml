@@ -16,6 +16,7 @@ jobs:
   build-deploy:
     name: Build & Deploy / ${{ matrix.package }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           - package: home
