@@ -21,7 +21,7 @@
           bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
           transition duration-300 active:scale-95"
           :class="{ 'bg-blue-a': route.path === '/' }"
-          @click="viewShowFullNavigationBar = false"
+          @click="viewToggleFullNavigationBar(false)"
         >
           <ClientOnly>
             <font-awesome-icon :icon="['fas', 'house']" class="max-lg:landscape:!h-4 !h-5" />
@@ -38,7 +38,7 @@
             '!px-0 !max-w-[3.5rem]': !viewShowFullNavigationBar,
             'bg-blue-a': route.path === '/playlist'
           }"
-          @click="viewShowFullNavigationBar = false"
+          @click="viewToggleFullNavigationBar(false)"
         >
           <span class="aspect-square flex flex-row justify-center items-center pl-0.5 h-14">
             <ClientOnly>
@@ -111,15 +111,15 @@
           class="aspect-square flex flex-row justify-center items-center h-14
           bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
           transition duration-300 active:scale-95"
-          @click="viewShowFullNavigationBar = !viewShowFullNavigationBar"
+          @click="viewToggleFullNavigationBar()"
         >
           <ClientOnly>
             <font-awesome-icon
               :icon="['fas', 'angle-right']"
               class="max-lg:landscape:!h-4 !h-5 transition-transform duration-300"
-              :style="[ viewShowFullNavigationBarToggles === 0 ?
+              :style="[ viewFullNavigationBarToggles === 0 ?
                 '' :
-                `transform: rotate(${180 * viewShowFullNavigationBarToggles}deg)` ]"
+                `transform: rotate(${180 * viewFullNavigationBarToggles}deg)` ]"
             />
           </ClientOnly>
         </button>
@@ -127,7 +127,7 @@
     </nav>
     <main class="overflow-x-clip overflow-y-auto lg:overflow-y-hidden grid grid-cols-[1fr] grid-rows-[1fr] h-full">
       <LoginModal
-        v-if="!backendLoggedInChecking && !backendLoggedIn"
+        v-if="!backendLoggedIn && !backendLoggedInChecking"
         :visible="viewShowLoginModal"
         :auth-state="backendAuthState"
         @submit="backendLogin"
@@ -233,18 +233,25 @@ function backendLogout () {
 const viewShowLoginModal = ref<Boolean>(false)
 
 const viewShowFullNavigationBar = ref<Boolean>(false)
-const viewShowFullNavigationBarToggles = ref<number>(0)
 const viewShowFullNavigationBarRealState = ref<Boolean>(false)
+const viewFullNavigationBarToggles = ref<number>(0)
 const viewShowPageContent = ref<Boolean>(true)
-watch(viewShowFullNavigationBar, (value) => {
-  viewShowFullNavigationBarToggles.value++
-  setTimeout(() => {
-    viewShowFullNavigationBarRealState.value = value
-  }, 300)
-  if (value) {
-    viewShowPageContent.value = !value
-  } else {
-    setTimeout(() => { viewShowPageContent.value = !value }, 150)
+function viewToggleFullNavigationBar (show?: boolean) {
+  if (show === undefined) {
+    viewShowFullNavigationBar.value = !viewShowFullNavigationBar.value
+    viewFullNavigationBarToggles.value++
+  } else
+  if (viewShowFullNavigationBar.value !== show) {
+    viewShowFullNavigationBar.value = show
+    viewFullNavigationBarToggles.value++
   }
-})
+  setTimeout(() => {
+    viewShowFullNavigationBarRealState.value = viewShowFullNavigationBar.value
+  }, 300)
+  if (viewShowFullNavigationBar.value) {
+    viewShowPageContent.value = !viewShowFullNavigationBar.value
+  } else {
+    setTimeout(() => { viewShowPageContent.value = !viewShowFullNavigationBar.value }, 150)
+  }
+}
 </script>
