@@ -186,7 +186,7 @@ onBeforeMount(() => {
       async () => {
         await navigateTo('/')
         backendLoggedInChecking.value = false
-        viewShowLoginModal.value = true
+        setTimeout(() => { viewShowLoginModal.value = true }, 50)
       }
     )
 })
