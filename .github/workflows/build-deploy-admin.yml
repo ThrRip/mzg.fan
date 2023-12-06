@@ -6,8 +6,6 @@ on:
     paths:
       - 'packages/admin/**'
 
-concurrency: build-deploy-admin-${{ github.ref }}
-
 jobs:
   build-deploy-admin:
     name: Build & Deploy

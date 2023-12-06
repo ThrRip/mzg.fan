@@ -10,8 +10,6 @@ on:
       - '.editorconfig'
       - '.eslintrc.js'
 
-concurrency: build-deploy-[all]-${{ github.ref }}
-
 jobs:
   build-deploy:
     name: Build & Deploy / ${{ matrix.package }}

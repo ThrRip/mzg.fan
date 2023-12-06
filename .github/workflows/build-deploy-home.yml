@@ -6,8 +6,6 @@ on:
     paths:
       - 'packages/home/**'
 
-concurrency: build-deploy-home-${{ github.ref }}
-
 jobs:
   build-deploy-home:
     name: Build & Deploy
