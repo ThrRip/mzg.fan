@@ -120,7 +120,6 @@ jobs:
             ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
           shopt -s extglob
           cd "${{ secrets.PROD_CLOUD_PROJECT_ROOT }}/${{ inputs.package }}"
-          pm2 stop mzg.fan-${{ inputs.package }}
           pm2 delete mzg.fan-${{ inputs.package }}
           rm -fr !(build.tar.zst)
           zstd -d build.tar.zst
