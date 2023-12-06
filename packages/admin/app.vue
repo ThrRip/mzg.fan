@@ -219,7 +219,7 @@ function backendLogout () {
       () => {
         backendAuthState.value = 'succeeded'
         setTimeout(() => {
-          viewShowFullNavigationBar.value = false
+          viewToggleFullNavigationBar(false)
           backendAuthState.value = ''
           backendLoggedIn.value = false
           nextTick(() => { viewShowLoginModal.value = true })
