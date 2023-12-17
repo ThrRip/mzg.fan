@@ -27,7 +27,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.5",
     "appwrite": "^13.0.1",
     "node-appwrite": "^11.1.0",
-    "pinyin-pro": "^3.18.3"
+    "pinyin-pro": "^3.18.5"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
@@ -35,7 +35,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.55.0",
+    "eslint": "^8.56.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-nuxt": "^4.0.0",
     "nuxt": "^3.8.2",

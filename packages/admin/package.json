@@ -5,7 +5,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.5",
     "appwrite": "^13.0.1",
     "node-appwrite": "^11.1.0",
-    "pinyin-pro": "^3.18.3"
+    "pinyin-pro": "^3.18.5"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
