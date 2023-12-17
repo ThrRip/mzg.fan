@@ -4,10 +4,10 @@ module.exports = {
       name: 'mzg.fan-home',
       script: './.output/server/index.mjs',
       interpreter: 'bun',
-      port: 22320,
+      port: 12320,
       max_memory_restart: '200M',
       env: {
-        'NITRO_PORT': 22320
+        'NITRO_PORT': 12320
       }
     }
   ]
