@@ -140,16 +140,17 @@
               @click="viewPlaylistToggleSorting('name')"
             >
               歌名
-              <ClientOnly>
+              <transition
+                enter-from-class="opacity-0"
+                leave-to-class="opacity-0"
+              >
                 <font-awesome-icon
+                  v-if="viewPlaylistSortingColumn === 'name'"
                   :icon="['fas', 'caret-up']"
-                  class="mt-px opacity-0 transition"
-                  :class="{
-                    'opacity-100': viewPlaylistSortingColumn === 'name',
-                    'rotate-180': viewPlaylistSortingOrder === 'descending'
-                  }"
+                  class="mt-px transition"
+                  :class="{ 'rotate-180': viewPlaylistSortingOrder === 'descending' }"
                 />
-              </ClientOnly>
+              </transition>
             </button>
             <button
               class="flex flex-row portrait:order-4 gap-x-2 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs"
@@ -162,16 +163,17 @@
               @click="viewPlaylistToggleSorting('artist')"
             >
               歌手
-              <ClientOnly>
+              <transition
+                enter-from-class="opacity-0"
+                leave-to-class="opacity-0"
+              >
                 <font-awesome-icon
+                  v-if="viewPlaylistSortingColumn === 'artist'"
                   :icon="['fas', 'caret-up']"
-                  class="mt-px opacity-0 transition"
-                  :class="{
-                    'opacity-100': viewPlaylistSortingColumn === 'artist',
-                    'rotate-180': viewPlaylistSortingOrder === 'descending'
-                  }"
+                  class="mt-px transition"
+                  :class="{ 'rotate-180': viewPlaylistSortingOrder === 'descending' }"
                 />
-              </ClientOnly>
+              </transition>
             </button>
             <button
               class="flex flex-row portrait:row-span-2 gap-x-2 items-center px-4 portrait:px-3 h-full"
@@ -184,16 +186,17 @@
               @click="viewPlaylistToggleSorting('payment_amount')"
             >
               SC
-              <ClientOnly>
+              <transition
+                enter-from-class="opacity-0"
+                leave-to-class="opacity-0"
+              >
                 <font-awesome-icon
+                  v-if="viewPlaylistSortingColumn === 'payment_amount'"
                   :icon="['fas', 'caret-up']"
-                  class="mt-px opacity-0 transition"
-                  :class="{
-                    'opacity-100': viewPlaylistSortingColumn === 'payment_amount',
-                    'transition-opacity rotate-180': viewPlaylistSortingOrder === 'descending'
-                  }"
+                  class="mt-px transition"
+                  :class="{ 'rotate-180': viewPlaylistSortingOrder === 'descending' }"
                 />
-              </ClientOnly>
+              </transition>
             </button>
             <button
               class="flex flex-row portrait:row-span-2 gap-x-2 items-center pl-4 portrait:pl-3 py-2 h-full"
@@ -206,16 +209,17 @@
               @click="viewPlaylistToggleSorting('language')"
             >
               语言
-              <ClientOnly>
+              <transition
+                enter-from-class="opacity-0"
+                leave-to-class="opacity-0"
+              >
                 <font-awesome-icon
+                  v-if="viewPlaylistSortingColumn === 'language'"
                   :icon="['fas', 'caret-up']"
-                  class="mt-px opacity-0 transition"
-                  :class="{
-                    'opacity-100': viewPlaylistSortingColumn === 'language',
-                    'rotate-180': viewPlaylistSortingOrder === 'descending'
-                  }"
+                  class="mt-px transition"
+                  :class="{ 'rotate-180': viewPlaylistSortingOrder === 'descending' }"
                 />
-              </ClientOnly>
+              </transition>
             </button>
           </div>
           <div class="overflow-y-hidden grid grid-areas-stack h-full">
@@ -223,15 +227,17 @@
               class="flex flex-row order-2 justify-between items-center self-end pl-6 pr-2.5 py-1.5 h-12
               bg-white-alta/75 border-t border-gray backdrop-blur"
             >
-              共 {{ viewPlaylistCountTotal }} 首歌
-              <span v-if="viewPlaylistCountTotal !== viewPlaylistCountDisplayed">
-                ，已显示 {{ viewPlaylistCountDisplayed }} 首
+              <span>
+                共 {{ viewPlaylistCountTotal }} 首歌
+                <span v-if="viewPlaylistCountTotal !== viewPlaylistCountDisplayed">
+                  ，已显示 {{ viewPlaylistCountDisplayed }} 首
+                </span>
               </span>
               <button
                 class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
                 transition active:scale-95 duration-200"
                 title="随机排列"
-                @click="viewPlaylistReshuffle"
+                @click="viewPlaylistDataUpdate(['shuffle'])"
               >
                 <ClientOnly>
                   <font-awesome-icon :icon="['fas', 'dice']" />
@@ -305,7 +311,6 @@
 
 <script setup lang="ts">
 import { Client, Databases, Query } from 'appwrite'
-import { pinyin } from 'pinyin-pro'
 
 // Live status
 const { data: biliApiRoomPlayInfo } = await useFetch<{
@@ -336,42 +341,12 @@ interface Song {
 }
 type Playlist = Array<Song>
 
-const backendPlaylist = ref<Playlist>([])
-const backendFetchPlaylistState = ref<'processing' | 'succeeded' | 'failed'>('processing')
-
-onBeforeMount(() => {
-  backendDatabases.listDocuments('home', 'playlist', [Query.limit(1000)])
-    .then(
-      (res) => {
-        backendFetchPlaylistState.value = 'succeeded'
-        backendPlaylist.value = res.documents
-      },
-      () => {
-        backendFetchPlaylistState.value = 'failed'
-      }
-    )
-})
-
-const backendPlaylistShuffled = computed<Playlist>(() => {
-  if (backendPlaylist.value.length !== 0) {
-    // Reshuffles can also be triggered manually
-    // eslint-disable-next-line no-unused-expressions
-    viewPlaylistShuffles.value
-
-    const playlist = backendPlaylist.value.slice()
-    let currentSong = playlist.length
-    while (currentSong !== 0) {
-      const targetSong = Math.floor(Math.random() * currentSong)
-      currentSong--
-      const targetSongBackup = { ...playlist[targetSong] }
-      playlist[targetSong] = playlist[currentSong]
-      playlist[currentSong] = targetSongBackup
-    }
-    return playlist
-  } else {
-    return backendPlaylist.value
-  }
-})
+const { data: backendPlaylistFetchResponse } = await useAsyncData<Playlist>(
+  'backend-databases-home-playlist',
+  () => backendDatabases.listDocuments('home', 'playlist', [Query.limit(1000)]),
+  { transform: (res: { total: number, documents: Playlist }): Playlist => res.documents }
+)
+const backendPlaylist = ref<Playlist>(backendPlaylistFetchResponse.value ?? [])
 
 // View
 const contentRoot = ref<HTMLDivElement>()
@@ -384,6 +359,11 @@ function scrollToPlaylist () {
 }
 
 type PlaylistColumn = 'name' | 'artist' | 'payment_amount' | 'language'
+interface SortingSong extends Song {
+  namePinyin?: string
+  artistPinyin?: string
+  languageCode?: string
+}
 type PlaylistSortingOrder = 'ascending' | 'descending'
 const viewPlaylistSortingColumn = ref<null | PlaylistColumn>(null)
 const viewPlaylistSortingOrder = ref<PlaylistSortingOrder>('ascending')
@@ -414,74 +394,95 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
         viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[sortingOrderOptionIndex]
   }
+  viewPlaylistDataUpdate(['sort'])
 }
 
-const viewPlaylistData = computed<Playlist>(() => {
-  interface SortingSong extends Song {
-    namePinyin?: string
-    artistPinyin?: string
-    languageCode?: string
-  }
-  if (backendPlaylist.value.length !== 0 && viewPlaylistSortingColumn.value !== null) {
-    let playlist: Array<SortingSong> = []
-    const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
-
-    // Sort by song name or artist in alphabetical order
-    if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
-      playlist = backendPlaylist.value.map((song) => {
-        // @ts-ignore
-        song[`${viewPlaylistSortingColumn.value}Pinyin`] =
-          // @ts-ignore
-          pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
-            .replaceAll(' ', '')
-        return song
-      })
-      playlist.sort((a, b) => {
-        // @ts-ignore
-        if (a[`${viewPlaylistSortingColumn.value}Pinyin`] < b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
-          return -1 * orderModifier
-        } else
-        // @ts-ignore
-        if (a[`${viewPlaylistSortingColumn.value}Pinyin`] > b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
-          return 1 * orderModifier
-        } else {
-          return 0
-        }
-      })
-    } else
-
-    // Sort by payment requirement
-    if (viewPlaylistSortingColumn.value === 'payment_amount') {
-      playlist = backendPlaylistShuffled.value.slice()
-      playlist.sort((a, b) => {
-        if (a.payment_required === false || b.payment_required === false) {
-          return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
-        }
-        return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
-      })
-    } else
-
-    // Sort by language
-    if (viewPlaylistSortingColumn.value === 'language') {
-      playlist = backendPlaylistShuffled.value.slice()
-      const languageOrder = ['国语', '粤语', '日语']
-      playlist.sort((a, b) => {
-        return (languageOrder.findIndex(language => a.language === language) -
-          languageOrder.findIndex(language => b.language === language)) * orderModifier
-      })
+const viewPlaylistData = ref<Playlist>([])
+const viewPlaylistDataShuffled = ref<Playlist>([])
+function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
+  if (backendPlaylist.value.length !== 0) {
+    function shuffle () {
+      const playlist = backendPlaylist.value.slice()
+      let currentSong = playlist.length
+      while (currentSong !== 0) {
+        const targetSong = Math.floor(Math.random() * currentSong)
+        currentSong--
+        const targetSongBackup = { ...playlist[targetSong] }
+        playlist[targetSong] = playlist[currentSong]
+        playlist[currentSong] = targetSongBackup
+      }
+      viewPlaylistDataShuffled.value = playlist
+      return playlist
     }
 
-    return playlist
-  }
-  return backendPlaylistShuffled.value
-})
+    async function sort () {
+      const playlist: Array<SortingSong> = backendPlaylist.value.slice()
+      const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
 
-const viewPlaylistShuffles = ref(0)
-function viewPlaylistReshuffle () {
-  viewPlaylistSortingColumn.value = null
-  viewPlaylistSortingOrder.value = 'ascending'
-  viewPlaylistShuffles.value++
+      // Sort by song name or artist in alphabetical order
+      if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
+        const pinyinPro = await import('pinyin-pro')
+        playlist.map((song) => {
+          song[`${viewPlaylistSortingColumn.value}Pinyin`] =
+            pinyinPro.pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
+              .replaceAll(' ', '')
+          return song
+        })
+        playlist.sort((a, b) => {
+          // @ts-ignore
+          if (a[`${viewPlaylistSortingColumn.value}Pinyin`] < b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
+            return -1 * orderModifier
+          } else
+          // @ts-ignore
+          if (a[`${viewPlaylistSortingColumn.value}Pinyin`] > b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
+            return 1 * orderModifier
+          } else {
+            return 0
+          }
+        })
+      } else
+
+      // Sort by payment requirement
+      if (viewPlaylistSortingColumn.value === 'payment_amount') {
+        playlist.sort((a, b) => {
+          if (a.payment_required === false || b.payment_required === false) {
+            return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
+          }
+          return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
+        })
+      } else
+
+      // Sort by language
+      if (viewPlaylistSortingColumn.value === 'language') {
+        const languageOrder = ['国语', '粤语', '日语']
+        playlist.sort((a, b) => {
+          return (languageOrder.findIndex(language => a.language === language) -
+            languageOrder.findIndex(language => b.language === language)) * orderModifier
+        })
+      }
+
+      return playlist
+    }
+
+    tasks.forEach(async (task, index) => {
+      switch (task) {
+        case 'shuffle':
+          shuffle()
+          if (index === tasks.length - 1) {
+            viewPlaylistSortingColumn.value = null
+            viewPlaylistDataUpdate(['sort'])
+            viewPlaylistData.value = viewPlaylistDataShuffled.value
+          }
+          break
+        case 'sort':
+          if (index === tasks.length - 1) {
+            viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled.value : await sort()
+          }
+      }
+    })
+  }
 }
+if (process.client) { viewPlaylistDataUpdate(['shuffle']) }
 
 const viewPlaylistCopiedSongs = ref<Set<Song['$id']>>(new Set())
 const viewPlaylistCopyingFailedSongs = ref<Set<Song['$id']>>(new Set())
@@ -505,5 +506,7 @@ function viewPlaylistCopySong (id: Song['$id']) {
 }
 
 const viewPlaylistCountTotal = computed<number>(() => backendPlaylist.value.length)
-const viewPlaylistCountDisplayed = computed<number>(() => viewPlaylistData.value.length)
+const viewPlaylistCountDisplayed = computed<number>(() => {
+  return process.server ? backendPlaylist.value.length : viewPlaylistData.value.length
+})
 </script>
