@@ -343,7 +343,7 @@ type Playlist = Array<Song>
 
 const { data: backendPlaylistFetchResponse } = await useAsyncData<Playlist>(
   'backend-databases-home-playlist',
-  () => backendDatabases.listDocuments('home', 'playlist', [Query.limit(1000)]),
+  () => backendDatabases.listDocuments('home', 'playlist', [Query.limit(useAppConfig().backendQueryResultsLimit)]),
   { transform: (res: { total: number, documents: Playlist }): Playlist => res.documents }
 )
 const backendPlaylist = ref<Playlist>(backendPlaylistFetchResponse.value ?? [])

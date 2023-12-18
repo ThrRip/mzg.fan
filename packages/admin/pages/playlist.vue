@@ -62,7 +62,7 @@ const backendPlaylist = ref<Playlist>([])
 const backendFetchPlaylistState = ref<'processing' | 'succeeded' | 'failed'>('processing')
 
 onBeforeMount(() => {
-  backendDatabases.listDocuments('home', 'playlist', [Query.limit(1000)])
+  backendDatabases.listDocuments('home', 'playlist', [Query.limit(useAppConfig().backendQueryResultsLimit)])
     .then(
       (res) => {
         backendFetchPlaylistState.value = 'succeeded'
