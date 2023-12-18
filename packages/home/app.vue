@@ -343,9 +343,11 @@ type Playlist = Array<Song>
 
 const { data: backendPlaylistFetchResponse } = await useAsyncData<Playlist>(
   'backend-databases-home-playlist',
+  // @ts-ignore
   () => backendDatabases.listDocuments('home', 'playlist', [Query.limit(useAppConfig().backendQueryResultsLimit)]),
   { transform: (res: { total: number, documents: Playlist }): Playlist => res.documents }
 )
+// @ts-ignore
 const backendPlaylist = ref<Playlist>(backendPlaylistFetchResponse.value ?? [])
 
 // View
@@ -423,7 +425,9 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
       if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
         const pinyinPro = await import('pinyin-pro')
         playlist.map((song) => {
+          // @ts-ignore
           song[`${viewPlaylistSortingColumn.value}Pinyin`] =
+            // @ts-ignore
             pinyinPro.pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
               .replaceAll(' ', '')
           return song
