@@ -283,9 +283,8 @@
                 <span class="flex flex-row portrait:order-4 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs">
                   {{ song.artist }}
                 </span>
-                <span class="flex flex-row portrait:row-span-2 px-4 portrait:px-3 h-full">
+                <span v-if="song.payment_required" class="flex flex-row portrait:row-span-2 px-4 portrait:px-3 h-full">
                   <span
-                    v-if="song.payment_required"
                     class="flex flex-col justify-center items-center"
                     :title="song.payment_amount ? `需要 ${song.payment_amount} 元 SC` : ''"
                   >
@@ -295,7 +294,7 @@
                     </span>
                   </span>
                 </span>
-                <span class="flex flex-row portrait:row-span-2 items-center pl-4 portrait:pl-3 py-2 h-full">
+                <span class="col-start-4 portrait:col-start-3 flex flex-row portrait:row-span-2 items-center pl-4 portrait:pl-3 py-2 h-full">
                   {{ song.language }}
                 </span>
               </div>

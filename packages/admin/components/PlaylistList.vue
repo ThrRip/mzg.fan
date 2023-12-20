@@ -373,7 +373,7 @@
                 :title="song.payment_required && song.payment_amount ? `需要 ${song.payment_amount} 元 SC` : ''"
               >
                 <font-awesome-icon v-if="props.type === 'main' && song.payment_required" :icon="['fas', 'comment-dollar']" class="!h-5" />
-                <span :class="{ 'text-[0.625rem] leading-snug': props.type === 'main' }">
+                <span v-if="song.payment_required" :class="{ 'text-[0.625rem] leading-snug': props.type === 'main' }">
                   <span
                     v-if="(props.type === 'main' && song.payment_amount) ||
                       (props.type === 'changes' && song.payment_amount &&
