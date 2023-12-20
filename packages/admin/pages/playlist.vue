@@ -14,7 +14,8 @@
       :modification="true"
       :sorting-column="viewPlaylistSortingColumn"
       :sorting-order="viewPlaylistSortingOrder"
-      :count-total="backendPlaylist.length"
+      :count-total="// @ts-ignore
+        backendPlaylist.length"
       :count-displayed="viewPlaylistData.length"
       @toggle-sorting="viewPlaylistToggleSorting"
       @stage-changes="viewPlaylistStageChanges"
@@ -58,22 +59,20 @@ export interface Song {
 }
 export type Playlist = Array<Song>
 
-const backendPlaylist = ref<Playlist>([])
-const backendFetchPlaylistState = ref<'processing' | 'succeeded' | 'failed'>('processing')
+const { data: backendPlaylist } = await useAsyncData<Playlist>(
+  // Use a random key to avoid caching
+  `backend-databases-home-playlist-${Math.random()}`,
+  // @ts-ignore
+  () => backendDatabases.listDocuments('home', 'playlist', [Query.limit(useAppConfig().backendQueryResultsLimit)]),
+  {
+    server: false,
+    lazy: true,
+    default: () => [],
+    transform: (res: { total: number, documents: Playlist }): Playlist => res.documents
+  }
+)
 
-onBeforeMount(() => {
-  backendDatabases.listDocuments('home', 'playlist', [Query.limit(useAppConfig().backendQueryResultsLimit)])
-    .then(
-      (res) => {
-        backendFetchPlaylistState.value = 'succeeded'
-        backendPlaylist.value = res.documents
-      },
-      () => {
-        backendFetchPlaylistState.value = 'failed'
-      }
-    )
-})
-
+// View
 export type PlaylistColumn = 'name' | 'artist' | 'payment_amount' | 'language'
 export type PlaylistSortingOrder = 'ascending' | 'descending'
 const viewPlaylistSortingColumn = ref<null | PlaylistColumn>(null)
@@ -167,6 +166,7 @@ function viewPlaylistStageChanges (changes: Song) {
   const changesFieldsAccepted: Set<keyof Song> = new Set(['$id', 'hidden', 'name', 'artist', 'payment_amount', 'language'])
 
   // New song
+  // @ts-ignore
   if (!backendPlaylist.value.some(song => song.$id === changes.$id) && Object.keys(changes).length === changesFieldsAccepted.size) {
     const changesFields: Set<string> = new Set(Object.keys(changes))
     let changesFieldsFulfilled: boolean = true
@@ -212,6 +212,7 @@ function viewPlaylistStageChanges (changes: Song) {
       viewPlaylistChangesData.value.splice(viewPlaylistChangesData.value.findIndex(song => song.$id === changes.$id), 1)
     }
     // If the song is not published yet, do not create a change
+    // @ts-ignore
     if (backendPlaylist.value.some(song => song.$id === changes.$id)) {
       viewPlaylistChangesData.value.push(changes)
     }
@@ -228,6 +229,7 @@ function viewPlaylistUndoChanges (changesIds: Set<Song['$id']>) {
 }
 
 const viewPlaylistData = computed<Playlist>(() => {
+  // @ts-ignore
   const playlist: Playlist = backendPlaylist.value.slice()
 
   viewPlaylistChangesData.value.forEach((changes: Song) => {
