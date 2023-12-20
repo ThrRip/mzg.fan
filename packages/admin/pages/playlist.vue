@@ -35,7 +35,6 @@
 
 <script setup lang="ts">
 import { Client, Databases, Query } from 'appwrite'
-import { pinyin } from 'pinyin-pro'
 
 const props = defineProps<{
   backendClient: Client
@@ -74,6 +73,11 @@ const { data: backendPlaylist } = await useAsyncData<Playlist>(
 
 // View
 export type PlaylistColumn = 'name' | 'artist' | 'payment_amount' | 'language'
+interface SortingSong extends Song {
+  namePinyin?: string
+  artistPinyin?: string
+  languageCode?: string
+}
 export type PlaylistSortingOrder = 'ascending' | 'descending'
 const viewPlaylistSortingColumn = ref<null | PlaylistColumn>(null)
 const viewPlaylistSortingOrder = ref<PlaylistSortingOrder>('ascending')
@@ -104,63 +108,80 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
         viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[sortingOrderOptionIndex]
   }
+  viewPlaylistDataUpdate()
 }
-function viewPlaylistSort (playlist: Playlist) {
-  interface SortingSong extends Song {
-    namePinyin?: string
-    artistPinyin?: string
-    languageCode?: string
-  }
-  let sortingPlaylist: Array<SortingSong> = []
-  const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
 
-  // Sort by song name or artist in alphabetical order
-  if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
-    playlist.forEach((song: SortingSong) => {
-      // @ts-ignore
-      song[`${viewPlaylistSortingColumn.value}Pinyin`] =
+const viewPlaylistChangesData = ref<Playlist>([])
+const viewPlaylistDataWithChanges = computed<Playlist>(() => {
+  // @ts-ignore
+  const playlist: Playlist = backendPlaylist.value.slice()
+  viewPlaylistChangesData.value.forEach((changes: Song) => {
+    if (Object.keys(changes).length === 1 && Object.keys(changes)[0] === '$id') {
+      playlist.splice(playlist.findIndex(song => song.$id === changes.$id), 1)
+    } else
+    if (playlist.some(song => song.$id === changes.$id)) {
+      playlist[playlist.findIndex(song => song.$id === changes.$id)] = changes
+    } else {
+      playlist.push(changes)
+    }
+  })
+  return playlist
+})
+const viewPlaylistData = ref<Playlist>(viewPlaylistDataWithChanges.value)
+async function viewPlaylistDataUpdate () {
+  if (viewPlaylistSortingColumn.value === null) {
+    viewPlaylistData.value = viewPlaylistDataWithChanges.value
+  } else {
+    const playlist: Array<SortingSong> = viewPlaylistDataWithChanges.value.slice()
+    const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
+
+    // Sort by song name or artist in alphabetical order
+    if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
+      const pinyinPro = await import('pinyin-pro')
+      playlist.map((song) => {
+        // @ts-ignore
+        song[`${viewPlaylistSortingColumn.value}Pinyin`] =
           // @ts-ignore
-          pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
+          pinyinPro.pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
             .replaceAll(' ', '')
-      sortingPlaylist.push(song)
-    })
-    sortingPlaylist.sort((a, b) => {
-      // @ts-ignore
-      if (a[`${viewPlaylistSortingColumn.value}Pinyin`] < b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
-        return -1 * orderModifier
-      } else
-      // @ts-ignore
-      if (a[`${viewPlaylistSortingColumn.value}Pinyin`] > b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
-        return 1 * orderModifier
-      } else {
-        return 0
-      }
-    })
-  } else
+        return song
+      })
+      playlist.sort((a, b) => {
+        // @ts-ignore
+        if (a[`${viewPlaylistSortingColumn.value}Pinyin`] < b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
+          return -1 * orderModifier
+        } else
+        // @ts-ignore
+        if (a[`${viewPlaylistSortingColumn.value}Pinyin`] > b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
+          return 1 * orderModifier
+        } else {
+          return 0
+        }
+      })
+    } else
 
-  // Sort by payment requirement
-  if (viewPlaylistSortingColumn.value === 'payment_amount') {
-    sortingPlaylist = playlist.slice()
-    sortingPlaylist.sort((a, b) => {
-      if (a.payment_required === false || b.payment_required === false) {
-        return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
-      }
-      return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
-    })
-  } else
+    // Sort by payment requirement
+    if (viewPlaylistSortingColumn.value === 'payment_amount') {
+      playlist.sort((a, b) => {
+        if (a.payment_required === false || b.payment_required === false) {
+          return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
+        }
+        return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
+      })
+    } else
 
-  // Sort by language
-  if (viewPlaylistSortingColumn.value === 'language') {
-    sortingPlaylist = playlist.slice()
-    const languageOrder = ['国语', '粤语', '日语']
-    sortingPlaylist.sort((a, b) => {
-      return (languageOrder.findIndex(language => a.language === language) -
-        languageOrder.findIndex(language => b.language === language)) * orderModifier
-    })
+    // Sort by language
+    if (viewPlaylistSortingColumn.value === 'language') {
+      const languageOrder = ['国语', '粤语', '日语']
+      playlist.sort((a, b) => {
+        return (languageOrder.findIndex(language => a.language === language) -
+          languageOrder.findIndex(language => b.language === language)) * orderModifier
+      })
+    }
+    viewPlaylistData.value = playlist
   }
-
-  return sortingPlaylist
 }
+watch(viewPlaylistDataWithChanges, () => viewPlaylistDataUpdate())
 
 function viewPlaylistStageChanges (changes: Song) {
   const changesFieldsAccepted: Set<keyof Song> = new Set(['$id', 'hidden', 'name', 'artist', 'payment_amount', 'language'])
@@ -227,28 +248,4 @@ function viewPlaylistUndoChanges (changesIds: Set<Song['$id']>) {
     )
   })
 }
-
-const viewPlaylistData = computed<Playlist>(() => {
-  // @ts-ignore
-  const playlist: Playlist = backendPlaylist.value.slice()
-
-  viewPlaylistChangesData.value.forEach((changes: Song) => {
-    if (Object.keys(changes).length === 1 && Object.keys(changes)[0] === '$id') {
-      playlist.splice(playlist.findIndex(song => song.$id === changes.$id), 1)
-    } else
-    if (playlist.some(song => song.$id === changes.$id)) {
-      playlist[playlist.findIndex(song => song.$id === changes.$id)] = changes
-    } else {
-      playlist.push(changes)
-    }
-  })
-
-  if (playlist.length !== 0 && viewPlaylistSortingColumn.value !== null) {
-    return viewPlaylistSort(playlist)
-  }
-
-  return playlist
-})
-
-const viewPlaylistChangesData = ref<Playlist>([])
 </script>
