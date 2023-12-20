@@ -24,15 +24,11 @@
             transition active:scale-95"
           >
             <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <ClientOnly>
-                <font-awesome-icon :icon="['fab', 'bilibili']" />
-              </ClientOnly>
+              <font-awesome-icon :icon="['fab', 'bilibili']" />
             </span>
             哔哩哔哩主页
             <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <ClientOnly>
-                <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
-              </ClientOnly>
+              <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
             </span>
           </NuxtLink>
           <NuxtLink
@@ -44,25 +40,19 @@
             transition active:scale-95"
           >
             <span v-if="!biliApiLiveStatus" class="aspect-square flex flex-row justify-center items-center h-8">
-              <ClientOnly>
-                <font-awesome-icon :icon="['fas', 'podcast']" class="!h-5" />
-              </ClientOnly>
+              <font-awesome-icon :icon="['fas', 'podcast']" class="!h-5" />
             </span>
             <span v-if="biliApiLiveStatus" class="aspect-square flex flex-col justify-center items-center h-8">
-              <ClientOnly>
-                <span class="overflow-hidden min-h-[1.2rem] max-h-[1.2rem]">
-                  <font-awesome-icon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
-                </span>
-                <span class="text-[0.5rem] leading-snug">
-                  直播中
-                </span>
-              </ClientOnly>
+              <span class="overflow-hidden min-h-[1.2rem] max-h-[1.2rem]">
+                <font-awesome-icon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
+              </span>
+              <span class="text-[0.5rem] leading-snug">
+                直播中
+              </span>
             </span>
             直播间
             <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <ClientOnly>
-                <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
-              </ClientOnly>
+              <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
             </span>
           </NuxtLink>
           <NuxtLink
@@ -74,15 +64,11 @@
             transition active:scale-95"
           >
             <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <ClientOnly>
-                <font-awesome-icon :icon="['fas', 'video']" />
-              </ClientOnly>
+              <font-awesome-icon :icon="['fas', 'video']" />
             </span>
             录播组
             <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <ClientOnly>
-                <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
-              </ClientOnly>
+              <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
             </span>
           </NuxtLink>
           <button
@@ -93,15 +79,11 @@
             @click="scrollToPlaylist"
           >
             <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <ClientOnly>
-                <font-awesome-icon :icon="['fas', 'list']" />
-              </ClientOnly>
+              <font-awesome-icon :icon="['fas', 'list']" />
             </span>
             歌单
             <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <ClientOnly>
-                <font-awesome-icon :icon="['fas', 'arrow-down']" />
-              </ClientOnly>
+              <font-awesome-icon :icon="['fas', 'arrow-down']" />
             </span>
           </button>
         </div>
@@ -116,9 +98,7 @@
           class="grid grid-areas-stack place-items-center
           h-36 landscape:h-20 landscape:xl:h-36 landscape:2xl:h-40 landscape:3xl:h-48 landscape:5xl:h-52"
         >
-          <ClientOnly>
-            <font-awesome-icon :icon="['fas', 'music']" class="min-h-full text-pink-l" />
-          </ClientOnly>
+          <font-awesome-icon :icon="['fas', 'music']" class="min-h-full text-pink-l" />
           <h2 class="-mr-2 max-xl:landscape:text-3xl portrait:text-5xl text-6xl font-light tracking-wider text-brown">
             歌单
           </h2>
@@ -239,9 +219,7 @@
                 title="随机排列"
                 @click="viewPlaylistDataUpdate(['shuffle'])"
               >
-                <ClientOnly>
-                  <font-awesome-icon :icon="['fas', 'dice']" />
-                </ClientOnly>
+                <font-awesome-icon :icon="['fas', 'dice']" />
               </button>
             </div>
             <transition-group

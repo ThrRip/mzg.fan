@@ -23,9 +23,7 @@
           :class="{ 'bg-blue-a': route.path === '/' }"
           @click="viewToggleFullNavigationBar(false)"
         >
-          <ClientOnly>
-            <font-awesome-icon :icon="['fas', 'house']" class="max-lg:landscape:!h-4 !h-5" />
-          </ClientOnly>
+          <font-awesome-icon :icon="['fas', 'house']" class="max-lg:landscape:!h-4 !h-5" />
         </NuxtLink>
       </section>
       <section class="z-50 flex flex-col max-lg:landscape:gap-y-2 gap-y-4 items-end">
@@ -41,9 +39,7 @@
           @click="viewToggleFullNavigationBar(false)"
         >
           <span class="aspect-square flex flex-row justify-center items-center pl-0.5 h-14">
-            <ClientOnly>
-              <font-awesome-icon :icon="['fas', 'pen-to-square']" class="max-lg:landscape:!h-5 !h-6" />
-            </ClientOnly>
+            <font-awesome-icon :icon="['fas', 'pen-to-square']" class="max-lg:landscape:!h-5 !h-6" />
           </span>
           <span class="min-w-max">
             歌单编辑
@@ -57,42 +53,40 @@
           transition duration-300 active:scale-95"
           @click="backendLogout"
         >
-          <ClientOnly>
-            <transition-group
-              tag="span"
-              class="aspect-square grid grid-areas-stack place-items-center pl-0.5 h-14"
-              enter-from-class="opacity-0"
-              enter-active-class="transition-opacity duration-200"
-              leave-active-class="transition-opacity duration-200"
-              leave-to-class="opacity-0"
-            >
-              <font-awesome-icon
-                v-if="backendAuthState === ''"
-                key="idle"
-                :icon="['fas', 'right-from-bracket']"
-                class="max-lg:landscape:!h-5 !h-6"
-              />
-              <font-awesome-icon
-                v-if="backendAuthState === 'processing'"
-                key="processing"
-                :icon="['fas', 'circle-notch']"
-                spin
-                class="max-lg:landscape:!h-5 !h-6"
-              />
-              <font-awesome-icon
-                v-if="backendAuthState === 'succeeded'"
-                key="succeeded"
-                :icon="['fas', 'check']"
-                class="max-lg:landscape:!h-5 !h-6"
-              />
-              <font-awesome-icon
-                v-if="backendAuthState === 'failed'"
-                key="failed"
-                :icon="['fas', 'circle-exclamation']"
-                class="max-lg:landscape:!h-5 !h-6"
-              />
-            </transition-group>
-          </ClientOnly>
+          <transition-group
+            tag="span"
+            class="aspect-square grid grid-areas-stack place-items-center pl-0.5 h-14"
+            enter-from-class="opacity-0"
+            enter-active-class="transition-opacity duration-200"
+            leave-active-class="transition-opacity duration-200"
+            leave-to-class="opacity-0"
+          >
+            <font-awesome-icon
+              v-if="backendAuthState === ''"
+              key="idle"
+              :icon="['fas', 'right-from-bracket']"
+              class="max-lg:landscape:!h-5 !h-6"
+            />
+            <font-awesome-icon
+              v-if="backendAuthState === 'processing'"
+              key="processing"
+              :icon="['fas', 'circle-notch']"
+              spin
+              class="max-lg:landscape:!h-5 !h-6"
+            />
+            <font-awesome-icon
+              v-if="backendAuthState === 'succeeded'"
+              key="succeeded"
+              :icon="['fas', 'check']"
+              class="max-lg:landscape:!h-5 !h-6"
+            />
+            <font-awesome-icon
+              v-if="backendAuthState === 'failed'"
+              key="failed"
+              :icon="['fas', 'circle-exclamation']"
+              class="max-lg:landscape:!h-5 !h-6"
+            />
+          </transition-group>
           <transition-group
             tag="span"
             class="grid grid-areas-stack justify-items-start"
@@ -113,15 +107,13 @@
           transition duration-300 active:scale-95"
           @click="viewToggleFullNavigationBar()"
         >
-          <ClientOnly>
-            <font-awesome-icon
-              :icon="['fas', 'angle-right']"
-              class="max-lg:landscape:!h-4 !h-5 transition-transform duration-300"
-              :style="[ viewFullNavigationBarToggles === 0 ?
-                '' :
-                `transform: rotate(${180 * viewFullNavigationBarToggles}deg)` ]"
-            />
-          </ClientOnly>
+          <font-awesome-icon
+            :icon="['fas', 'angle-right']"
+            class="max-lg:landscape:!h-4 !h-5 transition-transform duration-300"
+            :style="[ viewFullNavigationBarToggles === 0 ?
+              '' :
+              `transform: rotate(${180 * viewFullNavigationBarToggles}deg)` ]"
+          />
         </button>
       </section>
     </nav>
