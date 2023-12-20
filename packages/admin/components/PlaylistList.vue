@@ -63,16 +63,17 @@
         @click="emit('toggleSorting', 'name')"
       >
         歌名
-        <ClientOnly>
+        <transition
+          enter-from-class="opacity-0"
+          leave-to-class="opacity-0"
+        >
           <font-awesome-icon
+            v-if="props.sortingColumn === 'name'"
             :icon="['fas', 'caret-up']"
-            class="mt-px opacity-0 transition"
-            :class="{
-              'opacity-100': props.sortingColumn === 'name',
-              'rotate-180': props.sortingOrder === 'descending'
-            }"
+            class="mt-px transition"
+            :class="{ 'rotate-180': props.sortingOrder === 'descending' }"
           />
-        </ClientOnly>
+        </transition>
       </button>
       <button
         class="flex flex-row portrait:order-4 gap-x-2 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs"
@@ -85,16 +86,17 @@
         @click="emit('toggleSorting', 'artist')"
       >
         歌手
-        <ClientOnly>
+        <transition
+          enter-from-class="opacity-0"
+          leave-to-class="opacity-0"
+        >
           <font-awesome-icon
+            v-if="props.sortingColumn === 'artist'"
             :icon="['fas', 'caret-up']"
-            class="mt-px opacity-0 transition"
-            :class="{
-              'opacity-100': props.sortingColumn === 'artist',
-              'rotate-180': props.sortingOrder === 'descending'
-            }"
+            class="mt-px transition"
+            :class="{ 'rotate-180': props.sortingOrder === 'descending' }"
           />
-        </ClientOnly>
+        </transition>
       </button>
       <button
         class="flex flex-row portrait:row-span-2 gap-x-2 items-center px-4 portrait:px-3 h-full"
@@ -107,16 +109,17 @@
         @click="emit('toggleSorting', 'payment_amount')"
       >
         SC
-        <ClientOnly>
+        <transition
+          enter-from-class="opacity-0"
+          leave-to-class="opacity-0"
+        >
           <font-awesome-icon
+            v-if="props.sortingColumn === 'payment_amount'"
             :icon="['fas', 'caret-up']"
-            class="mt-px opacity-0 transition"
-            :class="{
-              'opacity-100': props.sortingColumn === 'payment_amount',
-              'transition-opacity rotate-180': props.sortingOrder === 'descending'
-            }"
+            class="mt-px transition"
+            :class="{ 'transition-opacity rotate-180': props.sortingOrder === 'descending' }"
           />
-        </ClientOnly>
+        </transition>
       </button>
       <button
         class="flex flex-row portrait:row-span-2 gap-x-2 items-center pl-4 portrait:pl-3 py-2 h-full"
@@ -129,16 +132,17 @@
         @click="emit('toggleSorting', 'language')"
       >
         语言
-        <ClientOnly>
+        <transition
+          enter-from-class="opacity-0"
+          leave-to-class="opacity-0"
+        >
           <font-awesome-icon
+            v-if="props.sortingColumn === 'language'"
             :icon="['fas', 'caret-up']"
-            class="mt-px opacity-0 transition"
-            :class="{
-              'opacity-100': props.sortingColumn === 'language',
-              'rotate-180': props.sortingOrder === 'descending'
-            }"
+            class="mt-px transition"
+            :class="{ 'rotate-180': props.sortingOrder === 'descending' }"
           />
-        </ClientOnly>
+        </transition>
       </button>
     </div>
     <div class="overflow-y-hidden grid grid-areas-stack h-full">
