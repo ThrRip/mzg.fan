@@ -119,10 +119,9 @@ jobs:
             -o StrictHostKeyChecking=no \
             -p ${{ secrets.PROD_CLOUD_SSH_PORT }} \
             ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
-          shopt -s extglob
           cd "${{ secrets.PROD_CLOUD_PROJECT_ROOT }}/${{ inputs.package }}"
           pm2 delete mzg.fan-${{ inputs.package }}
-          rm -fr !(build.tar.zst)
+          rm -fr .output ecosystem.config.js
           zstd -d build.tar.zst
           tar -xvf build.tar
           rm -f build.tar.zst build.tar
