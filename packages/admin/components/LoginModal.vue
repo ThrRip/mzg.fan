@@ -30,27 +30,25 @@
           @keydown.enter="submit"
         >
       </form>
-      <button
+      <transition-group
+        tag="button"
         class="grid grid-areas-stack place-items-center w-full h-12
         text-white bg-blue hover:bg-blue-a rounded-xl focus:outline outline-2 outline-offset-3 outline-blue-a
         transition duration-200 active:scale-95"
+        enter-from-class="opacity-0"
+        enter-active-class="transition-opacity duration-200"
+        leave-active-class="transition-opacity duration-200"
+        leave-to-class="opacity-0"
         @click="submit"
       >
-        <transition-group
-          enter-from-class="opacity-0"
-          enter-active-class="transition-opacity duration-200"
-          leave-active-class="transition-opacity duration-200"
-          leave-to-class="opacity-0"
-        >
-          <span v-if="props.authState === ''" key="idle">登录</span>
-          <font-awesome-icon v-if="props.authState === 'processing'" key="processing" :icon="['fas', 'circle-notch']" spin class="!h-5" />
-          <font-awesome-icon v-if="props.authState === 'succeeded'" key="succeeded" :icon="['fas', 'check']" class="!h-5" />
-          <span v-if="props.authState === 'failed'" key="failed" class="flex flex-row gap-x-2 items-center">
-            <font-awesome-icon :icon="['fas', 'circle-exclamation']" class="!h-5" />
-            请重试
-          </span>
-        </transition-group>
-      </button>
+        <span v-if="props.authState === ''" key="idle">登录</span>
+        <font-awesome-icon v-if="props.authState === 'processing'" key="processing" :icon="['fas', 'circle-notch']" spin class="!h-5" />
+        <font-awesome-icon v-if="props.authState === 'succeeded'" key="succeeded" :icon="['fas', 'check']" class="!h-5" />
+        <span v-if="props.authState === 'failed'" key="failed" class="flex flex-row gap-x-2 items-center">
+          <font-awesome-icon :icon="['fas', 'circle-exclamation']" class="!h-5" />
+          请重试
+        </span>
+      </transition-group>
     </div>
     <div
       class="-z-20 w-full max-w-lg h-full max-h-[30rem] bg-blue-l transition-opacity duration-300"
