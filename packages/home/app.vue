@@ -341,14 +341,15 @@ interface Song {
 }
 type Playlist = Array<Song>
 
-const { data: backendPlaylistFetchResponse } = await useAsyncData<Playlist>(
+const { data: backendPlaylist } = await useAsyncData<Playlist>(
   'backend-databases-home-playlist',
   // @ts-ignore
   () => backendDatabases.listDocuments('home', 'playlist', [Query.limit(useAppConfig().backendQueryResultsLimit)]),
-  { transform: (res: { total: number, documents: Playlist }): Playlist => res.documents }
+  {
+    default: () => [],
+    transform: (res: { total: number, documents: Playlist }): Playlist => res.documents
+  }
 )
-// @ts-ignore
-const backendPlaylist = ref<Playlist>(backendPlaylistFetchResponse.value ?? [])
 
 // View
 const contentRoot = ref<HTMLDivElement>()
@@ -402,8 +403,10 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
 const viewPlaylistData = ref<Playlist>([])
 const viewPlaylistDataShuffled = ref<Playlist>([])
 function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
+  // @ts-ignore
   if (backendPlaylist.value.length !== 0) {
     function shuffle () {
+      // @ts-ignore
       const playlist = backendPlaylist.value.slice()
       let currentSong = playlist.length
       while (currentSong !== 0) {
@@ -418,6 +421,7 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
     }
 
     async function sort () {
+      // @ts-ignore
       const playlist: Array<SortingSong> = backendPlaylist.value.slice()
       const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
 
@@ -509,8 +513,10 @@ function viewPlaylistCopySong (id: Song['$id']) {
   )
 }
 
+// @ts-ignore
 const viewPlaylistCountTotal = computed<number>(() => backendPlaylist.value.length)
 const viewPlaylistCountDisplayed = computed<number>(() => {
+  // @ts-ignore
   return process.server ? backendPlaylist.value.length : viewPlaylistData.value.length
 })
 </script>
