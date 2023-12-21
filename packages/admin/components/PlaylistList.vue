@@ -462,8 +462,8 @@ const props = defineProps<{
   countDisplayed?: number
 }>()
 const emit = defineEmits<{
-  toggleSorting: [PlaylistColumn],
-  stageChanges: [changes: Song],
+  toggleSorting: [PlaylistColumn]
+  stageChanges: [changes: Song]
   undoChanges: [changesIds: Set<Song['$id']>]
 }>()
 
