@@ -1,5 +1,3 @@
-import { Client, Databases, Query } from 'node-appwrite'
-
 export default defineNuxtRouteMiddleware(async (to) => {
   if (process.client) { return }
 
@@ -17,6 +15,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo(useAppConfig().appHomeBase, { external: true })
   }
 
+  const { Client, Databases, Query } = await import('node-appwrite')
   const backendClient = new Client()
   const backendDatabases = new Databases(backendClient)
   backendClient.setEndpoint(useAppConfig().backendBase)
