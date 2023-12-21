@@ -212,12 +212,14 @@
               pl-2.5 portrait:pl-2.5 portrait:pr-1 py-2.5 h-full rounded-lg cursor-pointer"
             >
               <input type="checkbox" class="hidden" @click="selectedIds.has(song.$id) ? selectedIds.delete(song.$id) : selectedIds.add(song.$id)">
-              <svg v-if="!selectedIds.has(song.$id)" class="!h-5 rounded-lg transition group-active:scale-90">
-                <use href="#far-square" />
-              </svg>
-              <svg v-if="selectedIds.has(song.$id)" class="!h-5 text-blue group-hover:text-blue-a rounded-lg transition group-active:scale-90">
-                <use href="#fas-square-check" />
-              </svg>
+              <ClientOnly>
+                <svg v-if="!selectedIds.has(song.$id)" class="!h-5 rounded-lg transition group-active:scale-90">
+                  <use href="#far-square" />
+                </svg>
+                <svg v-if="selectedIds.has(song.$id)" class="!h-5 text-blue group-hover:text-blue-a rounded-lg transition group-active:scale-90">
+                  <use href="#fas-square-check" />
+                </svg>
+              </ClientOnly>
             </label>
             <transition-group
               tag="span"
