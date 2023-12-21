@@ -154,38 +154,29 @@
         <span v-if="props.type === 'changes'">
           共 {{ props.countTotal }} 首歌有改动
         </span>
-        <span v-if="props.type === 'main'" class="flex flex-row gap-x-1 h-full">
-          <button
-            class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
-            transition active:scale-95 duration-200"
-            title="添加歌曲"
-            @click="create"
-          >
+        <span
+          v-if="props.type === 'main'"
+          class="flex flex-row gap-x-1 h-full
+          *:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-full *:rounded-lg hover:*:bg-gray
+          *:transition active:*:scale-95 *:duration-200"
+        >
+          <button title="添加歌曲" @click="create">
             <font-awesome-icon :icon="['fas', 'plus']" />
           </button>
-          <button
-            class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
-            transition active:scale-95 duration-200"
-            title="删除歌曲"
-            @click="selectedIds.forEach(id => { emit('stageChanges', { $id: id }); selectedIds.delete(id) })"
-          >
+          <button title="删除歌曲" @click="selectedIds.forEach(id => { emit('stageChanges', { $id: id }); selectedIds.delete(id) })">
             <font-awesome-icon :icon="['fas', 'minus']" />
           </button>
         </span>
-        <span v-if="props.type === 'changes'" class="flex flex-row gap-x-1 h-full">
-          <button
-            class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
-            transition active:scale-95 duration-200"
-            title="撤销改动"
-            @click="emit('undoChanges', selectedIds); selectedIds.clear()"
-          >
+        <span
+          v-if="props.type === 'changes'"
+          class="flex flex-row gap-x-1 h-full
+          *:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-full *:rounded-lg hover:*:bg-gray
+          *:transition active:*:scale-95 *:duration-200"
+        >
+          <button title="撤销改动" @click="emit('undoChanges', selectedIds); selectedIds.clear()">
             <font-awesome-icon :icon="['fas', 'rotate-left']" />
           </button>
-          <button
-            class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
-            transition active:scale-95 duration-200"
-            title="发布改动"
-          >
+          <button title="发布改动">
             <font-awesome-icon :icon="['fas', 'cloud-arrow-up']" />
           </button>
         </span>

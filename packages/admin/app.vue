@@ -55,37 +55,16 @@
         >
           <transition-group
             tag="span"
-            class="aspect-square grid grid-areas-stack place-items-center pl-0.5 h-14"
+            class="aspect-square grid grid-areas-stack place-items-center pl-0.5 h-14 max-lg:landscape:*:!h-5 *:!h-6"
             enter-from-class="opacity-0"
             enter-active-class="transition-opacity duration-200"
             leave-active-class="transition-opacity duration-200"
             leave-to-class="opacity-0"
           >
-            <font-awesome-icon
-              v-if="backendAuthState === ''"
-              key="idle"
-              :icon="['fas', 'right-from-bracket']"
-              class="max-lg:landscape:!h-5 !h-6"
-            />
-            <font-awesome-icon
-              v-if="backendAuthState === 'processing'"
-              key="processing"
-              :icon="['fas', 'circle-notch']"
-              spin
-              class="max-lg:landscape:!h-5 !h-6"
-            />
-            <font-awesome-icon
-              v-if="backendAuthState === 'succeeded'"
-              key="succeeded"
-              :icon="['fas', 'check']"
-              class="max-lg:landscape:!h-5 !h-6"
-            />
-            <font-awesome-icon
-              v-if="backendAuthState === 'failed'"
-              key="failed"
-              :icon="['fas', 'circle-exclamation']"
-              class="max-lg:landscape:!h-5 !h-6"
-            />
+            <font-awesome-icon v-if="backendAuthState === ''" key="idle" :icon="['fas', 'right-from-bracket']" />
+            <font-awesome-icon v-if="backendAuthState === 'processing'" key="processing" :icon="['fas', 'circle-notch']" spin />
+            <font-awesome-icon v-if="backendAuthState === 'succeeded'" key="succeeded" :icon="['fas', 'check']" />
+            <font-awesome-icon v-if="backendAuthState === 'failed'" key="failed" :icon="['fas', 'circle-exclamation']" />
           </transition-group>
           <transition-group
             tag="span"

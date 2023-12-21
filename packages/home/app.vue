@@ -14,35 +14,29 @@
         <h1 class="max-xl:landscape:text-4xl portrait:text-6xl text-7xl font-light text-white-alt">
           洺知-故犯
         </h1>
-        <div class="flex flex-col max-xl:landscape:gap-y-1 gap-y-4">
+        <div
+          class="flex flex-col max-xl:landscape:gap-y-1 gap-y-4
+          *:flex *:flex-row *:gap-x-2 *:justify-between *:items-center
+          max-xl:landscape:*:px-1.5 *:px-2.5 *:w-54 max-xl:landscape:*:h-10 *:h-12
+          *:text-white *:bg-blue hover:*:bg-blue-a focus:*:outline *:outline-2 *:outline-offset-3 *:outline-blue-a *:rounded-xl
+          *:transition active:*:scale-95"
+        >
           <NuxtLink
             to="https://space.bilibili.com/32159860"
             target="_blank"
-            class="flex flex-row gap-x-2 justify-between items-center
-            max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
-            text-white bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
-            transition active:scale-95"
+            class="*:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-8"
           >
-            <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <font-awesome-icon :icon="['fab', 'bilibili']" />
-            </span>
+            <span><font-awesome-icon :icon="['fab', 'bilibili']" /></span>
             哔哩哔哩主页
-            <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
-            </span>
+            <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
           </NuxtLink>
           <NuxtLink
             to="https://live.bilibili.com/1267105"
             target="_blank"
-            class="flex flex-row gap-x-2 justify-between items-center
-            max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
-            text-white bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
-            transition active:scale-95"
+            class="*:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-8"
           >
-            <span v-if="!biliApiLiveStatus" class="aspect-square flex flex-row justify-center items-center h-8">
-              <font-awesome-icon :icon="['fas', 'podcast']" class="!h-5" />
-            </span>
-            <span v-if="biliApiLiveStatus" class="aspect-square flex flex-col justify-center items-center h-8">
+            <span v-if="!biliApiLiveStatus"><font-awesome-icon :icon="['fas', 'podcast']" class="!h-5" /></span>
+            <span v-if="biliApiLiveStatus">
               <span class="overflow-hidden min-h-[1.2rem] max-h-[1.2rem]">
                 <font-awesome-icon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
               </span>
@@ -51,40 +45,24 @@
               </span>
             </span>
             直播间
-            <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
-            </span>
+            <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
           </NuxtLink>
           <NuxtLink
             to="https://space.bilibili.com/391500490"
             target="_blank"
-            class="flex flex-row gap-x-2 justify-between items-center
-            max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
-            text-white bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
-            transition active:scale-95"
+            class="*:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-8"
           >
-            <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <font-awesome-icon :icon="['fas', 'video']" />
-            </span>
+            <span><font-awesome-icon :icon="['fas', 'video']" /></span>
             录播组
-            <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" />
-            </span>
+            <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
           </NuxtLink>
           <button
-            class="landscape:hidden flex flex-row gap-x-2 justify-between items-center
-            max-xl:landscape:px-1.5 px-2.5 w-54 max-xl:landscape:h-10 h-12
-            text-white bg-blue hover:bg-blue-a focus:outline outline-2 outline-offset-3 outline-blue-a rounded-xl
-            transition active:scale-95"
+            class="landscape:hidden *:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-8"
             @click="scrollToPlaylist"
           >
-            <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <font-awesome-icon :icon="['fas', 'list']" />
-            </span>
+            <span><font-awesome-icon :icon="['fas', 'list']" /></span>
             歌单
-            <span class="aspect-square flex flex-row justify-center items-center h-8">
-              <font-awesome-icon :icon="['fas', 'arrow-down']" />
-            </span>
+            <span><font-awesome-icon :icon="['fas', 'arrow-down']" /></span>
           </button>
         </div>
       </section>
