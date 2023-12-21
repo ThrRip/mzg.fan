@@ -132,7 +132,7 @@ async function viewPlaylistDataUpdate () {
   if (viewPlaylistSortingColumn.value === null) {
     viewPlaylistData.value = viewPlaylistDataWithChanges.value
   } else {
-    const playlist: Array<SortingSong> = viewPlaylistDataWithChanges.value.slice()
+    const playlist: Array<SortingSong> = viewPlaylistDataWithChanges.value.map(song => ({ ...song }))
     const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
 
     // Sort by song name or artist in alphabetical order
@@ -202,7 +202,8 @@ function viewPlaylistStageChanges (changes: Song) {
 
   // Modify song
   if (viewPlaylistData.value.some(song => song.$id === changes.$id) && Object.keys(changes).length > 1) {
-    const song = viewPlaylistData.value.find(_ => _.$id === changes.$id)
+    // @ts-ignore
+    const song = viewPlaylistChangesData.value.find(_ => _.$id === changes.$id) ?? backendPlaylist.value.find(_ => _.$id === changes.$id)
     let changesValid = false
     for (const field in changes) {
       // @ts-ignore
