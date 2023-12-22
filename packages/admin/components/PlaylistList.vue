@@ -22,16 +22,8 @@
               new Set(props.dataChanges?.map(song => song.$id))"
         >
         <span class="grid place-items-center w-5">
-          <svg class="hidden">
-            <symbol id="far-square">
-              <font-awesome-icon :icon="['far', 'square']" />
-            </symbol>
-          </svg>
-          <svg class="hidden">
-            <symbol id="fas-square-check">
-              <font-awesome-icon :icon="['fas', 'square-check']" />
-            </symbol>
-          </svg>
+          <svg class="hidden"><symbol id="far-square"><font-awesome-icon :icon="['far', 'square']" /></symbol></svg>
+          <svg class="hidden"><symbol id="fas-square-check"><font-awesome-icon :icon="['fas', 'square-check']" /></symbol></svg>
           <svg v-if="selectedIds.size === 0" class="!h-5 rounded-lg transition group-active:scale-90">
             <use href="#far-square" />
           </svg>
