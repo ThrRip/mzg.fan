@@ -99,7 +99,6 @@
     <main class="overflow-x-clip overflow-y-auto lg:overflow-y-hidden grid grid-cols-[1fr] grid-rows-[1fr] h-full">
       <LoginModal
         v-if="!backendLoggedIn && !backendLoggedInChecking"
-        :visible="viewShowLoginModal"
         :auth-state="backendAuthState"
         @submit="backendLogin"
       />
@@ -157,7 +156,6 @@ onBeforeMount(() => {
       async () => {
         await navigateTo('/')
         backendLoggedInChecking.value = false
-        setTimeout(() => { viewShowLoginModal.value = true }, 50)
       }
     )
 })
@@ -172,12 +170,9 @@ function backendLogin (email: string, password: string) {
       () => {
         backendAuthState.value = 'succeeded'
         setTimeout(() => {
-          viewShowLoginModal.value = false
-        }, 1000)
-        setTimeout(() => {
           backendAuthState.value = ''
           backendLoggedIn.value = true
-        }, 1300)
+        }, 1000)
       },
       () => { backendAuthState.value = 'failed' }
     )
@@ -193,7 +188,6 @@ function backendLogout () {
           viewToggleFullNavigationBar(false)
           backendAuthState.value = ''
           backendLoggedIn.value = false
-          nextTick(() => { viewShowLoginModal.value = true })
         }, 1000)
       },
       () => { backendAuthState.value = 'failed' }
@@ -201,8 +195,6 @@ function backendLogout () {
 }
 
 // View
-const viewShowLoginModal = ref<Boolean>(false)
-
 const viewShowFullNavigationBar = ref<Boolean>(false)
 const viewShowFullNavigationBarRealState = ref<Boolean>(false)
 const viewFullNavigationBarToggles = ref<number>(0)
