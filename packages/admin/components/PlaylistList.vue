@@ -248,7 +248,7 @@
                   v-if="props.type === 'changes' && props.data.find(unmodified => unmodified.$id === song.$id)?.name !== song.name"
                   class="flex flex-row gap-x-1.5"
                 >
-                  <span v-if="props.data.some(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
+                  <span v-if="props.data.find(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
                     <s>{{ props.data.find(unmodified => unmodified.$id === song.$id)?.name }}</s>
                   </span>
                   <span v-if="song.name" class="px-2.5 py-0.5 rounded-lg bg-blue-l/50">
@@ -301,7 +301,7 @@
                   v-if="props.type === 'changes' && props.data.find(unmodified => unmodified.$id === song.$id)?.artist !== song.artist"
                   class="flex flex-row gap-x-1.5"
                 >
-                  <span v-if="props.data.some(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
+                  <span v-if="props.data.find(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
                     <s>{{ props.data.find(unmodified => unmodified.$id === song.$id)?.artist }}</s>
                   </span>
                   <span v-if="song.artist" class="px-2.5 py-0.5 rounded-lg bg-blue-l/50">
@@ -414,7 +414,7 @@
                   v-if="props.type === 'changes' && props.data.find(unmodified => unmodified.$id === song.$id)?.language !== song.language"
                   class="flex flex-col gap-y-1 py-0.5"
                 >
-                  <span v-if="props.data.some(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
+                  <span v-if="props.data.find(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
                     <s>{{ props.data.find(unmodified => unmodified.$id === song.$id)?.language }}</s>
                   </span>
                   <span v-if="song.language" class="px-2.5 py-0.5 rounded-lg bg-blue-l/50">

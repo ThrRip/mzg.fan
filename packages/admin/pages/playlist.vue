@@ -118,7 +118,7 @@ const viewPlaylistDataWithChanges = computed<Playlist>(() => {
     if (Object.keys(changes).length === 1 && Object.keys(changes)[0] === '$id') {
       playlist.splice(playlist.findIndex(song => song.$id === changes.$id), 1)
     } else
-    if (playlist.some(song => song.$id === changes.$id)) {
+    if (playlist.find(song => song.$id === changes.$id)) {
       playlist[playlist.findIndex(song => song.$id === changes.$id)] = changes
     } else {
       playlist.push(changes)
@@ -187,7 +187,7 @@ function viewPlaylistStageChanges (changes: Song) {
 
   // New song
   // @ts-ignore
-  if (!backendPlaylist.value.some(song => song.$id === changes.$id) && Object.keys(changes).length === changesFieldsAccepted.size) {
+  if (!backendPlaylist.value.find(song => song.$id === changes.$id) && Object.keys(changes).length === changesFieldsAccepted.size) {
     const changesFields: Set<string> = new Set(Object.keys(changes))
     let changesFieldsFulfilled: boolean = true
     changesFieldsAccepted.forEach((field) => {
@@ -200,7 +200,7 @@ function viewPlaylistStageChanges (changes: Song) {
   } else
 
   // Modify song
-  if (viewPlaylistData.value.some(song => song.$id === changes.$id) && Object.keys(changes).length > 1) {
+  if (viewPlaylistData.value.find(song => song.$id === changes.$id) && Object.keys(changes).length > 1) {
     // @ts-ignore
     const song = viewPlaylistChangesData.value.find(_ => _.$id === changes.$id) ?? backendPlaylist.value.find(_ => _.$id === changes.$id)
     let changesValid = false
@@ -225,16 +225,16 @@ function viewPlaylistStageChanges (changes: Song) {
 
   // Delete song
   if (
-    viewPlaylistData.value.some(song => song.$id === changes.$id) &&
+    viewPlaylistData.value.find(song => song.$id === changes.$id) &&
     Object.keys(changes).length === 1 &&
     changes.$id
   ) {
-    if (viewPlaylistChangesData.value.some(song => song.$id === changes.$id)) {
+    if (viewPlaylistChangesData.value.find(song => song.$id === changes.$id)) {
       viewPlaylistChangesData.value.splice(viewPlaylistChangesData.value.findIndex(song => song.$id === changes.$id), 1)
     }
     // If the song is not published yet, do not create a change
     // @ts-ignore
-    if (backendPlaylist.value.some(song => song.$id === changes.$id)) {
+    if (backendPlaylist.value.find(song => song.$id === changes.$id)) {
       viewPlaylistChangesData.value.push(changes)
     }
   }
