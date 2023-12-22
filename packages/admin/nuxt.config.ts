@@ -36,6 +36,8 @@ export default defineNuxtConfig({
     port: 3001
   },
 
+  devtools: false,
+
   postcss: {
     plugins: {
       'tailwindcss': {},

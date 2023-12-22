@@ -34,6 +34,8 @@ export default defineNuxtConfig({
     host: '0.0.0.0'
   },
 
+  devtools: false,
+
   postcss: {
     plugins: {
       'tailwindcss': {},
