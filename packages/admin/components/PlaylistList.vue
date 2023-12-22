@@ -448,7 +448,6 @@ const props = defineProps<{
   // For a Changes list, pass the unmodified list as "data" and the modified-only list as "dataChanges"
   data: Playlist
   dataChanges?: Playlist
-  modification?: boolean
   sortingColumn: null | PlaylistColumn
   sortingOrder: PlaylistSortingOrder
   countTotal: number

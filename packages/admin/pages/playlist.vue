@@ -11,7 +11,6 @@
     <PlaylistList
       type="main"
       :data="viewPlaylistData"
-      :modification="true"
       :sorting-column="viewPlaylistSortingColumn"
       :sorting-order="viewPlaylistSortingOrder"
       :count-total="// @ts-ignore
