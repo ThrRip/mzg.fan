@@ -137,13 +137,12 @@ async function viewPlaylistDataUpdate () {
     // Sort by song name or artist in alphabetical order
     if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
       const pinyinPro = await import('pinyin-pro')
-      playlist.map((song) => {
+      playlist.forEach((song, index) => {
         // @ts-ignore
-        song[`${viewPlaylistSortingColumn.value}Pinyin`] =
+        playlist[index][`${viewPlaylistSortingColumn.value}Pinyin`] =
           // @ts-ignore
           pinyinPro.pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
             .replaceAll(' ', '')
-        return song
       })
       playlist.sort((a, b) => {
         // @ts-ignore
