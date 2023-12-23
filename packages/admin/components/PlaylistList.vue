@@ -188,6 +188,12 @@
             :key="song.$id"
             class="grid grid-cols-[1.875rem_0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[2.125rem_1fr_3.5rem_4.5rem]
             grid-rows-1 portrait:grid-rows-[auto_auto]"
+            :class="{
+              'bg-blue-l/50 rounded-xl': props.type === 'changes' &&
+                song.$id.includes('-') && song.name === '' && song.artist === '' && song.payment_amount === null && song.language === '',
+              'bg-pink-l/75 rounded-xl': props.type === 'changes' &&
+                Object.keys(song).length === 1 && Object.keys(song)[0] === '$id',
+            }"
           >
             <label
               title="选择"
