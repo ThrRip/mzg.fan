@@ -5,7 +5,8 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
       htmlAttrs: {
-        lang: 'zh'
+        lang: 'zh',
+        class: 'bg-white-alt'
       },
       title: '管理面板 | 洺知-故犯',
       meta: [

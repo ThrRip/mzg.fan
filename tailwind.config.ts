@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss'
 
 export default {
   content: [
+    './nuxt.config.ts',
     './app.vue',
     './pages/**/*.vue',
     './components/**/*.vue'
