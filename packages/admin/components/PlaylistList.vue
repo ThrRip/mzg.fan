@@ -248,7 +248,11 @@
                   v-if="props.type === 'changes' && props.data.find(unmodified => unmodified.$id === song.$id)?.name !== song.name"
                   class="flex flex-row gap-x-1.5"
                 >
-                  <span v-if="props.data.find(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
+                  <span
+                    v-if="props.data.find(unmodified => unmodified.$id === song.$id) &&
+                      props.data.find(unmodified => unmodified.$id === song.$id)?.name !== ''"
+                    class="px-2.5 py-0.5 rounded-lg bg-pink-l/75"
+                  >
                     <s>{{ props.data.find(unmodified => unmodified.$id === song.$id)?.name }}</s>
                   </span>
                   <span v-if="song.name" class="px-2.5 py-0.5 rounded-lg bg-blue-l/50">
@@ -301,7 +305,11 @@
                   v-if="props.type === 'changes' && props.data.find(unmodified => unmodified.$id === song.$id)?.artist !== song.artist"
                   class="flex flex-row gap-x-1.5"
                 >
-                  <span v-if="props.data.find(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
+                  <span
+                    v-if="props.data.find(unmodified => unmodified.$id === song.$id) &&
+                      props.data.find(unmodified => unmodified.$id === song.$id)?.artist !== ''"
+                    class="px-2.5 py-0.5 rounded-lg bg-pink-l/75"
+                  >
                     <s>{{ props.data.find(unmodified => unmodified.$id === song.$id)?.artist }}</s>
                   </span>
                   <span v-if="song.artist" class="px-2.5 py-0.5 rounded-lg bg-blue-l/50">
@@ -328,8 +336,11 @@
                 class="z-10 w-full h-2/3 text-center bg-white
                 rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
                 :value="song.payment_amount"
-                @blur="// @ts-ignore
-                  modifyFinish({ $id: song.$id, payment_amount: $event.target.value === '' ? null : $event.target.value })"
+                @blur="modifyFinish({
+                  $id: song.$id,
+                  // @ts-ignore
+                  payment_amount: ($event.target.value === '' || $event.target.value === '0') ? null : Number($event.target.value)
+                })"
                 @keydown.enter="// @ts-ignore
                   $event.target.blur()"
                 @keydown.esc="// @ts-ignore
@@ -338,15 +349,22 @@
               >
               <span
                 key="text"
-                class="flex flex-col justify-center items-center h-full"
+                class="flex flex-col justify-center h-full"
                 :class="{
-                  '!h-2/3 rounded ring-2 ring-white-alta group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta \
+                  'items-center !h-2/3 rounded ring-2 ring-white-alta group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta \
                   transition-[box-shadow,opacity] duration-200': props.type === 'main'
                 }"
                 :title="song.payment_required && song.payment_amount ? `需要 ${song.payment_amount} 元 SC` : ''"
               >
                 <font-awesome-icon v-if="props.type === 'main' && song.payment_required" :icon="['fas', 'comment-dollar']" class="!h-5" />
-                <span v-if="song.payment_required" :class="{ 'text-[0.625rem] leading-snug': props.type === 'main' }">
+                <span
+                  v-if="(props.type === 'main' && song.payment_required) ||
+                    (props.type === 'changes' && (
+                      props.data.find(unmodified => unmodified.$id === song.$id)?.payment_amount ||
+                      song.payment_amount
+                    ))"
+                  :class="{ 'text-[0.625rem] leading-snug': props.type === 'main' }"
+                >
                   <span
                     v-if="(props.type === 'main' && song.payment_amount) ||
                       (props.type === 'changes' && song.payment_amount &&
@@ -414,10 +432,14 @@
                   v-if="props.type === 'changes' && props.data.find(unmodified => unmodified.$id === song.$id)?.language !== song.language"
                   class="flex flex-col gap-y-1 py-0.5"
                 >
-                  <span v-if="props.data.find(unmodified => unmodified.$id === song.$id)" class="px-2.5 py-0.5 rounded-lg bg-pink-l/75">
+                  <span
+                    v-if="props.data.find(unmodified => unmodified.$id === song.$id) &&
+                      props.data.find(unmodified => unmodified.$id === song.$id)?.language !== ''"
+                    class="px-2.5 py-0.5 w-fit rounded-lg bg-pink-l/75"
+                  >
                     <s>{{ props.data.find(unmodified => unmodified.$id === song.$id)?.language }}</s>
                   </span>
-                  <span v-if="song.language" class="px-2.5 py-0.5 rounded-lg bg-blue-l/50">
+                  <span v-if="song.language" class="px-2.5 py-0.5 w-fit rounded-lg bg-blue-l/50">
                     {{ song.language }}
                   </span>
                 </span>
