@@ -8,7 +8,7 @@
     >
       <label
         title="全选"
-        class="group flex flex-row row-span-2 pl-2.5 portrait:pl-2.5 portrait:pr-1 h-full items-center rounded-lg cursor-pointer"
+        class="group flex flex-row row-span-2 pl-2.5 portrait:pl-2.5 portrait:pr-1 h-full items-center cursor-pointer"
       >
         <input
           type="checkbox"
@@ -24,19 +24,19 @@
         <span class="grid place-items-center w-5">
           <svg class="hidden"><symbol id="far-square"><font-awesome-icon :icon="['far', 'square']" /></symbol></svg>
           <svg class="hidden"><symbol id="fas-square-check"><font-awesome-icon :icon="['fas', 'square-check']" /></symbol></svg>
-          <svg v-if="selectedIds.size === 0" class="!h-5 rounded-lg transition group-active:scale-90">
+          <svg v-if="selectedIds.size === 0" class="!h-5 transition group-active:scale-90">
             <use href="#far-square" />
           </svg>
           <font-awesome-icon
             v-if="selectedIds.size !== 0 &&
               selectedIds.size !== (props.type === 'main' ? props.data.length : props.dataChanges?.length)"
             :icon="['fas', 'square-minus']"
-            class="!h-5 text-blue group-hover:text-blue-a rounded-lg transition group-active:scale-90"
+            class="!h-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
           />
           <svg
             v-if="(props.type === 'main' ? props.data.length : props.dataChanges?.length) !== 0 &&
               selectedIds.size === (props.type === 'main' ? props.data.length : props.dataChanges?.length)"
-            class="!h-5 text-blue group-hover:text-blue-a rounded-lg transition group-active:scale-90"
+            class="!h-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
           >
             <use href="#fas-square-check" />
           </svg>
@@ -210,7 +210,7 @@
               :class="{ 'cursor-text': props.type === 'main' }"
               :enter-from-class="props.type === 'main' ? 'opacity-0' : ''"
               :enter-active-class="props.type === 'main' ? 'transition-opacity' : ''"
-              :leave-active-class="props.type === 'main' ? 'transition-opacity delay-75' : ''"
+              :leave-active-class="props.type === 'main' ? 'transition-opacity' : ''"
               :leave-to-class="props.type === 'main' ? 'opacity-0' : ''"
               @click="modifyStart({ id: song.$id, field: 'name' })"
             >
@@ -267,7 +267,7 @@
               :class="{ 'cursor-text': props.type === 'main' }"
               :enter-from-class="props.type === 'main' ? 'opacity-0' : ''"
               :enter-active-class="props.type === 'main' ? 'transition-opacity' : ''"
-              :leave-active-class="props.type === 'main' ? 'transition-opacity delay-75' : ''"
+              :leave-active-class="props.type === 'main' ? 'transition-opacity' : ''"
               :leave-to-class="props.type === 'main' ? 'opacity-0' : ''"
               @click="modifyStart({ id: song.$id, field: 'artist' })"
             >
@@ -324,7 +324,7 @@
               :class="{ 'cursor-text': props.type === 'main' && song.payment_required }"
               :enter-from-class="props.type === 'main' ? 'opacity-0' : ''"
               :enter-active-class="props.type === 'main' ? 'transition-opacity' : ''"
-              :leave-active-class="props.type === 'main' ? 'transition-opacity delay-75' : ''"
+              :leave-active-class="props.type === 'main' ? 'transition-opacity' : ''"
               :leave-to-class="props.type === 'main' ? 'opacity-0' : ''"
               @click="modifyStart({ id: song.$id, field: 'payment_amount' })"
             >
@@ -395,7 +395,7 @@
               :class="{ 'cursor-text': props.type === 'main' }"
               :enter-from-class="props.type === 'main' ? 'opacity-0' : ''"
               :enter-active-class="props.type === 'main' ? 'transition-opacity' : ''"
-              :leave-active-class="props.type === 'main' ? 'transition-opacity delay-75' : ''"
+              :leave-active-class="props.type === 'main' ? 'transition-opacity' : ''"
               :leave-to-class="props.type === 'main' ? 'opacity-0' : ''"
               @click="modifyStart({ id: song.$id, field: 'language' })"
             >
