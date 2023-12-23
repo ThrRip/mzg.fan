@@ -6,7 +6,9 @@
       <script value="preview:admin" />
     </scripts>
     <node-interpreter value="project" />
-    <envs />
+    <envs>
+      <env name="NITRO_PORT" value="3001" />
+    </envs>
     <method v="2" />
   </configuration>
 </component>
