@@ -210,7 +210,7 @@ function viewPlaylistStageChanges (changes: Song) {
     if (changesValid) {
       const changesPrevious = viewPlaylistChangesData.value.find(song => song.$id === changes.$id)
       // @ts-ignore
-      changes.payment_required = Boolean(changes.payment_amount ?? song.payment_required)
+      changes.payment_required = Boolean(changes.payment_amount)
       changesFieldsAccepted.forEach((field) => {
         // @ts-ignore
         if (changes[field] === undefined) { changes[field] = changesPrevious ? changesPrevious[field] : song[field] }
