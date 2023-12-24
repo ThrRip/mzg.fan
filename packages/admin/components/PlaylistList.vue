@@ -192,7 +192,11 @@
               'bg-blue-l/50 rounded-xl': props.type === 'changes' &&
                 song.$id.includes('-') && song.name === '' && song.artist === '' && song.payment_amount === null && song.language === '',
               'bg-pink-l/75 rounded-xl': props.type === 'changes' &&
-                Object.keys(song).length === 1 && Object.keys(song)[0] === '$id',
+                Object.keys(song).length === 1 && Object.keys(song)[0] === '$id' &&
+                props.data.find(unmodified => unmodified.$id === song.$id)?.name === '' &&
+                props.data.find(unmodified => unmodified.$id === song.$id)?.artist === '' &&
+                props.data.find(unmodified => unmodified.$id === song.$id)?.payment_amount === null &&
+                props.data.find(unmodified => unmodified.$id === song.$id)?.language === ''
             }"
           >
             <label
