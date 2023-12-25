@@ -13,10 +13,12 @@ import {
   faCaretUp,
   faSquareMinus,
   faSquareCheck,
+  faExclamation,
   faCommentDollar,
   faPlus,
   faMinus,
   faRotateLeft,
+  faBroom,
   faCloudArrowUp
 } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -37,10 +39,12 @@ library.add(
   faSquare,
   faSquareMinus,
   faSquareCheck,
+  faExclamation,
   faCommentDollar,
   faPlus,
   faMinus,
   faRotateLeft,
+  faBroom,
   faCloudArrowUp
 )
 
