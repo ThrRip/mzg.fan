@@ -355,7 +355,7 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   viewPlaylistDataUpdate(['sort'])
 }
 
-const viewPlaylistData = ref<Playlist>([])
+const viewPlaylistData = useState<Playlist>('viewPlaylistData')
 const viewPlaylistDataShuffled = ref<Playlist>([])
 function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
   // @ts-ignore
@@ -444,7 +444,7 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
     })
   }
 }
-if (process.client) { viewPlaylistDataUpdate(['shuffle']) }
+callOnce(() => viewPlaylistDataUpdate(['shuffle']))
 
 const viewPlaylistCopiedSongs = ref<Set<Song['$id']>>(new Set())
 const viewPlaylistCopyingFailedSongs = ref<Set<Song['$id']>>(new Set())
