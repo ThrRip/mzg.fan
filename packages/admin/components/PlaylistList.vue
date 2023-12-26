@@ -336,12 +336,12 @@
                     v-if="(getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
                       (getPublishingStateById(song.$id)?.old && getPublishingStateById(song.$id)?.old?.name !== '') :
                       (getUnmodifiedSongById(song.$id) && getUnmodifiedSongById(song.$id)?.name !== '')"
-                    class="px-2.5 py-0.5 line-through rounded-lg bg-pink-l/75"
+                    class="px-2.5 py-0.5 line-through bg-pink-l/75 rounded-lg"
                   >
                     {{ (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
                       getPublishingStateById(song.$id)?.old?.name : getUnmodifiedSongById(song.$id)?.name }}
                   </span>
-                  <span v-if="song.name" class="px-2.5 py-0.5 rounded-lg bg-blue-l/50">
+                  <span v-if="song.name" class="px-2.5 py-0.5 bg-blue-l/50 rounded-lg">
                     {{ song.name }}
                   </span>
                 </span>
@@ -400,12 +400,12 @@
                     v-if="(getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
                       (getPublishingStateById(song.$id)?.old && getPublishingStateById(song.$id)?.old?.artist !== '') :
                       (getUnmodifiedSongById(song.$id) && getUnmodifiedSongById(song.$id)?.artist !== '')"
-                    class="px-2.5 py-0.5 line-through rounded-lg bg-pink-l/75"
+                    class="px-2.5 py-0.5 line-through bg-pink-l/75 rounded-lg"
                   >
                     {{ (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
                       getPublishingStateById(song.$id)?.old?.artist : getUnmodifiedSongById(song.$id)?.artist }}
                   </span>
-                  <span v-if="song.artist" class="px-2.5 py-0.5 rounded-lg bg-blue-l/50">
+                  <span v-if="song.artist" class="px-2.5 py-0.5 bg-blue-l/50 rounded-lg">
                     {{ song.artist }}
                   </span>
                 </span>
@@ -479,12 +479,12 @@
                       v-if="(getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
                         (getPublishingStateById(song.$id)?.old && getPublishingStateById(song.$id)?.old?.payment_amount) :
                         (getUnmodifiedSongById(song.$id) && getUnmodifiedSongById(song.$id)?.payment_amount)"
-                      class="px-2 py-0.5 w-fit line-through rounded-md bg-pink-l/75"
+                      class="px-2 py-0.5 w-fit line-through bg-pink-l/75 rounded-md"
                     >
                       ¥{{ (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
                         getPublishingStateById(song.$id)?.old?.payment_amount : getUnmodifiedSongById(song.$id)?.payment_amount }}
                     </span>
-                    <span v-if="song.payment_amount" class="px-2 py-0.5 w-fit rounded-md bg-blue-l/50">
+                    <span v-if="song.payment_amount" class="px-2 py-0.5 w-fit bg-blue-l/50 rounded-md">
                       ¥{{ song.payment_amount }}
                     </span>
                   </span>
@@ -543,12 +543,12 @@
                     v-if="(getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
                       (getPublishingStateById(song.$id)?.old && getPublishingStateById(song.$id)?.old?.language !== '') :
                       (getUnmodifiedSongById(song.$id) && getUnmodifiedSongById(song.$id)?.language !== '')"
-                    class="px-2.5 py-0.5 w-fit line-through rounded-lg bg-pink-l/75"
+                    class="px-2.5 py-0.5 w-fit line-through bg-pink-l/75 rounded-lg"
                   >
                     {{ (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
                       getPublishingStateById(song.$id)?.old?.language : getUnmodifiedSongById(song.$id)?.language }}
                   </span>
-                  <span v-if="song.language" class="px-2.5 py-0.5 w-fit rounded-lg bg-blue-l/50">
+                  <span v-if="song.language" class="px-2.5 py-0.5 w-fit bg-blue-l/50 rounded-lg">
                     {{ song.language }}
                   </span>
                 </span>

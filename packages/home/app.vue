@@ -1,7 +1,7 @@
 <template>
   <div ref="contentRoot" class="relative portrait:overflow-y-auto h-dscreen">
     <main
-      class="z-10 absolute landscape:grid landscape:grid-cols-[36vw_1fr]
+      class="absolute z-10 landscape:grid landscape:grid-cols-[36vw_1fr]
       gap-x-14 lg:gap-x-16 xl:gap-x-28 2xl:gap-x-40 3xl:gap-x-6
       landscape:3xl:px-40 landscape:5xl:px-64 landscape:py-7 landscape:2xl:py-16 landscape:5xl:py-28
       w-full landscape:h-full backdrop-blur-[8rem]"
