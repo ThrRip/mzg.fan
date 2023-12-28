@@ -24,7 +24,7 @@
           <NuxtLink
             to="https://space.bilibili.com/32159860"
             target="_blank"
-            class="*:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-8"
+            class="*:flex *:flex-row *:justify-center *:items-center *:size-8"
           >
             <span><font-awesome-icon :icon="['fab', 'bilibili']" /></span>
             哔哩哔哩主页
@@ -33,7 +33,7 @@
           <NuxtLink
             to="https://live.bilibili.com/1267105"
             target="_blank"
-            class="*:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-8"
+            class="*:flex *:flex-row *:justify-center *:items-center *:size-8"
           >
             <span v-if="!biliApiLiveStatus"><font-awesome-icon :icon="['fas', 'podcast']" class="!h-5" /></span>
             <span v-if="biliApiLiveStatus">
@@ -50,14 +50,14 @@
           <NuxtLink
             to="https://space.bilibili.com/391500490"
             target="_blank"
-            class="*:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-8"
+            class="*:flex *:flex-row *:justify-center *:items-center *:size-8"
           >
             <span><font-awesome-icon :icon="['fas', 'video']" /></span>
             录播组
             <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
           </NuxtLink>
           <button
-            class="landscape:hidden *:aspect-square *:flex *:flex-row *:justify-center *:items-center *:h-8"
+            class="landscape:hidden *:flex *:flex-row *:justify-center *:items-center *:size-8"
             @click="scrollToPlaylist"
           >
             <span><font-awesome-icon :icon="['fas', 'list']" /></span>

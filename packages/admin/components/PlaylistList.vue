@@ -27,7 +27,7 @@
           <svg v-if="props.type === 'changes'" class="hidden"><symbol id="fas-exclamation">
             <font-awesome-icon :icon="['fas', 'exclamation']" />
           </symbol></svg>
-          <svg v-if="selectedIds.size === 0" class="!h-5 transition group-active:scale-90">
+          <svg v-if="selectedIds.size === 0" class="size-5 transition group-active:scale-90">
             <use href="#far-square" />
           </svg>
           <font-awesome-icon
@@ -37,7 +37,7 @@
           />
           <svg
             v-if="selectedIds.size !== 0 && selectedIds.size === selectableIds.length"
-            class="!h-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
+            class="size-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
           >
             <use href="#fas-square-check" />
           </svg>
@@ -242,7 +242,7 @@
               <ClientOnly>
                 <svg
                   v-if="!selectedIds.has(song.$id) && (props.type === 'main' || !getPublishingStateById(song.$id))"
-                  class="!h-5 transition group-active:scale-90"
+                  class="size-5 transition group-active:scale-90"
                 >
                   <use href="#far-square" />
                 </svg>
@@ -259,7 +259,7 @@
                       !getPublishingStateById(song.$id) ||
                       getPublishingStateById(song.$id)?.state === 'failed'
                     )"
-                    class="z-10 !h-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
+                    class="z-10 size-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
                   >
                     <use href="#fas-square-check" />
                   </svg>
@@ -272,13 +272,13 @@
                   leave-active-class="transition-opacity duration-200"
                   leave-to-class="opacity-0"
                 >
-                  <svg v-if="getPublishingStateById(song.$id)?.state === 'processing'" key="processing" class="!h-5 animate-[spin_2s_linear_infinite]">
+                  <svg v-if="getPublishingStateById(song.$id)?.state === 'processing'" key="processing" class="size-5 animate-[spin_2s_linear_infinite]">
                     <use href="#fas-circle-notch" />
                   </svg>
-                  <svg v-if="getPublishingStateById(song.$id)?.state === 'succeeded'" key="succeeded" class="!h-5">
+                  <svg v-if="getPublishingStateById(song.$id)?.state === 'succeeded'" key="succeeded" class="size-5">
                     <use href="#fas-check" />
                   </svg>
-                  <svg v-if="getPublishingStateById(song.$id)?.state === 'failed' && !selectedIds.has(song.$id)" key="failed" class="!h-5">
+                  <svg v-if="getPublishingStateById(song.$id)?.state === 'failed' && !selectedIds.has(song.$id)" key="failed" class="size-5">
                     <use href="#fas-exclamation" />
                   </svg>
                 </transition-group>
