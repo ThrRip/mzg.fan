@@ -196,6 +196,7 @@
                 <font-awesome-icon :icon="['fas', 'dice']" />
               </button>
             </div>
+            <svg class="hidden"><symbol id="fas-comment-dollar"><font-awesome-icon :icon="['fas', 'comment-dollar']" /></symbol></svg>
             <transition-group
               tag="div"
               move-class="transition-transform duration-[1300ms]"
@@ -242,7 +243,7 @@
                     class="flex flex-col justify-center items-center"
                     :title="song.payment_amount ? `需要 ${song.payment_amount} 元 SC` : ''"
                   >
-                    <font-awesome-icon :icon="['fas', 'comment-dollar']" class="!h-5" />
+                    <svg class="size-5"><use href="#fas-comment-dollar" /></svg>
                     <span v-if="song.payment_amount" class="text-[0.625rem] leading-snug">
                       ¥{{ song.payment_amount }}
                     </span>

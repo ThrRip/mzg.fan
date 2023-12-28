@@ -177,6 +177,7 @@
           </button>
         </span>
       </div>
+      <svg class="hidden"><symbol id="fas-comment-dollar"><font-awesome-icon :icon="['fas', 'comment-dollar']" /></symbol></svg>
       <div
         ref="listArea"
         class="overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta"
@@ -449,7 +450,7 @@
                 }"
                 :title="song.payment_required && song.payment_amount ? `需要 ${song.payment_amount} 元 SC` : ''"
               >
-                <font-awesome-icon v-if="props.type === 'main' && song.payment_required" :icon="['fas', 'comment-dollar']" class="!h-5" />
+                <svg v-if="props.type === 'main' && song.payment_required" class="min-h-5 size-5"><use href="#fas-comment-dollar" /></svg>
                 <span
                   v-if="(props.type === 'main' && song.payment_required) || (
                     props.type === 'changes' && (
