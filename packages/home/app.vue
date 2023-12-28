@@ -206,7 +206,7 @@
                 :key="song.$id"
                 class="grid grid-cols-[0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[1fr_3.5rem_4.5rem]
                 grid-rows-1 portrait:grid-rows-[auto_auto]"
-                @click="viewPlaylistCopySong(song.$id)"
+                @click="viewPlaylistCopySongName(song.name, song.$id)"
               >
                 <span class="flex flex-row gap-x-3 items-center px-4 portrait:px-3 portrait:py-0.5 portrait:leading-snug h-full">
                   {{ song.name }}
@@ -444,20 +444,17 @@ callOnce(() => viewPlaylistDataUpdate(['shuffle']))
 
 const viewPlaylistCopiedSongs = ref<Set<Song['$id']>>(new Set())
 const viewPlaylistCopyingFailedSongs = ref<Set<Song['$id']>>(new Set())
-function viewPlaylistCopySong (id: Song['$id']) {
-  const clipboardWritePromise = navigator.clipboard.writeText(
-    // @ts-ignore
-    `点歌 ${backendPlaylist.value.find(song => song.$id === id).name}`
-  )
+function viewPlaylistCopySongName (name: Song['name'], id: Song['$id']) {
+  const clipboardWritePromise = navigator.clipboard.writeText(`点歌 ${name}`)
   setTimeout(() => { if (!viewPlaylistCopiedSongs.value.has(id)) { viewPlaylistCopyingFailedSongs.value.add(id) } }, 500)
   clipboardWritePromise.then(
     () => {
-      if (viewPlaylistCopyingFailedSongs.value.has(id)) { viewPlaylistCopyingFailedSongs.value.delete(id) }
-      if (!viewPlaylistCopiedSongs.value.has(id)) { viewPlaylistCopiedSongs.value.add(id) }
+      viewPlaylistCopyingFailedSongs.value.delete(id)
+      viewPlaylistCopiedSongs.value.add(id)
       setTimeout(() => viewPlaylistCopiedSongs.value.delete(id), 2000)
     },
     () => {
-      if (!viewPlaylistCopyingFailedSongs.value.has(id)) { viewPlaylistCopyingFailedSongs.value.add(id) }
+      viewPlaylistCopyingFailedSongs.value.add(id)
       setTimeout(() => viewPlaylistCopyingFailedSongs.value.delete(id), 5000)
     }
   )
