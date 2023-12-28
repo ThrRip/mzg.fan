@@ -466,8 +466,5 @@ function viewPlaylistCopySongName (name: Song['name'], id: Song['$id']) {
 
 // @ts-ignore
 const viewPlaylistCountTotal = computed<number>(() => backendPlaylist.value.length)
-const viewPlaylistCountDisplayed = computed<number>(() => {
-  // @ts-ignore
-  return process.server ? backendPlaylist.value.length : viewPlaylistData.value.length
-})
+const viewPlaylistCountDisplayed = computed<number>(() => viewPlaylistData.value.length)
 </script>
