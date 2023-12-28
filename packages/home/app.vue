@@ -423,19 +423,18 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
     }
 
     tasks.forEach(async (task, index) => {
-      switch (task) {
-        case 'shuffle':
-          shuffle()
-          if (index === tasks.length - 1) {
-            viewPlaylistSortingColumn.value = null
-            viewPlaylistDataUpdate(['sort'])
-            viewPlaylistData.value = viewPlaylistDataShuffled.value
-          }
-          break
-        case 'sort':
-          if (index === tasks.length - 1) {
-            viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled.value : await sort()
-          }
+      if (task === 'shuffle') {
+        shuffle()
+        if (index === tasks.length - 1) {
+          viewPlaylistSortingColumn.value = null
+          viewPlaylistDataUpdate(['sort'])
+          viewPlaylistData.value = viewPlaylistDataShuffled.value
+        }
+      } else
+      if (task === 'sort') {
+        if (index === tasks.length - 1) {
+          viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled.value : await sort()
+        }
       }
     })
   }

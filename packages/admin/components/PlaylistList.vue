@@ -587,18 +587,16 @@ const emit = defineEmits<{
 
 const listArea = ref<HTMLDivElement>()
 function scrollList (position: 'top' | 'bottom') {
-  switch (position) {
-    case 'top':
-      nextTick(() => listArea.value?.scroll({
-        top: 0,
-        behavior: 'smooth'
-      }))
-      break
-    case 'bottom':
-      nextTick(() => listArea.value?.scroll({
-        top: listArea.value?.scrollHeight,
-        behavior: 'smooth'
-      }))
+  if (position === 'top') {
+    nextTick(() => listArea.value?.scroll({
+      top: 0,
+      behavior: 'smooth'
+    }))
+  } else {
+    nextTick(() => listArea.value?.scroll({
+      top: listArea.value?.scrollHeight,
+      behavior: 'smooth'
+    }))
   }
 }
 
