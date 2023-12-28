@@ -440,6 +440,9 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
   }
 }
 callOnce(() => viewPlaylistDataUpdate(['shuffle']))
+if (process.client && useNuxtApp().isHydrating && useNuxtApp().payload.serverRendered) {
+  viewPlaylistDataShuffled.value = viewPlaylistData.value
+}
 
 const viewPlaylistCopiedSongs = ref<Set<Song['$id']>>(new Set())
 const viewPlaylistCopyingFailedSongs = ref<Set<Song['$id']>>(new Set())
