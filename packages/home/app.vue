@@ -221,13 +221,13 @@
                       leave-to-class="opacity-0"
                     >
                       <font-awesome-icon
-                        v-if="viewPlaylistCopiedSongs.has(song.$id)"
+                        v-if="viewPlaylistCopySongNameState[song.$id] === 'succeeded'"
                         key="copied"
                         :icon="['fas', 'clipboard-check']"
                         class="!h-5"
                       />
                       <font-awesome-icon
-                        v-if="viewPlaylistCopyingFailedSongs.has(song.$id)"
+                        v-if="viewPlaylistCopySongNameState[song.$id] === 'failed'"
                         key="copying-failed"
                         :icon="['fas', 'clipboard-question']"
                         class="!h-5"
@@ -447,20 +447,23 @@ if (process.client && useNuxtApp().isHydrating && useNuxtApp().payload.serverRen
   viewPlaylistDataShuffled.value = viewPlaylistData.value
 }
 
-const viewPlaylistCopiedSongs = ref<Set<Song['$id']>>(new Set())
-const viewPlaylistCopyingFailedSongs = ref<Set<Song['$id']>>(new Set())
+const viewPlaylistCopySongNameState = ref<{
+  [key: Song['$id']]: 'succeeded' | 'failed'
+}>({})
 function viewPlaylistCopySongName (name: Song['name'], id: Song['$id']) {
+  if (Object.keys(viewPlaylistCopySongNameState.value).includes(id)) { return }
   const clipboardWritePromise = navigator.clipboard.writeText(`点歌 ${name}`)
-  setTimeout(() => { if (!viewPlaylistCopiedSongs.value.has(id)) { viewPlaylistCopyingFailedSongs.value.add(id) } }, 500)
+  setTimeout(() => {
+    if (viewPlaylistCopySongNameState.value[id] !== 'succeeded') { viewPlaylistCopySongNameState.value[id] = 'failed' }
+  }, 500)
   clipboardWritePromise.then(
     () => {
-      viewPlaylistCopyingFailedSongs.value.delete(id)
-      viewPlaylistCopiedSongs.value.add(id)
-      setTimeout(() => viewPlaylistCopiedSongs.value.delete(id), 2000)
+      viewPlaylistCopySongNameState.value[id] = 'succeeded'
+      setTimeout(() => delete viewPlaylistCopySongNameState.value[id], 2000)
     },
     () => {
-      viewPlaylistCopyingFailedSongs.value.add(id)
-      setTimeout(() => viewPlaylistCopyingFailedSongs.value.delete(id), 5000)
+      viewPlaylistCopySongNameState.value[id] = 'failed'
+      setTimeout(() => delete viewPlaylistCopySongNameState.value[id], 5000)
     }
   )
 }
