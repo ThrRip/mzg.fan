@@ -36,7 +36,7 @@
             class="*:flex *:flex-row *:justify-center *:items-center *:size-8"
           >
             <span v-if="!biliApiLiveStatus"><font-awesome-icon :icon="['fas', 'podcast']" class="!h-5" /></span>
-            <span v-if="biliApiLiveStatus">
+            <span v-else>
               <span class="overflow-hidden min-h-[1.2rem] max-h-[1.2rem]">
                 <font-awesome-icon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
               </span>
@@ -68,9 +68,9 @@
       </section>
       <section
         ref="viewPlaylistArea"
-        class="overflow-y-hidden grid grid-cols-1 grid-rows-[auto_1fr] portrait:grid-rows-[auto_1fr]
-        gap-y-8 portrait:gap-y-6 justify-items-stretch portrait:px-6 portrait:pt-10
-        landscape:pr-10 landscape:xl:pr-12 landscape:2xl:pr-20 landscape:3xl:pr-0 portrait:pb-6 portrait:h-dscreen"
+        class="overflow-y-hidden grid grid-cols-1 grid-rows-[auto_1fr] gap-y-8 portrait:gap-y-6
+        portrait:px-6 portrait:pt-10 landscape:pr-10 landscape:xl:pr-12 landscape:2xl:pr-20 landscape:3xl:pr-0 portrait:pb-6
+        portrait:h-dscreen"
       >
         <header
           class="grid grid-areas-stack place-items-center
@@ -81,11 +81,11 @@
             歌单
           </h2>
         </header>
-        <div class="overflow-y-hidden grid grid-rows-[auto_1fr] landscape:col-span-2 h-full text-black rounded-2xl">
+        <div class="overflow-y-hidden grid grid-rows-[auto_1fr] h-full text-black rounded-2xl">
           <div
             class="landscape:overflow-y-scroll grid grid-cols-[0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[1fr_3.5rem_4.5rem]
-            grid-rows-1 portrait:grid-rows-[1.625rem_1rem] content-center
-            px-2 h-12 portrait:h-16 bg-gray scrollbar scrollbar-thumb-transparent scrollbar-track-transparent"
+            grid-rows-1 portrait:grid-rows-[1.625rem_1rem] content-center px-2 h-12 portrait:h-16 bg-gray
+            scrollbar scrollbar-thumb-transparent scrollbar-track-transparent"
           >
             <button
               class="flex flex-row gap-x-2 items-center px-4 portrait:px-3 py-2 portrait:py-0.5 portrait:leading-snug h-full"
@@ -167,10 +167,7 @@
               @click="viewPlaylistToggleSorting('language')"
             >
               语言
-              <transition
-                enter-from-class="opacity-0"
-                leave-to-class="opacity-0"
-              >
+              <transition enter-from-class="opacity-0" leave-to-class="opacity-0">
                 <font-awesome-icon
                   v-if="viewPlaylistSortingColumn === 'language'"
                   :icon="['fas', 'caret-up']"
@@ -428,16 +425,14 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
     tasks.forEach(async (task, index) => {
       if (task === 'shuffle') {
         shuffle()
-        if (index === tasks.length - 1) {
-          viewPlaylistSortingColumn.value = null
-          viewPlaylistDataUpdate(['sort'])
-          viewPlaylistData.value = viewPlaylistDataShuffled.value
-        }
+        if (index !== tasks.length - 1) { return }
+        viewPlaylistSortingColumn.value = null
+        viewPlaylistDataUpdate(['sort'])
+        viewPlaylistData.value = viewPlaylistDataShuffled.value
       } else
       if (task === 'sort') {
-        if (index === tasks.length - 1) {
-          viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled.value : await sort()
-        }
+        if (index !== tasks.length - 1) { return }
+        viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled.value : await sort()
       }
     })
   }

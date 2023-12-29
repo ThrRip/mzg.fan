@@ -116,20 +116,18 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
     backendPlaylistPublishChangesState.value[changesPublishStateIndex].error = error
   }
   function backendPlaylistRefreshIfAllPublishingFinished () {
-    if (!backendPlaylistPublishChangesState.value.find(_ => _.state === 'processing')) {
-      backendPlaylistRefresh()
-        .then(() => {
-          backendPlaylistPublishChangesState.value.forEach((_, index) => {
-            if (_.newId) {
-              viewPlaylistChangesData.value[
-                viewPlaylistChangesData.value.findIndex(changes => changes.$id === _.$id)
-              ].$id = _.newId
-              backendPlaylistPublishChangesState.value[index].$id = _.newId
-              delete backendPlaylistPublishChangesState.value[index].newId
-            }
-          })
+    if (backendPlaylistPublishChangesState.value.find(_ => _.state === 'processing')) { return }
+    backendPlaylistRefresh()
+      .then(() => {
+        backendPlaylistPublishChangesState.value.forEach((_, index) => {
+          if (!_.newId) { return }
+          viewPlaylistChangesData.value[
+            viewPlaylistChangesData.value.findIndex(changes => changes.$id === _.$id)
+          ].$id = _.newId
+          backendPlaylistPublishChangesState.value[index].$id = _.newId
+          delete backendPlaylistPublishChangesState.value[index].newId
         })
-    }
+      })
   }
 
   changesIds.forEach((changesId) => {
@@ -208,15 +206,14 @@ const viewPlaylistDataWithChanges = computed<Playlist>(() => {
   // @ts-ignore
   const playlist: Playlist = backendPlaylist.value.slice()
   viewPlaylistChangesData.value.forEach((changes: Song) => {
-    if (!backendPlaylistPublishChangesState.value.find(_ => _.$id === changes.$id && _.state === 'succeeded')) {
-      if (Object.keys(changes).length === 1 && Object.keys(changes)[0] === '$id') {
-        playlist.splice(playlist.findIndex(song => song.$id === changes.$id), 1)
-      } else
-      if (playlist.find(song => song.$id === changes.$id)) {
-        playlist[playlist.findIndex(song => song.$id === changes.$id)] = changes
-      } else {
-        playlist.push(changes)
-      }
+    if (backendPlaylistPublishChangesState.value.find(_ => _.$id === changes.$id && _.state === 'succeeded')) { return }
+    if (Object.keys(changes).length === 1 && Object.keys(changes)[0] === '$id') {
+      playlist.splice(playlist.findIndex(song => song.$id === changes.$id), 1)
+    } else
+    if (playlist.find(song => song.$id === changes.$id)) {
+      playlist[playlist.findIndex(song => song.$id === changes.$id)] = changes
+    } else {
+      playlist.push(changes)
     }
   })
   return playlist
