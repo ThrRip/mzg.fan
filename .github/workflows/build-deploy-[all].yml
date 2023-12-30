@@ -6,6 +6,7 @@ on:
     paths-ignore:
       - '.idea/**'
       - '.run/**'
+      - 'database/**'
       - 'packages/**'
       - '.editorconfig'
       - '.eslintrc.js'
