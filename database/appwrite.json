@@ -1,0 +1,106 @@
+{
+    "databases": [
+        {
+            "$id": "home",
+            "name": "Home"
+        },
+        {
+            "$id": "admin",
+            "name": "Administration Panel"
+        }
+    ],
+    "collections": [
+        {
+            "$id": "playlist",
+            "name": "Playlist",
+            "databaseId": "home",
+            "documentSecurity": true,
+            "attributes": [
+                {
+                    "key": "hidden",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false
+                },
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255
+                },
+                {
+                    "key": "artist",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255
+                },
+                {
+                    "key": "language",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255
+                },
+                {
+                    "key": "payment_required",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false
+                },
+                {
+                    "key": "payment_amount",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "min": 1,
+                    "max": 100000,
+                    "default": null
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "entry-tokens",
+            "name": "Entry Tokens",
+            "databaseId": "admin",
+            "attributes": [
+                {
+                    "key": "token",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 32
+                },
+                {
+                    "key": "valid",
+                    "type": "boolean",
+                    "required": false,
+                    "array": false,
+                    "default": true
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 65535,
+                    "default": null
+                }
+            ],
+            "indexes": [
+                {
+                    "key": "token",
+                    "type": "unique",
+                    "attributes": [
+                        "token"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
+        }
+    ]
+}
