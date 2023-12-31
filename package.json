@@ -1,7 +1,7 @@
 {
   "name": "mzg.fan",
   "type": "module",
-  "license": "UNLICENSED",
+  "license": "MPL-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/ThrRip/mzg.fan.git"
