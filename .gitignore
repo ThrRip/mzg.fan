@@ -15,8 +15,10 @@
 ### JetBrains IDE
 .idea/*
 !.idea/dictionaries/
+!.idea/fileTemplates/
 !.idea/inspectionProfiles/
 !.idea/jsLinters/
+!.idea/compiler.xml
 !.idea/icon.svg
 
 ### Node.js
