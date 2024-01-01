@@ -303,7 +303,11 @@ type Playlist = Array<Song>
 const { data: backendPlaylist } = await useAsyncData<Playlist>(
   'backend-databases-home-playlist',
   // @ts-ignore
-  () => backendDatabases.listDocuments('home', 'playlist', [Query.limit(useAppConfig().backendQueryResultsLimit)]),
+  () => backendDatabases.listDocuments('home', 'playlist', [
+    useAppConfig().monitoringDataCollectorUserAgentMatch.test(useRequestHeader('user-agent') ?? '') ?
+      Query.limit(1) :
+      Query.limit(useAppConfig().backendQueryResultsLimit)
+  ]),
   {
     default: () => [],
     transform: (res: { total: number, documents: Playlist }): Playlist => res.documents
