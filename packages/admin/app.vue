@@ -154,7 +154,7 @@ const backendAccount = new Account(backendClient)
 
 const backendLoggedIn = ref<Boolean>(false)
 const backendLoggedInChecking = ref<Boolean>(true)
-onBeforeMount(() => {
+if (process.client) {
   backendAccount.get()
     .then(
       () => {
@@ -166,7 +166,7 @@ onBeforeMount(() => {
         backendLoggedInChecking.value = false
       }
     )
-})
+}
 
 export type BackendAuthState = '' | 'processing' | 'succeeded' | 'failed'
 const backendAuthState = ref<BackendAuthState>('')
