@@ -15,7 +15,7 @@
       leave-active-class="transition-opacity duration-300"
       leave-to-class="opacity-0"
     >
-      <div key="content" class="flex flex-col gap-y-8 justify-center items-center w-4/5 max-w-xs">
+      <div v-if="props.visible" key="content" class="flex flex-col gap-y-8 justify-center items-center w-4/5 max-w-xs">
         <div class="flex flex-col gap-y-1 text-white">
           登录至
           <h1 class="text-3xl">
@@ -62,7 +62,7 @@
           </span>
         </transition-group>
       </div>
-      <div key="background" class="-z-20 w-full max-w-lg h-full max-h-[30rem] bg-blue-l" />
+      <div v-if="props.visible" key="background" class="-z-20 w-full max-w-lg h-full max-h-[30rem] bg-blue-l" />
     </transition-group>
   </div>
 </template>

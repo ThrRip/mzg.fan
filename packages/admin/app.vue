@@ -110,6 +110,7 @@
       <LoginModal
         v-if="!backendLoggedIn && !backendLoggedInChecking"
         :auth-state="backendAuthState"
+        :visible="viewShowLoginModal"
         @submit="backendLogin"
       />
       <NuxtPage
@@ -179,10 +180,12 @@ function backendLogin (email: string, password: string) {
     .then(
       () => {
         backendAuthState.value = 'succeeded'
+        setTimeout(() => { viewShowLoginModal.value = false }, 1000)
         setTimeout(() => {
           backendAuthState.value = ''
           backendLoggedIn.value = true
-        }, 1000)
+          viewShowLoginModal.value = true
+        }, 1300)
       },
       () => { backendAuthState.value = 'failed' }
     )
@@ -205,10 +208,14 @@ function backendLogout () {
 }
 
 // View
+const viewShowLoginModal = ref<Boolean>(true)
+
 const viewShowFullNavigationBar = ref<Boolean>(false)
 const viewShowFullNavigationBarRealState = ref<Boolean>(false)
 const viewFullNavigationBarToggles = ref<number>(0)
+
 const viewShowPageContent = ref<Boolean>(true)
+
 function viewToggleFullNavigationBar (show?: boolean) {
   if (show === undefined) {
     viewShowFullNavigationBar.value = !viewShowFullNavigationBar.value
