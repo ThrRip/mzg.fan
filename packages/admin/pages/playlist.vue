@@ -16,8 +16,7 @@
     <h2 class="col-span-2 self-end px-2 portrait:pt-8 lg:py-12 text-4xl lg:text-5xl font-light tracking-wide text-brown">
       歌单编辑
     </h2>
-    <PlaylistList
-      type="main"
+    <PlaylistMainList
       :data="viewPlaylistData"
       :sorting-column="viewPlaylistSortingColumn"
       :sorting-order="viewPlaylistSortingOrder"
@@ -27,8 +26,7 @@
       @toggle-sorting="viewPlaylistToggleSorting"
       @stage-changes="viewPlaylistStageChanges"
     />
-    <PlaylistList
-      type="changes"
+    <PlaylistChangesList
       :data="backendPlaylist"
       :data-changes="viewPlaylistChangesData"
       :publishing-state="backendPlaylistPublishChangesState"
