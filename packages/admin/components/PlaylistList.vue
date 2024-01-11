@@ -274,7 +274,6 @@
                 </transition>
                 <transition-group
                   v-if="props.type === 'changes'"
-                  :css="getPublishingStateById(song.$id)?.state !== 'succeeded'"
                   enter-from-class="opacity-0"
                   enter-active-class="transition-opacity duration-200"
                   leave-active-class="transition-opacity duration-200"
