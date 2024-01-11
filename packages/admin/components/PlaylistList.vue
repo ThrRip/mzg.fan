@@ -203,7 +203,11 @@
             grid-rows-1 portrait:grid-rows-[auto_auto]"
             :class="{
               'bg-blue-l/50 rounded-xl': props.type === 'changes' && (
-                (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                (
+                  getPublishingStateById(song.$id) &&
+                  getPublishingStateById(song.$id)?.state !== 'processing' &&
+                  getPublishingStateById(song.$id)?.state !== 'failed'
+                ) ?
                   !getPublishingStateById(song.$id)?.old :
                   !getUnmodifiedSongById(song.$id)
               ) &&
@@ -327,26 +331,42 @@
               >
                 {{ props.type === 'main' || (
                   props.type === 'changes' && (
-                    (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    (
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       getPublishingStateById(song.$id)?.old?.name === song.name :
                       getUnmodifiedSongById(song.$id)?.name === song.name
                   )
                 ) ? song.name : '' }}
                 <span
                   v-if="props.type === 'changes' && (
-                    (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    (
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       getPublishingStateById(song.$id)?.old?.name !== song.name :
                       getUnmodifiedSongById(song.$id)?.name !== song.name
                   )"
                   class="flex flex-row gap-x-1.5"
                 >
                   <span
-                    v-if="(getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    v-if="(
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       (getPublishingStateById(song.$id)?.old && getPublishingStateById(song.$id)?.old?.name !== '') :
                       (getUnmodifiedSongById(song.$id) && getUnmodifiedSongById(song.$id)?.name !== '')"
                     class="px-2.5 py-0.5 line-through bg-pink-l/75 rounded-lg"
                   >
-                    {{ (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    {{ (
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       getPublishingStateById(song.$id)?.old?.name : getUnmodifiedSongById(song.$id)?.name }}
                   </span>
                   <span v-if="song.name" class="px-2.5 py-0.5 bg-blue-l/50 rounded-lg">
@@ -391,26 +411,42 @@
               >
                 {{ props.type === 'main' || (
                   props.type === 'changes' && (
-                    (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    (
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       getPublishingStateById(song.$id)?.old?.artist === song.artist :
                       getUnmodifiedSongById(song.$id)?.artist === song.artist
                   )
                 ) ? song.artist : '' }}
                 <span
                   v-if="props.type === 'changes' && (
-                    (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    (
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       getPublishingStateById(song.$id)?.old?.artist !== song.artist :
                       getUnmodifiedSongById(song.$id)?.artist !== song.artist
                   )"
                   class="flex flex-row gap-x-1.5"
                 >
                   <span
-                    v-if="(getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    v-if="(
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       (getPublishingStateById(song.$id)?.old && getPublishingStateById(song.$id)?.old?.artist !== '') :
                       (getUnmodifiedSongById(song.$id) && getUnmodifiedSongById(song.$id)?.artist !== '')"
                     class="px-2.5 py-0.5 line-through bg-pink-l/75 rounded-lg"
                   >
-                    {{ (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    {{ (
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       getPublishingStateById(song.$id)?.old?.artist : getUnmodifiedSongById(song.$id)?.artist }}
                   </span>
                   <span v-if="song.artist" class="px-2.5 py-0.5 bg-blue-l/50 rounded-lg">
@@ -470,26 +506,42 @@
                 >
                   {{ props.type === 'main' || (
                     props.type === 'changes' && song.payment_amount && (
-                      (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                      (
+                        getPublishingStateById(song.$id) &&
+                        getPublishingStateById(song.$id)?.state !== 'processing' &&
+                        getPublishingStateById(song.$id)?.state !== 'failed'
+                      ) ?
                         getPublishingStateById(song.$id)?.old?.payment_amount === song.payment_amount :
                         getUnmodifiedSongById(song.$id)?.payment_amount === song.payment_amount
                     )
                   ) ? `¥${song.payment_amount}` : '' }}
                   <span
                     v-if="props.type === 'changes' && (
-                      (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                      (
+                        getPublishingStateById(song.$id) &&
+                        getPublishingStateById(song.$id)?.state !== 'processing' &&
+                        getPublishingStateById(song.$id)?.state !== 'failed'
+                      ) ?
                         getPublishingStateById(song.$id)?.old?.payment_amount !== song.payment_amount :
                         getUnmodifiedSongById(song.$id)?.payment_amount !== song.payment_amount
                     )"
                     class="flex flex-col gap-y-1 py-0.5 text-sm"
                   >
                     <span
-                      v-if="(getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                      v-if="(
+                        getPublishingStateById(song.$id) &&
+                        getPublishingStateById(song.$id)?.state !== 'processing' &&
+                        getPublishingStateById(song.$id)?.state !== 'failed'
+                      ) ?
                         (getPublishingStateById(song.$id)?.old && getPublishingStateById(song.$id)?.old?.payment_amount) :
                         (getUnmodifiedSongById(song.$id) && getUnmodifiedSongById(song.$id)?.payment_amount)"
                       class="px-2 py-0.5 w-fit line-through bg-pink-l/75 rounded-md"
                     >
-                      ¥{{ (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                      ¥{{ (
+                        getPublishingStateById(song.$id) &&
+                        getPublishingStateById(song.$id)?.state !== 'processing' &&
+                        getPublishingStateById(song.$id)?.state !== 'failed'
+                      ) ?
                         getPublishingStateById(song.$id)?.old?.payment_amount : getUnmodifiedSongById(song.$id)?.payment_amount }}
                     </span>
                     <span v-if="song.payment_amount" class="px-2 py-0.5 w-fit bg-blue-l/50 rounded-md">
@@ -534,26 +586,42 @@
               >
                 {{ props.type === 'main' || (
                   props.type === 'changes' && (
-                    (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    (
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       getPublishingStateById(song.$id)?.old?.language === song.language :
                       getUnmodifiedSongById(song.$id)?.language === song.language
                   )
                 ) ? song.language : '' }}
                 <span
                   v-if="props.type === 'changes' && (
-                    (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    (
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       getPublishingStateById(song.$id)?.old?.language !== song.language :
                       getUnmodifiedSongById(song.$id)?.language !== song.language
                   )"
                   class="flex flex-col gap-y-1 py-0.5"
                 >
                   <span
-                    v-if="(getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    v-if="(
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       (getPublishingStateById(song.$id)?.old && getPublishingStateById(song.$id)?.old?.language !== '') :
                       (getUnmodifiedSongById(song.$id) && getUnmodifiedSongById(song.$id)?.language !== '')"
                     class="px-2.5 py-0.5 w-fit line-through bg-pink-l/75 rounded-lg"
                   >
-                    {{ (getPublishingStateById(song.$id) && getPublishingStateById(song.$id)?.state !== 'processing') ?
+                    {{ (
+                      getPublishingStateById(song.$id) &&
+                      getPublishingStateById(song.$id)?.state !== 'processing' &&
+                      getPublishingStateById(song.$id)?.state !== 'failed'
+                    ) ?
                       getPublishingStateById(song.$id)?.old?.language : getUnmodifiedSongById(song.$id)?.language }}
                   </span>
                   <span v-if="song.language" class="px-2.5 py-0.5 w-fit bg-blue-l/50 rounded-lg">
