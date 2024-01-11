@@ -4,7 +4,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.5",
     "appwrite": "^13.0.1",
-    "pinyin-pro": "^3.18.5"
+    "pinyin-pro": "^3.19.0"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
