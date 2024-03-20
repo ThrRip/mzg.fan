@@ -38,11 +38,11 @@ jobs:
       - name: Copy the assets out
         run: cp -r mzg.fan-assets/* .
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: 8
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: lts/*
           check-latest: true
@@ -78,7 +78,7 @@ jobs:
           tar -cvf build.tar .output ecosystem.config.js
           zstd -11 -T0 build.tar
       - name: Store the build as an artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-${{ github.ref_name }}_${{ inputs.package }}-${{ github.sha }}
           path: packages/${{ inputs.package }}/build.tar.zst
@@ -97,7 +97,7 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install rsync
       - name: Retrieve the build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-${{ github.ref_name }}_${{ inputs.package }}-${{ github.sha }}
       - name: Retrieve the SSH key
