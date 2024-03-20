@@ -82,6 +82,7 @@ jobs:
         with:
           name: build-${{ github.ref_name }}_${{ inputs.package }}-${{ github.sha }}
           path: packages/${{ inputs.package }}/build.tar.zst
+          compression-level: 0
 
   deploy-prod:
     name: Deploy to production
