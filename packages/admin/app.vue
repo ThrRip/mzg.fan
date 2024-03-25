@@ -176,7 +176,7 @@ const backendAuthState = ref<BackendAuthState>('')
 
 function backendLogin (email: string, password: string) {
   backendAuthState.value = 'processing'
-  backendAccount.createEmailSession(email, password)
+  backendAccount.createEmailPasswordSession(email, password)
     .then(
       () => {
         backendAuthState.value = 'succeeded'
