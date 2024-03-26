@@ -16,6 +16,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const entryTokenQuery = to.query.entrytoken
   const entryTokenCookie = useCookie('admin_entry_token', {
     maxAge: 2592000,
+    httpOnly: true,
     path: useAppConfig().appAdminBasePath,
     sameSite: 'strict',
     secure: useRuntimeConfig().appSecureContext
