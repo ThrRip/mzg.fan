@@ -47,6 +47,10 @@ export default defineNuxtConfig({
 
   devtools: false,
 
+  nitro: {
+    preset: 'bun'
+  },
+
   postcss: {
     plugins: {
       'tailwindcss': {},
