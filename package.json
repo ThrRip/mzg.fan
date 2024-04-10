@@ -12,7 +12,7 @@
     "dev": "pnpm -r exec nuxt dev",
     "build": "pnpm -r exec nuxt build",
     "preview": "pnpm -r exec nuxt preview",
-    "lint": "eslint --ext .js,.cjs,.ts,.vue --ignore-path .gitignore .",
+    "lint": "eslint",
     "postinstall": "nuxt prepare && pnpm -r exec nuxt prepare",
     "dev:home": "pnpm -F home exec nuxt dev",
     "build:home": "pnpm -F home exec nuxt build",
@@ -22,22 +22,20 @@
     "preview:admin": "pnpm -F admin exec nuxt preview"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "appwrite": "^14.0.0",
     "node-appwrite": "^12.0.1",
-    "pinyin-pro": "^3.19.6"
+    "pinyin-pro": "^3.19.7"
   },
   "devDependencies": {
-    "@fortawesome/free-brands-svg-icons": "^6.5.1",
-    "@fortawesome/free-regular-svg-icons": "^6.5.1",
-    "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/free-regular-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@nuxt/eslint": "^0.3.4",
     "autoprefixer": "^10.4.19",
-    "eslint": "^8.57.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-nuxt": "^4.0.0",
-    "nuxt": "^3.11.1",
+    "eslint": "^9.0.0",
+    "nuxt": "^3.11.2",
     "postcss": "^8.4.38",
     "tailwind-scrollbar": "^3.0.5",
     "tailwindcss": "^3.4.3"
