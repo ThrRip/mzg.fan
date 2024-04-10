@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import {
   faPodcast,
-  faVideo,
   faList,
   faArrowUpRightFromSquare,
   faArrowDown,
@@ -30,7 +29,6 @@ config.autoAddCss = false
 
 library.add(
   faPodcast,
-  faVideo,
   faList,
   faArrowUpRightFromSquare,
   faArrowDown,

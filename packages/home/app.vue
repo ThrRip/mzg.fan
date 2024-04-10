@@ -17,10 +17,10 @@
       <section class="flex flex-col max-xl:landscape:gap-y-4 gap-y-14 justify-center items-center portrait:h-dscreen">
         <picture class="aspect-square max-xl:landscape:w-1/3 w-1/2 2xl:max-w-[15rem]">
           <source srcset="~/assets/img/profile-pic.avif" type="image/avif">
-          <img src="~/assets/img/profile-pic.webp" alt="洺知-故犯的头像" class="rounded-[15%]">
+          <img src="~/assets/img/profile-pic.webp" alt="一口菠萝包片夹小洺的头像" class="rounded-[15%]">
         </picture>
         <h1 class="max-xl:landscape:text-4xl portrait:text-6xl text-7xl font-light text-white-alt">
-          洺知-故犯
+          小洺
         </h1>
         <div
           class="flex flex-col max-xl:landscape:gap-y-1 gap-y-4
@@ -30,7 +30,7 @@
           *:transition active:*:scale-95"
         >
           <NuxtLink
-            to="https://space.bilibili.com/32159860"
+            :to="`https://space.bilibili.com/${useAppConfig().appHomeBiliUid}`"
             target="_blank"
             class="*:flex *:flex-row *:justify-center *:items-center *:size-8"
           >
@@ -39,7 +39,7 @@
             <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
           </NuxtLink>
           <NuxtLink
-            to="https://live.bilibili.com/1267105"
+            :to="`https://live.bilibili.com/${useAppConfig().appHomeBiliRoomId}`"
             target="_blank"
             class="*:flex *:justify-center *:items-center *:size-8"
           >
@@ -53,15 +53,6 @@
               </span>
             </span>
             直播间
-            <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
-          </NuxtLink>
-          <NuxtLink
-            to="https://space.bilibili.com/391500490"
-            target="_blank"
-            class="*:flex *:flex-row *:justify-center *:items-center *:size-8"
-          >
-            <span><font-awesome-icon :icon="['fas', 'video']" /></span>
-            录播组
             <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
           </NuxtLink>
           <button
@@ -272,15 +263,17 @@
 import { Client, Databases, Query } from 'appwrite'
 
 // Live status
-const { data: biliApiRoomPlayInfo } = await useFetch<{
-  data: {
-    live_status: 0 | 1
-  }
-}>(
+const { data: biliApiLiveStatus } = await useFetch(
   useAppConfig().biliApiRoomPlayInfoEndpoint,
-  { query: useAppConfig().biliApiRoomPlayInfoEndpointQueries }
+  {
+    query: { room_id: useAppConfig().appHomeBiliRoomId },
+    transform: (res: {
+      data: {
+        live_status: 0 | 1
+      }
+    }): boolean => (Boolean(res.data.live_status))
+  }
 )
-const biliApiLiveStatus = ref<0 | 1 | undefined>(biliApiRoomPlayInfo.value?.data.live_status)
 
 // Backend
 const backendClient = new Client()

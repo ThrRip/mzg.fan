@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         lang: 'zh',
         class: 'bg-white-alt'
       },
-      title: '洺知-故犯',
+      title: '一口菠萝包片夹小洺',
       meta: [
         { name: 'description', content: '' },
         { name: 'format-detection', content: 'telephone=no' },

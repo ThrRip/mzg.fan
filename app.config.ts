@@ -8,6 +8,9 @@
 
 export default defineAppConfig({
   appHomeBase: 'https://mzg.fan/',
+  appHomeBiliUid: '391500490',
+  appHomeBiliRoomId: '32452928',
+
   appAdminBasePath: '/admin',
 
   backendBase: 'https://api.mzg.fan/v1',
@@ -15,7 +18,6 @@ export default defineAppConfig({
   backendQueryResultsLimit: 1000,
 
   biliApiRoomPlayInfoEndpoint: 'https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo',
-  biliApiRoomPlayInfoEndpointQueries: { room_id: '1267105' },
 
   monitoringDataCollectorUserAgentMatch: /^Zabbix$/
 })
