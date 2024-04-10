@@ -366,7 +366,8 @@ function scrollList (position: 'top' | 'bottom') {
       top: 0,
       behavior: 'smooth'
     }))
-  } else {
+  }
+  else {
     nextTick(() => listArea.value?.scroll({
       top: listArea.value?.scrollHeight,
       behavior: 'smooth'
@@ -382,7 +383,6 @@ interface ModifyTarget {
   field: 'name' | 'artist' | 'payment_amount' | 'language'
 }
 const modifyingTarget = ref<{
-  // eslint-disable-next-line no-use-before-define
   [P in keyof ModifyTarget]: ModifyTarget[P] | null
 }>({
   id: null,

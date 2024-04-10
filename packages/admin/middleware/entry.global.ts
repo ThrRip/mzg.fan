@@ -6,8 +6,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-export default defineNuxtRouteMiddleware(async (to) => {
-  if (process.client) { return }
+export default defineNuxtRouteMiddleware(async to => {
+  if (import.meta.client) { return }
 
   function navigateToHome () {
     return navigateTo(useAppConfig().appHomeBase, { external: true })
@@ -19,6 +19,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     httpOnly: true,
     path: useAppConfig().appAdminBasePath,
     sameSite: 'strict',
+    // @ts-expect-error
     secure: useRuntimeConfig().appSecureContext
   })
   const entryToken = entryTokenQuery ?? entryTokenCookie.value
@@ -29,7 +30,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const backendDatabases = new Databases(backendClient)
   backendClient.setEndpoint(useAppConfig().backendBase)
     .setProject(useAppConfig().backendProjectId)
-    .setKey(useRuntimeConfig().backendApiKey)
+    .setKey(useRuntimeConfig().backendApiKey as string)
 
   const entryTokenMatches = (await backendDatabases.listDocuments(
     'admin',
@@ -41,7 +42,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
   )).total
   if (entryTokenMatches) {
     entryTokenCookie.value = String(entryToken)
-  } else {
+  }
+  else {
     return navigateToHome()
   }
 })

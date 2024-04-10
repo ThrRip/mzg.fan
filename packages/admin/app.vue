@@ -99,9 +99,9 @@
           <font-awesome-icon
             :icon="['fas', 'angle-right']"
             class="max-lg:landscape:!h-4 !h-5 transition-transform duration-300"
-            :style="[ viewFullNavigationBarToggles === 0 ?
+            :style="[viewFullNavigationBarToggles === 0 ?
               '' :
-              `transform: rotate(${180 * viewFullNavigationBarToggles}deg)` ]"
+              `transform: rotate(${180 * viewFullNavigationBarToggles}deg)`]"
           />
         </button>
       </section>
@@ -155,9 +155,9 @@ backendClient.setEndpoint(useAppConfig().backendBase)
   .setProject(useAppConfig().backendProjectId)
 const backendAccount = new Account(backendClient)
 
-const backendLoggedIn = ref<Boolean>(false)
-const backendLoggedInChecking = ref<Boolean>(true)
-if (process.client) {
+const backendLoggedIn = ref<boolean>(false)
+const backendLoggedInChecking = ref<boolean>(true)
+if (import.meta.client) {
   backendAccount.get()
     .then(
       () => {
@@ -208,19 +208,20 @@ function backendLogout () {
 }
 
 // View
-const viewShowLoginModal = ref<Boolean>(true)
+const viewShowLoginModal = ref<boolean>(true)
 
-const viewShowFullNavigationBar = ref<Boolean>(false)
-const viewShowFullNavigationBarRealState = ref<Boolean>(false)
+const viewShowFullNavigationBar = ref<boolean>(false)
+const viewShowFullNavigationBarRealState = ref<boolean>(false)
 const viewFullNavigationBarToggles = ref<number>(0)
 
-const viewShowPageContent = ref<Boolean>(true)
+const viewShowPageContent = ref<boolean>(true)
 
 function viewToggleFullNavigationBar (show?: boolean) {
   if (show === undefined) {
     viewShowFullNavigationBar.value = !viewShowFullNavigationBar.value
     viewFullNavigationBarToggles.value++
-  } else
+  }
+ else
   if (viewShowFullNavigationBar.value !== show) {
     viewShowFullNavigationBar.value = show
     viewFullNavigationBarToggles.value++
@@ -230,7 +231,8 @@ function viewToggleFullNavigationBar (show?: boolean) {
   }, 300)
   if (viewShowFullNavigationBar.value) {
     viewShowPageContent.value = !viewShowFullNavigationBar.value
-  } else {
+  }
+  else {
     setTimeout(() => { viewShowPageContent.value = !viewShowFullNavigationBar.value }, 150)
   }
 }

@@ -214,9 +214,9 @@
                   '请联系您的技术支持人员以获取帮助，或点击此图标以重新选择此项目，并再次尝试发布改动。' :
                   ''"
               class="group grid portrait:row-span-2 place-items-center pl-2.5 portrait:pl-2.5 portrait:pr-1 py-2.5 h-full"
-              :class="[ !getPublishingStateById(song.$id) ? 'cursor-pointer' :
+              :class="[!getPublishingStateById(song.$id) ? 'cursor-pointer' :
                 getPublishingStateById(song.$id)?.state === 'failed' ? 'grid-areas-stack cursor-pointer' :
-                'grid-areas-stack' ]"
+                'grid-areas-stack']"
             >
               <input
                 v-if="!getPublishingStateById(song.$id) || getPublishingStateById(song.$id)?.state === 'failed'"
@@ -473,7 +473,7 @@ const emit = defineEmits<{
 }>()
 
 const selectableIds = computed<Array<Song['$id']>>(() => {
-  // @ts-ignore
+  // @ts-expect-error
   return props.dataChanges.map(song => song.$id)
     .filter(id => getPublishingStateById(id)?.state !== 'processing' && getPublishingStateById(id)?.state !== 'succeeded')
 })

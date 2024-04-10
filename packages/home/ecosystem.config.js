@@ -15,7 +15,7 @@ module.exports = {
       port: 12320,
       max_memory_restart: '200M',
       env: {
-        'NITRO_PORT': 12320
+        NITRO_PORT: 12320
       }
     }
   ]

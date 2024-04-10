@@ -31,21 +31,23 @@ export default defineNuxtConfig({
     }
   },
 
-  build: {
-    transpile: ['@fortawesome/vue-fontawesome']
-  },
-
   css: [
     '@/../../assets/css/main.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
+
+  build: {
+    transpile: ['@fortawesome/vue-fontawesome']
+  },
 
   devServer: {
     host: '0.0.0.0',
     port: 3001
   },
 
-  devtools: false,
+  devtools: {
+    enabled: false
+  },
 
   nitro: {
     preset: 'bun'
@@ -53,8 +55,8 @@ export default defineNuxtConfig({
 
   postcss: {
     plugins: {
-      'tailwindcss': {},
-      'autoprefixer': {}
+      tailwindcss: {},
+      autoprefixer: {}
     }
   },
 

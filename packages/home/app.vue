@@ -275,7 +275,6 @@ import { Client, Databases, Query } from 'appwrite'
 const { data: biliApiRoomPlayInfo } = await useFetch<{
   data: {
     live_status: 0 | 1
-    [key: string]: any
   }
 }>(
   useAppConfig().biliApiRoomPlayInfoEndpoint,
@@ -302,7 +301,7 @@ type Playlist = Array<Song>
 
 const { data: backendPlaylist } = await useAsyncData<Playlist>(
   'backend-databases-home-playlist',
-  // @ts-ignore
+  // @ts-expect-error
   () => backendDatabases.listDocuments('home', 'playlist', [
     useAppConfig().monitoringDataCollectorUserAgentMatch.test(useRequestHeader('user-agent') ?? '') ?
       Query.limit(1) :
@@ -343,7 +342,8 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   if (viewPlaylistSortingColumn.value === null || column !== viewPlaylistSortingColumn.value) {
     viewPlaylistSortingColumn.value = column
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
-  } else
+  }
+  else
   // Disable sorting because out of ordering options
   if (
     column === viewPlaylistSortingColumn.value &&
@@ -351,8 +351,9 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   ) {
     viewPlaylistSortingColumn.value = null
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
+  }
   // Rotate between ordering options
-  } else {
+  else {
     const sortingOrderOptionIndex: number =
       viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1 >
       viewPlaylistSortingOrderOptions.value.length - 1 ?
@@ -366,10 +367,10 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
 const viewPlaylistData = useState<Playlist>('viewPlaylistData')
 const viewPlaylistDataShuffled = ref<Playlist>([])
 function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
-  // @ts-ignore
+  // @ts-expect-error
   if (backendPlaylist.value.length !== 0) {
     function shuffle () {
-      // @ts-ignore
+      // @ts-expect-error
       const playlist = backendPlaylist.value.slice()
       let currentSong = playlist.length
       while (currentSong !== 0) {
@@ -384,7 +385,7 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
     }
 
     async function sort () {
-      // @ts-ignore
+      // @ts-expect-error
       const playlist: Array<SortingSong> = backendPlaylist.value.slice()
       const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
 
@@ -392,25 +393,28 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
       if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
         const pinyinPro = await import('pinyin-pro')
         playlist.forEach((song, index) => {
-          // @ts-ignore
+          // @ts-expect-error
           playlist[index][`${viewPlaylistSortingColumn.value}Pinyin`] =
-            // @ts-ignore
+            // @ts-expect-error
             pinyinPro.pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
               .replaceAll(' ', '')
         })
         playlist.sort((a, b) => {
-          // @ts-ignore
+          // @ts-expect-error
           if (a[`${viewPlaylistSortingColumn.value}Pinyin`] < b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
             return -1 * orderModifier
-          } else
-          // @ts-ignore
+          }
+          else
+          // @ts-expect-error
           if (a[`${viewPlaylistSortingColumn.value}Pinyin`] > b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
             return 1 * orderModifier
-          } else {
+          }
+          else {
             return 0
           }
         })
-      } else
+      }
+      else
 
       // Sort by payment requirement
       if (viewPlaylistSortingColumn.value === 'payment_amount') {
@@ -420,7 +424,8 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
           }
           return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
         })
-      } else
+      }
+      else
 
       // Sort by language
       if (viewPlaylistSortingColumn.value === 'language') {
@@ -441,7 +446,8 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
         viewPlaylistSortingColumn.value = null
         viewPlaylistDataUpdate(['sort'])
         viewPlaylistData.value = viewPlaylistDataShuffled.value
-      } else
+      }
+      else
       if (task === 'sort') {
         if (index !== tasks.length - 1) { return }
         viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled.value : await sort()
@@ -450,7 +456,7 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
   }
 }
 callOnce(() => viewPlaylistDataUpdate(['shuffle']))
-if (process.client && useNuxtApp().isHydrating && useNuxtApp().payload.serverRendered) {
+if (import.meta.client && useNuxtApp().isHydrating && useNuxtApp().payload.serverRendered) {
   viewPlaylistDataShuffled.value = viewPlaylistData.value
 }
 
@@ -475,7 +481,7 @@ function viewPlaylistCopySongName (name: Song['name'], id: Song['$id']) {
   )
 }
 
-// @ts-ignore
+// @ts-expect-error
 const viewPlaylistCountTotal = computed<number>(() => backendPlaylist.value.length)
 const viewPlaylistCountDisplayed = computed<number>(() => viewPlaylistData.value.length)
 </script>
