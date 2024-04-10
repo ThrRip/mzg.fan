@@ -24,9 +24,9 @@
         </h1>
         <div
           class="flex flex-col max-xl:landscape:gap-y-1 gap-y-4
-          *:flex *:flex-row *:gap-x-2 *:justify-between *:items-center
-          max-xl:landscape:*:px-1.5 *:px-2.5 *:w-54 max-xl:landscape:*:h-10 *:h-12
-          *:text-white *:bg-blue hover:*:bg-blue-a focus:*:outline *:outline-2 *:outline-offset-3 *:outline-blue-a *:rounded-xl
+          *:flex *:flex-row *:gap-x-2 *:justify-between *:items-center max-xl:landscape:*:px-1.5 *:px-2.5
+          *:w-54 max-xl:landscape:*:h-10 *:h-12 *:text-white *:bg-blue hover:*:bg-blue-a
+          *:rounded-xl focus-visible:*:outline *:outline-2 *:outline-blue-a *:outline-offset-3
           *:transition active:*:scale-95"
         >
           <NuxtLink

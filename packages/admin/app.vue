@@ -25,9 +25,9 @@
         <NuxtLink
           to="/"
           title="首页"
-          class="aspect-square flex flex-row justify-center items-center h-14
-          bg-blue hover:bg-blue-a rounded-xl focus:outline outline-2 outline-offset-3 outline-blue-a
-          transition duration-300 active:scale-95"
+          class="aspect-square flex flex-row justify-center items-center h-14 bg-blue hover:bg-blue-a
+          rounded-xl focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition duration-300
+          active:scale-95"
           :class="{ 'bg-blue-a': route.path === '/' }"
           @click="viewToggleFullNavigationBar(false)"
         >
@@ -37,9 +37,9 @@
       <section class="z-50 flex flex-col max-lg:landscape:gap-y-2 gap-y-4 items-end">
         <NuxtLink
           to="/playlist"
-          class="overflow-clip flex flex-row gap-x-1 items-center px-2 h-14 w-full max-w-full
-          bg-blue hover:bg-blue-a rounded-xl focus:outline outline-2 outline-offset-3 outline-blue-a
-          transition-all duration-300 active:scale-95"
+          class="overflow-clip flex flex-row gap-x-1 items-center px-2 h-14 w-full max-w-full bg-blue hover:bg-blue-a
+          rounded-xl focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition-all duration-300
+          active:scale-95"
           :class="{
             '!px-0 !max-w-[3.5rem]': !viewShowFullNavigationBar,
             'bg-blue-a': route.path === '/playlist'
@@ -56,9 +56,9 @@
       </section>
       <section class="z-50 flex flex-row gap-x-12 justify-between">
         <button
-          class="flex flex-row gap-x-1 items-center px-2 w-full h-14
-          bg-blue hover:bg-blue-a rounded-xl focus:outline outline-2 outline-offset-3 outline-blue-a
-          transition duration-300 active:scale-95"
+          class="flex flex-row gap-x-1 items-center px-2 w-full h-14 bg-blue hover:bg-blue-a
+          rounded-xl focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition duration-300
+          active:scale-95"
           @click="backendLogout"
         >
           <ClientOnly>
@@ -91,9 +91,9 @@
         </button>
         <button
           :title="viewShowFullNavigationBar ? '收起导航栏' : '展开导航栏'"
-          class="aspect-square flex flex-row justify-center items-center h-14
-          bg-blue hover:bg-blue-a rounded-xl focus:outline outline-2 outline-offset-3 outline-blue-a
-          transition duration-300 active:scale-95"
+          class="aspect-square flex flex-row justify-center items-center h-14 bg-blue hover:bg-blue-a
+          rounded-xl focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition duration-300
+          active:scale-95"
           @click="viewToggleFullNavigationBar()"
         >
           <font-awesome-icon
