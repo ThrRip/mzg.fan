@@ -41,10 +41,10 @@
           <NuxtLink
             to="https://live.bilibili.com/1267105"
             target="_blank"
-            class="*:flex *:flex-row *:justify-center *:items-center *:size-8"
+            class="*:flex *:justify-center *:items-center *:size-8"
           >
-            <span v-if="!biliApiLiveStatus"><font-awesome-icon :icon="['fas', 'podcast']" class="!h-5" /></span>
-            <span v-else>
+            <span v-if="!biliApiLiveStatus" class="flex-row"><font-awesome-icon :icon="['fas', 'podcast']" class="!h-5" /></span>
+            <span v-else class="flex-col">
               <span class="overflow-hidden min-h-[1.2rem] max-h-[1.2rem]">
                 <font-awesome-icon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
               </span>
