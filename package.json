@@ -26,13 +26,13 @@
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "appwrite": "^14.0.0",
     "node-appwrite": "^12.0.1",
-    "pinyin-pro": "^3.19.7"
+    "pinyin-pro": "^3.20.0"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
-    "@nuxt/eslint": "^0.3.4",
+    "@nuxt/eslint": "^0.3.7",
     "autoprefixer": "^10.4.19",
     "eslint": "^9.0.0",
     "nuxt": "^3.11.2",
