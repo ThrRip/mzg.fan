@@ -24,17 +24,17 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/vue-fontawesome": "^3.0.6",
-    "appwrite": "^14.0.0",
+    "appwrite": "^14.0.1",
     "node-appwrite": "^12.0.1",
-    "pinyin-pro": "^3.20.0"
+    "pinyin-pro": "^3.20.2"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
-    "@nuxt/eslint": "^0.3.7",
+    "@nuxt/eslint": "^0.3.9",
     "autoprefixer": "^10.4.19",
-    "eslint": "^9.0.0",
+    "eslint": "^9.1.1",
     "nuxt": "^3.11.2",
     "postcss": "^8.4.38",
     "tailwind-scrollbar": "^3.0.5",
