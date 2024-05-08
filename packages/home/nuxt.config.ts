@@ -14,7 +14,7 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1',
       title: '一口菠萝包片夹小洺',
       meta: [
-        { name: 'description', content: '' },
+        { name: 'description', content: '一口菠萝包片夹小洺的主页 & 直播点唱歌单 | 哔哩哔哩 UID：391500490 直播间号：32452928' },
         { name: 'format-detection', content: 'telephone=no' },
         { name: 'theme-color', content: '#89c1cf', media: '(prefers-color-scheme: light)' },
         { name: 'theme-color', content: '#89c1cf', media: '(prefers-color-scheme: dark)' }
