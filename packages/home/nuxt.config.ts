@@ -9,12 +9,9 @@
 export default defineNuxtConfig({
   app: {
     head: {
+      htmlAttrs: { lang: 'zh' },
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-      htmlAttrs: {
-        lang: 'zh',
-        class: 'bg-white-alt'
-      },
       title: '一口菠萝包片夹小洺',
       meta: [
         { name: 'description', content: '' },

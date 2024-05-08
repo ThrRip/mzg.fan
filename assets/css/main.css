@@ -8,12 +8,14 @@
 
 @tailwind base;
 @tailwind components;
-
-:root {
-  user-select: none;
-}
-
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-white-alt;
+    @apply select-none;
+  }
+}
 
 @layer utilities {
   .grid-areas-stack {

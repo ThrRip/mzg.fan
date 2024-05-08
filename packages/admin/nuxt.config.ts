@@ -10,15 +10,11 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/admin/',
     head: {
+      htmlAttrs: { lang: 'zh' },
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-      htmlAttrs: {
-        lang: 'zh',
-        class: 'bg-white-alt'
-      },
       title: '管理面板 | 洺知-故犯',
       meta: [
-        { name: 'description', content: '' },
         { name: 'format-detection', content: 'telephone=no' },
         { name: 'theme-color', content: '#89c1cf', media: '(prefers-color-scheme: light)' },
         { name: 'theme-color', content: '#89c1cf', media: '(prefers-color-scheme: dark)' }
