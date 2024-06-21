@@ -7,7 +7,7 @@
   -->
 
 <template>
-  <div ref="contentRoot" class="relative portrait:overflow-y-auto h-dscreen">
+  <div class="relative portrait:overflow-y-auto h-dscreen scroll-smooth">
     <main
       class="absolute z-10 landscape:grid landscape:grid-cols-[36vw_1fr]
       gap-x-14 lg:gap-x-16 xl:gap-x-28 2xl:gap-x-40 3xl:gap-x-6
@@ -55,18 +55,19 @@
             直播间
             <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
           </NuxtLink>
-          <button
+          <NuxtLink
+            to="#playlist"
+            :external="true"
             class="landscape:hidden *:flex *:flex-row *:justify-center *:items-center *:size-8"
-            @click="scrollToPlaylist"
           >
             <span><font-awesome-icon :icon="['fas', 'list']" /></span>
             歌单
             <span><font-awesome-icon :icon="['fas', 'arrow-down']" /></span>
-          </button>
+          </NuxtLink>
         </div>
       </section>
       <section
-        ref="viewPlaylistArea"
+        id="playlist"
         class="overflow-y-hidden grid grid-cols-1 grid-rows-[auto_1fr] gap-y-8 portrait:gap-y-6
         portrait:px-6 portrait:pt-10 landscape:pr-10 landscape:xl:pr-12 landscape:2xl:pr-20 landscape:3xl:pr-0 portrait:pb-6
         portrait:h-dscreen"
@@ -307,15 +308,6 @@ const { data: backendPlaylist } = await useAsyncData<Playlist>(
 )
 
 // View
-const contentRoot = ref<HTMLDivElement>()
-const viewPlaylistArea = ref<HTMLElement>()
-function scrollToPlaylist () {
-  contentRoot.value?.scroll({
-    top: viewPlaylistArea.value?.getBoundingClientRect().top,
-    behavior: 'smooth'
-  })
-}
-
 type PlaylistColumn = 'name' | 'artist' | 'payment_amount' | 'language'
 interface SortingSong extends Song {
   namePinyin?: string
