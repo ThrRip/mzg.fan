@@ -84,11 +84,12 @@
         <div class="overflow-y-hidden grid grid-rows-[auto_1fr] h-full text-black rounded-2xl">
           <div
             class="landscape:overflow-y-scroll grid grid-cols-[0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[1fr_3.5rem_4.5rem]
-            grid-rows-1 portrait:grid-rows-[1.625rem_1rem] content-center px-2 h-12 portrait:h-16 bg-gray
-            scrollbar scrollbar-thumb-transparent scrollbar-track-transparent"
+            grid-rows-1 portrait:grid-rows-[0.55fr_0.45fr] content-center px-2 h-12 portrait:h-16 bg-gray
+            scrollbar scrollbar-thumb-transparent scrollbar-track-transparent
+            *:flex *:flex-row *:gap-x-2 *:items-center *:h-full *:pl-4 portrait:*:pl-3"
           >
             <button
-              class="flex flex-row gap-x-2 items-center pl-4 portrait:pl-3 portrait:pb-0.5 portrait:leading-snug h-full"
+              class="portrait:pt-3 portrait:pb-0.5 portrait:leading-snug"
               title="按歌名排序"
               :aria-label="`按歌名排序${viewPlaylistSortingColumn === 'name' ?
                 viewPlaylistSortingOrder === 'ascending' ? ' - 当前按歌名升序排序' :
@@ -111,7 +112,7 @@
               </transition>
             </button>
             <button
-              class="flex flex-row portrait:order-4 gap-x-2 items-center pl-4 portrait:pl-3 h-full portrait:text-xs"
+              class="portrait:pb-2.5 portrait:order-4 portrait:text-xs"
               title="按歌手排序"
               :aria-label="`按歌手排序${viewPlaylistSortingColumn === 'artist' ?
                 viewPlaylistSortingOrder === 'ascending' ? ' - 当前按歌手升序排序' :
@@ -134,7 +135,7 @@
               </transition>
             </button>
             <button
-              class="flex flex-row portrait:row-span-2 gap-x-2 items-center pl-4 portrait:pl-3 h-full"
+              class="portrait:row-span-2"
               title="按 SC 要求排序"
               :aria-label="`按 SC 要求排序${viewPlaylistSortingColumn === 'payment_amount' ?
                 viewPlaylistSortingOrder === 'descending' ? ' - 当前按 SC 要求降序排序' :
@@ -157,7 +158,7 @@
               </transition>
             </button>
             <button
-              class="flex flex-row portrait:row-span-2 gap-x-2 items-center pl-4 portrait:pl-3 h-full"
+              class="portrait:row-span-2"
               title="按语言排序"
               :aria-label="`按语言排序${viewPlaylistSortingColumn === 'language' ?
                 viewPlaylistSortingOrder === 'ascending' ? ' - 当前按语言升序排序' :
