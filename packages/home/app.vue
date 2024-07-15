@@ -17,10 +17,10 @@
       <section class="flex flex-col max-xl:landscape:gap-y-4 gap-y-14 justify-center items-center portrait:h-dscreen">
         <picture class="aspect-square max-xl:landscape:w-1/3 w-1/2 2xl:max-w-[15rem]">
           <source srcset="~/assets/img/profile-pic.avif" type="image/avif">
-          <img src="~/assets/img/profile-pic.webp" alt="一口菠萝包片夹小洺的头像" class="rounded-[15%]">
+          <img src="~/assets/img/profile-pic.webp" alt="洺知-故犯的头像" class="rounded-[15%]">
         </picture>
         <h1 class="max-xl:landscape:text-4xl portrait:text-6xl text-7xl font-light text-white-alt">
-          小洺
+          洺知-故犯
         </h1>
         <div
           class="flex flex-col max-xl:landscape:gap-y-1 gap-y-4

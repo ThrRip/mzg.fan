@@ -8,8 +8,8 @@
 
 export default defineAppConfig({
   appHomeBase: 'https://mzg.fan/',
-  appHomeBiliUid: '391500490',
-  appHomeBiliRoomId: '32452928',
+  appHomeBiliUid: '32159860',
+  appHomeBiliRoomId: '1267105',
 
   appAdminBasePath: '/admin',
 
