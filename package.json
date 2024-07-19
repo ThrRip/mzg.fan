@@ -29,9 +29,9 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "appwrite": "^15.0.0",
     "node-appwrite": "^13.0.0",
-    "nuxt": "^3.12.3",
+    "nuxt": "^3.12.4",
     "pinyin-pro": "^3.23.1",
-    "vue": "^3.4.31"
+    "vue": "^3.4.32"
   },
   "devDependencies": {
     "@nuxt/eslint": "^0.3.13",

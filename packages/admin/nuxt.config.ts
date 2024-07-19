@@ -32,6 +32,8 @@ export default defineNuxtConfig({
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
 
+  compatibilityDate: '2024-07-19',
+
   build: {
     transpile: ['@fortawesome/vue-fontawesome']
   },

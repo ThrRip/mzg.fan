@@ -15,9 +15,9 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "appwrite": "^15.0.0",
-    "nuxt": "^3.12.3",
+    "nuxt": "^3.12.4",
     "pinyin-pro": "^3.23.1",
-    "vue": "^3.4.31"
+    "vue": "^3.4.32"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
