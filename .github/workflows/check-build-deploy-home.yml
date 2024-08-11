@@ -1,0 +1,16 @@
+name: Check & Build & Deploy / home
+run-name: Check & Build & Deploy (${{ github.ref_name }}/home)
+
+on:
+  push:
+    paths:
+      - 'packages/home/**'
+
+jobs:
+  check-build-deploy-home:
+    name: Check & Build & Deploy
+    uses: ./.github/workflows/check-build-deploy.yml
+    with:
+      package: home
+      package_cap: HOME
+    secrets: inherit

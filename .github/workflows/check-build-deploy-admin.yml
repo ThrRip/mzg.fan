@@ -1,0 +1,16 @@
+name: Check & Build & Deploy / admin
+run-name: Check & Build & Deploy (${{ github.ref_name }}/admin)
+
+on:
+  push:
+    paths:
+      - 'packages/admin/**'
+
+jobs:
+  check-build-deploy-admin:
+    name: Check & Build & Deploy
+    uses: ./.github/workflows/check-build-deploy.yml
+    with:
+      package: admin
+      package_cap: ADMIN
+    secrets: inherit

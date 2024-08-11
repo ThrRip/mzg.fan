@@ -1,5 +1,5 @@
-name: Build & Deploy / [all]
-run-name: Build & Deploy (${{ github.ref_name }}/[all])
+name: Check & Build & Deploy / [all]
+run-name: Check & Build & Deploy (${{ github.ref_name }}/[all])
 
 on:
   push:
@@ -12,8 +12,8 @@ on:
       - '.eslintrc.js'
 
 jobs:
-  build-deploy:
-    name: Build & Deploy / ${{ matrix.package }}
+  check-build-deploy:
+    name: Check & Build & Deploy / ${{ matrix.package }}
     strategy:
       fail-fast: false
       matrix:
@@ -22,7 +22,7 @@ jobs:
             package_cap: HOME
           - package: admin
             package_cap: ADMIN
-    uses: ./.github/workflows/build-deploy.yml
+    uses: ./.github/workflows/check-build-deploy.yml
     with:
       package: ${{ matrix.package }}
       package_cap: ${{ matrix.package_cap }}

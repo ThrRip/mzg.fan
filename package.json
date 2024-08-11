@@ -13,13 +13,16 @@
     "build": "pnpm -r exec nuxt build",
     "preview": "pnpm -r exec nuxt preview",
     "lint": "eslint",
-    "postinstall": "nuxt prepare && pnpm -r exec nuxt prepare",
+    "typecheck": "nuxt typecheck",
     "dev:home": "pnpm -F home exec nuxt dev",
     "build:home": "pnpm -F home exec nuxt build",
     "preview:home": "pnpm -F home exec nuxt preview",
+    "lint:home": "pnpm -F home exec eslint",
     "dev:admin": "pnpm -F admin exec nuxt dev",
     "build:admin": "pnpm -F admin exec nuxt build",
-    "preview:admin": "pnpm -F admin exec nuxt preview"
+    "preview:admin": "pnpm -F admin exec nuxt preview",
+    "lint:admin": "pnpm -F admin exec eslint",
+    "postinstall": "nuxt prepare && pnpm -r exec nuxt prepare"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
@@ -39,6 +42,7 @@
     "eslint": "^9.9.0",
     "postcss": "^8.4.41",
     "tailwind-scrollbar": "^3.0.5",
-    "tailwindcss": "^3.4.9"
+    "tailwindcss": "^3.4.9",
+    "vue-tsc": "^2.0.29"
   }
 }
