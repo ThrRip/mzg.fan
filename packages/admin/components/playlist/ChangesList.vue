@@ -473,7 +473,6 @@ const emit = defineEmits<{
 }>()
 
 const selectableIds = computed<Array<Song['$id']>>(() => {
-  // @ts-expect-error
   return props.dataChanges.map(song => song.$id)
     .filter(id => getPublishingStateById(id)?.state !== 'processing' && getPublishingStateById(id)?.state !== 'succeeded')
 })
