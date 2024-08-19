@@ -8,6 +8,8 @@
 
 import type { Config } from 'tailwindcss'
 
+import scrollbar from 'tailwind-scrollbar'
+
 export default {
   content: [
     './nuxt.config.ts',
@@ -69,6 +71,6 @@ export default {
     }
   },
   plugins: [
-    require('tailwind-scrollbar')
+    scrollbar
   ]
 } satisfies Config
