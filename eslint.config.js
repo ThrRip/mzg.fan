@@ -14,6 +14,8 @@ export default withNuxt(
   },
   {
     rules: {
+      'no-console': 'error',
+      'require-await': 'error',
       '@typescript-eslint/ban-ts-comment': ['error', {
         'ts-expect-error': false,
         'ts-nocheck': false
