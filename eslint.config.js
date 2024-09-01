@@ -39,5 +39,8 @@ export default withNuxt(
   {
     files: ['packages/*/pages/**/*.vue'],
     rules: { 'vue/multi-word-component-names': 'off' }
+  },
+  {
+    ignores: ['.idea']
   }
 )
