@@ -17,7 +17,7 @@
     "appwrite": "^15.0.0",
     "nuxt": "^3.13.2",
     "pinyin-pro": "^3.25.0",
-    "vue": "^3.5.10"
+    "vue": "^3.5.11"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
