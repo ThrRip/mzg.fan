@@ -6,4 +6,4 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-export { default } from '../../app.config'
+export { default } from '../../../app/app.config'

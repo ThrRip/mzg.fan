@@ -13,6 +13,10 @@ export default defineNuxtConfig({
   ],
 
   // Feature flags
+  future: {
+    compatibilityVersion: 4
+  },
+
   compatibilityDate: '2024-07-19',
 
   // Tooling

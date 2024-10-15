@@ -37,7 +37,7 @@ export default withNuxt(
     }
   },
   {
-    files: ['packages/*/pages/**/*.vue'],
+    files: ['packages/*/app/pages/**/*.vue'],
     rules: { 'vue/multi-word-component-names': 'off' }
   },
   {

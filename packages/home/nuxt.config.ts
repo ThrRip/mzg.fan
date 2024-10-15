@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   },
 
   css: [
-    '@/../../assets/css/main.css',
+    '~/../../../app/assets/css/main.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
 
@@ -49,6 +49,10 @@ export default defineNuxtConfig({
   },
 
   // Feature flags
+  future: {
+    compatibilityVersion: 4
+  },
+
   compatibilityDate: '2024-07-19',
 
   // Nitro

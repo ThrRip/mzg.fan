@@ -13,9 +13,9 @@ import scrollbar from 'tailwind-scrollbar'
 export default {
   content: [
     './nuxt.config.ts',
-    './app.vue',
-    './pages/**/*.vue',
-    './components/**/*.vue'
+    './app/app.vue',
+    './app/pages/**/*.vue',
+    './app/components/**/*.vue'
   ],
   theme: {
     colors: {
