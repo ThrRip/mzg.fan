@@ -7,6 +7,12 @@
  */
 
 export default defineNuxtConfig({
+  // Nuxt
+  devtools: {
+    enabled: false
+  },
+
+  // Client
   app: {
     head: {
       htmlAttrs: { lang: 'zh' },
@@ -32,24 +38,25 @@ export default defineNuxtConfig({
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
 
-  compatibilityDate: '2024-07-19',
-
+  // Build
   build: {
     transpile: ['@fortawesome/vue-fontawesome']
   },
 
+  // Development
   devServer: {
     host: '0.0.0.0'
   },
 
-  devtools: {
-    enabled: false
-  },
+  // Feature flags
+  compatibilityDate: '2024-07-19',
 
+  // Nitro
   nitro: {
     preset: 'bun'
   },
 
+  // Tooling
   postcss: {
     plugins: {
       tailwindcss: {},

@@ -7,12 +7,15 @@
  */
 
 export default defineNuxtConfig({
-  compatibilityDate: '2024-07-19',
-
+  // Extensions
   modules: [
     '@nuxt/eslint'
   ],
 
+  // Feature flags
+  compatibilityDate: '2024-07-19',
+
+  // Tooling
   eslint: {
     config: {
       stylistic: true

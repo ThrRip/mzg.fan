@@ -7,6 +7,12 @@
  */
 
 export default defineNuxtConfig({
+  // Nuxt
+  devtools: {
+    enabled: false
+  },
+
+  // Client
   app: {
     baseURL: '/admin/',
     head: {
@@ -32,34 +38,36 @@ export default defineNuxtConfig({
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
 
-  compatibilityDate: '2024-07-19',
+  // Runtime secrets
+  runtimeConfig: {
+    appSecureContext: true,
+    backendApiKey: ''
+  },
 
+  // Build
   build: {
     transpile: ['@fortawesome/vue-fontawesome']
   },
 
+  // Development
   devServer: {
     host: '0.0.0.0',
     port: 3001
   },
 
-  devtools: {
-    enabled: false
-  },
+  // Feature flags
+  compatibilityDate: '2024-07-19',
 
+  // Nitro
   nitro: {
     preset: 'bun'
   },
 
+  // Tooling
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {}
     }
-  },
-
-  runtimeConfig: {
-    appSecureContext: true,
-    backendApiKey: ''
   }
 })
