@@ -102,15 +102,18 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
   )
 
   function cleanup (changesId: Song['$id'], newId?: Song['$id']) {
+    // @ts-expect-error
     backendPlaylistPublishChangesState.value[
       backendPlaylistPublishChangesState.value.findIndex(_ => _.$id === changesId)
     ].state = 'succeeded'
     if (newId) {
+      // @ts-expect-error
       backendPlaylistPublishChangesState.value[
         backendPlaylistPublishChangesState.value.findIndex(_ => _.$id === changesId)
       ].newId = newId
     }
     else {
+      // @ts-expect-error
       backendPlaylistPublishChangesState.value[
         backendPlaylistPublishChangesState.value.findIndex(_ => _.$id === changesId)
       // @ts-expect-error
@@ -119,7 +122,9 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
   }
   function fail (changesId: Song['$id'], error: AppwriteException) {
     const changesPublishStateIndex = backendPlaylistPublishChangesState.value.findIndex(_ => _.$id === changesId)
+    // @ts-expect-error
     backendPlaylistPublishChangesState.value[changesPublishStateIndex].state = 'failed'
+    // @ts-expect-error
     backendPlaylistPublishChangesState.value[changesPublishStateIndex].error = error
   }
   function backendPlaylistRefreshIfAllPublishingFinished () {
@@ -128,10 +133,13 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
       .then(() => {
         backendPlaylistPublishChangesState.value.forEach((_, index) => {
           if (!_.newId) { return }
+          // @ts-expect-error
           viewPlaylistChangesData.value[
             viewPlaylistChangesData.value.findIndex(changes => changes.$id === _.$id)
           ].$id = _.newId
+          // @ts-expect-error
           backendPlaylistPublishChangesState.value[index].$id = _.newId
+          // @ts-expect-error
           delete backendPlaylistPublishChangesState.value[index].newId
         })
       })
@@ -189,6 +197,7 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   // Enable sorting or switch to another column
   if (viewPlaylistSortingColumn.value === null || column !== viewPlaylistSortingColumn.value) {
     viewPlaylistSortingColumn.value = column
+    // @ts-expect-error
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
   }
   else
@@ -198,16 +207,15 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
     viewPlaylistSortingOrder.value === viewPlaylistSortingOrderOptions.value[viewPlaylistSortingOrderOptions.value.length - 1]
   ) {
     viewPlaylistSortingColumn.value = null
+    // @ts-expect-error
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
-  // Rotate between ordering options
   }
+  // Rotate between ordering options
   else {
-    const sortingOrderOptionIndex: number =
-      viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1 >
-      viewPlaylistSortingOrderOptions.value.length - 1 ?
-        0 :
-        viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1
-    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[sortingOrderOptionIndex]
+    // @ts-expect-error
+    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[
+      viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1
+    ]
   }
   viewPlaylistDataUpdate()
 }

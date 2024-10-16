@@ -327,6 +327,7 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   // Enable sorting or switch to another column
   if (viewPlaylistSortingColumn.value === null || column !== viewPlaylistSortingColumn.value) {
     viewPlaylistSortingColumn.value = column
+    // @ts-expect-error
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
   }
   else
@@ -336,16 +337,15 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
     viewPlaylistSortingOrder.value === viewPlaylistSortingOrderOptions.value[viewPlaylistSortingOrderOptions.value.length - 1]
   ) {
     viewPlaylistSortingColumn.value = null
+    // @ts-expect-error
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
   }
   // Rotate between ordering options
   else {
-    const sortingOrderOptionIndex: number =
-      viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1 >
-      viewPlaylistSortingOrderOptions.value.length - 1 ?
-        0 :
-        viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1
-    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[sortingOrderOptionIndex]
+    // @ts-expect-error
+    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[
+      viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1
+    ]
   }
   viewPlaylistDataUpdate(['sort'])
 }
