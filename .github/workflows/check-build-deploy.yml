@@ -145,6 +145,7 @@ jobs:
             -o StrictHostKeyChecking=no \
             -p ${{ secrets.PROD_CLOUD_SSH_PORT }} \
             ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
+          set -e
           cd "${{ secrets.PROD_CLOUD_PROJECT_ROOT }}/${{ inputs.package }}"
           pm2 delete mzg.fan-${{ inputs.package }}
           rm -fr .output ecosystem.config.js
