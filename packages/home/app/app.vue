@@ -262,8 +262,6 @@
 </template>
 
 <script setup lang="ts">
-import { Client, Databases, Query } from 'appwrite'
-
 // Live status
 const { data: biliApiLiveStatus } = await useFetch(
   useAppConfig().biliApiRoomPlayInfoEndpoint,
@@ -277,12 +275,6 @@ const { data: biliApiLiveStatus } = await useFetch(
   }
 )
 
-// Backend
-const backendClient = new Client()
-const backendDatabases = new Databases(backendClient)
-backendClient.setEndpoint(useAppConfig().backendBase)
-  .setProject(useAppConfig().backendProjectId)
-
 interface Song {
   hidden?: false
   name?: string
@@ -294,14 +286,23 @@ interface Song {
 }
 type Playlist = Array<Song>
 
+// Backend
 const { data: backendPlaylist } = await useAsyncData<Playlist>(
   'backend-databases-home-playlist',
   // @ts-expect-error
-  () => backendDatabases.listDocuments('home', 'playlist', [
-    useAppConfig().monitoringDataCollectorUserAgentMatch.test(useRequestHeader('user-agent') ?? '') ?
-      Query.limit(1) :
-      Query.limit(useAppConfig().backendQueryResultsLimit)
-  ]),
+  async () => {
+    const appConfig = useAppConfig()
+    const requestUserAgent = useRequestHeader('user-agent')
+    const { Client, Databases, Query } = await import('appwrite')
+    const client = new Client()
+    const databases = new Databases(client)
+    client.setEndpoint(appConfig.backendBase).setProject(appConfig.backendProjectId)
+    return databases.listDocuments('home', 'playlist', [
+      appConfig.monitoringDataCollectorUserAgentMatch.test(requestUserAgent ?? '') ?
+        Query.limit(1) :
+        Query.limit(appConfig.backendQueryResultsLimit)
+    ])
+  },
   {
     default: () => [],
     transform: (res: { total: number, documents: Playlist }): Playlist => res.documents
