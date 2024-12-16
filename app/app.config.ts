@@ -17,6 +17,8 @@ export default defineAppConfig({
   backendProjectId: '649758e1eb1fa584a04d',
   backendQueryResultsLimit: 1000,
 
+  statsBase: 'https://stats.mzg.fan',
+
   biliApiRoomPlayInfoEndpoint: 'https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo',
 
   monitoringDataCollectorUserAgentMatch: /^Zabbix$/
