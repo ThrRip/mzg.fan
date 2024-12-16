@@ -319,40 +319,42 @@ interface SortingSong extends Song {
 type PlaylistSortingOrder = 'ascending' | 'descending'
 const viewPlaylistSortingColumn = ref<null | PlaylistColumn>(null)
 const viewPlaylistSortingOrder = ref<PlaylistSortingOrder>('ascending')
-const viewPlaylistSortingOrderOptions = computed<Array<PlaylistSortingOrder>>(() => {
-  return viewPlaylistSortingColumn.value === 'payment_amount' ?
-    ['descending', 'ascending'] :
-    ['ascending', 'descending']
-})
+const viewPlaylistSortingOrderOptions: Record<PlaylistColumn, Array<PlaylistSortingOrder>> = {
+  name: ['ascending', 'descending'],
+  artist: ['ascending', 'descending'],
+  payment_amount: ['descending', 'ascending'],
+  language: ['ascending', 'descending']
+}
 function viewPlaylistToggleSorting (column: PlaylistColumn) {
   // Enable sorting or switch to another column
   if (viewPlaylistSortingColumn.value === null || column !== viewPlaylistSortingColumn.value) {
     viewPlaylistSortingColumn.value = column
     // @ts-expect-error
-    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
+    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions[column][0]
   }
   else
   // Disable sorting because out of ordering options
   if (
     column === viewPlaylistSortingColumn.value &&
-    viewPlaylistSortingOrder.value === viewPlaylistSortingOrderOptions.value[viewPlaylistSortingOrderOptions.value.length - 1]
+    viewPlaylistSortingOrder.value ===
+      viewPlaylistSortingOrderOptions[column][viewPlaylistSortingOrderOptions[column].length - 1]
   ) {
     viewPlaylistSortingColumn.value = null
     // @ts-expect-error
-    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
+    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions[column][0]
   }
   // Rotate between ordering options
   else {
     // @ts-expect-error
-    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[
-      viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1
+    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions[column][
+      viewPlaylistSortingOrderOptions[column].findIndex(option => option === viewPlaylistSortingOrder.value) + 1
     ]
   }
   viewPlaylistDataUpdate(['sort'])
 }
 
 const viewPlaylistData = useState<Playlist>('viewPlaylistData')
-const viewPlaylistDataShuffled = ref<Playlist>([])
+let viewPlaylistDataShuffled: Playlist = []
 function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
   // @ts-expect-error
   if (backendPlaylist.value.length !== 0) {
@@ -367,7 +369,7 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
         playlist[targetSong] = playlist[currentSong]
         playlist[currentSong] = targetSongBackup
       }
-      viewPlaylistDataShuffled.value = playlist
+      viewPlaylistDataShuffled = playlist
       return playlist
     }
 
@@ -432,19 +434,19 @@ function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
         if (index !== tasks.length - 1) { return }
         viewPlaylistSortingColumn.value = null
         viewPlaylistDataUpdate(['sort'])
-        viewPlaylistData.value = viewPlaylistDataShuffled.value
+        viewPlaylistData.value = viewPlaylistDataShuffled
       }
       else
       if (task === 'sort') {
         if (index !== tasks.length - 1) { return }
-        viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled.value : await sort()
+        viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled : await sort()
       }
     })
   }
 }
 callOnce(() => viewPlaylistDataUpdate(['shuffle']))
 if (import.meta.client && useNuxtApp().isHydrating && useNuxtApp().payload.serverRendered) {
-  viewPlaylistDataShuffled.value = viewPlaylistData.value
+  viewPlaylistDataShuffled = viewPlaylistData.value
 }
 
 const viewPlaylistCopySongNameState = ref<{
