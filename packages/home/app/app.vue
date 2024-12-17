@@ -264,11 +264,16 @@
 </template>
 
 <script setup lang="ts">
+import type { Omits } from './utils/types'
+
+const omits = useState<Omits>('omits')
+
 // Live status
 const { data: biliApiLiveStatus } = await useFetch(
   useAppConfig().biliApiRoomPlayInfoEndpoint,
   {
     query: { room_id: useAppConfig().appHomeBiliRoomId },
+    immediate: !omits.value.liveStatus,
     transform: (res: {
       data: {
         live_status: 0 | 1
@@ -294,18 +299,18 @@ const { data: backendPlaylist } = await useAsyncData<Playlist>(
   // @ts-expect-error
   async () => {
     const appConfig = useAppConfig()
-    const requestUserAgent = useRequestHeader('user-agent')
     const { Client, Databases, Query } = await import('appwrite')
     const client = new Client()
     const databases = new Databases(client)
     client.setEndpoint(appConfig.backendBase).setProject(appConfig.backendProjectId)
     return databases.listDocuments('home', 'playlist', [
-      appConfig.monitoringDataCollectorUserAgentMatch.test(requestUserAgent ?? '') ?
+      omits.value.playlistMin ?
         Query.limit(1) :
         Query.limit(appConfig.backendQueryResultsLimit)
     ])
   },
   {
+    immediate: !omits.value.playlist,
     default: () => [],
     transform: (res: { total: number, documents: Playlist }): Playlist => res.documents
   }
@@ -355,7 +360,7 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   viewPlaylistDataUpdate(['sort'])
 }
 
-const viewPlaylistData = useState<Playlist>('viewPlaylistData')
+const viewPlaylistData = useState<Playlist>('viewPlaylistData', () => shallowRef([]))
 let viewPlaylistDataShuffled: Playlist = []
 function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
   // @ts-expect-error

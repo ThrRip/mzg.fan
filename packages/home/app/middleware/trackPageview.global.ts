@@ -6,14 +6,15 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
+import type { Omits } from '../utils/types'
+
 export default defineNuxtRouteMiddleware(() => {
   if (
     !useAppConfig().statsBase ||
+    useState<Omits>('omits').value.stats ||
     import.meta.client ||
     import.meta.dev ||
-    !useRequestHeader('user-agent') ||
-    // @ts-expect-error
-    useAppConfig().monitoringDataCollectorUserAgentMatch.test(useRequestHeader('user-agent'))
+    !useRequestHeader('user-agent')
   ) return
 
   const fetchHeaders: Record<string, string> = {}

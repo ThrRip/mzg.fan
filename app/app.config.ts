@@ -19,7 +19,5 @@ export default defineAppConfig({
 
   statsBase: 'https://stats.mzg.fan',
 
-  biliApiRoomPlayInfoEndpoint: 'https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo',
-
-  monitoringDataCollectorUserAgentMatch: /^Zabbix$/
+  biliApiRoomPlayInfoEndpoint: 'https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo'
 })
