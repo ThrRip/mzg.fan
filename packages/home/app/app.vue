@@ -359,92 +359,91 @@ const viewPlaylistData = useState<Playlist>('viewPlaylistData')
 let viewPlaylistDataShuffled: Playlist = []
 function viewPlaylistDataUpdate (tasks: Array<'shuffle' | 'sort'>) {
   // @ts-expect-error
-  if (backendPlaylist.value.length !== 0) {
-    function shuffle () {
-      // @ts-expect-error
-      const playlist = backendPlaylist.value.slice()
-      let currentSong = playlist.length
-      while (currentSong !== 0) {
-        const targetSong = Math.floor(Math.random() * currentSong)
-        currentSong--
-        const targetSongBackup = { ...playlist[targetSong] }
-        playlist[targetSong] = playlist[currentSong]
-        playlist[currentSong] = targetSongBackup
-      }
-      viewPlaylistDataShuffled = playlist
-      return playlist
+  if (backendPlaylist.value.length === 0) return
+  function shuffle () {
+    // @ts-expect-error
+    const playlist = backendPlaylist.value.slice()
+    let currentSong = playlist.length
+    while (currentSong !== 0) {
+      const targetSong = Math.floor(Math.random() * currentSong)
+      currentSong--
+      const targetSongBackup = { ...playlist[targetSong] }
+      playlist[targetSong] = playlist[currentSong]
+      playlist[currentSong] = targetSongBackup
     }
-
-    async function sort () {
-      // @ts-expect-error
-      const playlist: Array<SortingSong> = backendPlaylist.value.slice()
-      const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
-
-      // Sort by song name or artist in alphabetical order
-      if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
-        const pinyinPro = await import('pinyin-pro')
-        playlist.forEach((song, index) => {
-          // @ts-expect-error
-          playlist[index][`${viewPlaylistSortingColumn.value}Pinyin`] =
-            // @ts-expect-error
-            pinyinPro.pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
-              .replaceAll(' ', '')
-        })
-        playlist.sort((a, b) => {
-          // @ts-expect-error
-          if (a[`${viewPlaylistSortingColumn.value}Pinyin`] < b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
-            return -1 * orderModifier
-          }
-          else
-          // @ts-expect-error
-          if (a[`${viewPlaylistSortingColumn.value}Pinyin`] > b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
-            return 1 * orderModifier
-          }
-          else {
-            return 0
-          }
-        })
-      }
-      else
-
-      // Sort by payment requirement
-      if (viewPlaylistSortingColumn.value === 'payment_amount') {
-        playlist.sort((a, b) => {
-          if (a.payment_required === false || b.payment_required === false) {
-            return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
-          }
-          return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
-        })
-      }
-      else
-
-      // Sort by language
-      if (viewPlaylistSortingColumn.value === 'language') {
-        const languageOrder = ['国语', '粤语', '日语']
-        playlist.sort((a, b) => {
-          return (languageOrder.findIndex(language => a.language === language) -
-            languageOrder.findIndex(language => b.language === language)) * orderModifier
-        })
-      }
-
-      return playlist
-    }
-
-    tasks.forEach(async (task, index) => {
-      if (task === 'shuffle') {
-        shuffle()
-        if (index !== tasks.length - 1) { return }
-        viewPlaylistSortingColumn.value = null
-        viewPlaylistDataUpdate(['sort'])
-        viewPlaylistData.value = viewPlaylistDataShuffled
-      }
-      else
-      if (task === 'sort') {
-        if (index !== tasks.length - 1) { return }
-        viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled : await sort()
-      }
-    })
+    viewPlaylistDataShuffled = playlist
+    return playlist
   }
+
+  async function sort () {
+    // @ts-expect-error
+    const playlist: Array<SortingSong> = backendPlaylist.value.slice()
+    const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
+
+    // Sort by song name or artist in alphabetical order
+    if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
+      const pinyinPro = await import('pinyin-pro')
+      playlist.forEach((song, index) => {
+        // @ts-expect-error
+        playlist[index][`${viewPlaylistSortingColumn.value}Pinyin`] =
+          // @ts-expect-error
+          pinyinPro.pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
+            .replaceAll(' ', '')
+      })
+      playlist.sort((a, b) => {
+        // @ts-expect-error
+        if (a[`${viewPlaylistSortingColumn.value}Pinyin`] < b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
+          return -1 * orderModifier
+        }
+        else
+        // @ts-expect-error
+        if (a[`${viewPlaylistSortingColumn.value}Pinyin`] > b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
+          return 1 * orderModifier
+        }
+        else {
+          return 0
+        }
+      })
+    }
+    else
+
+    // Sort by payment requirement
+    if (viewPlaylistSortingColumn.value === 'payment_amount') {
+      playlist.sort((a, b) => {
+        if (a.payment_required === false || b.payment_required === false) {
+          return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
+        }
+        return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
+      })
+    }
+    else
+
+    // Sort by language
+    if (viewPlaylistSortingColumn.value === 'language') {
+      const languageOrder = ['国语', '粤语', '日语']
+      playlist.sort((a, b) => {
+        return (languageOrder.findIndex(language => a.language === language) -
+          languageOrder.findIndex(language => b.language === language)) * orderModifier
+      })
+    }
+
+    return playlist
+  }
+
+  tasks.forEach(async (task, index) => {
+    if (task === 'shuffle') {
+      shuffle()
+      if (index !== tasks.length - 1) { return }
+      viewPlaylistSortingColumn.value = null
+      viewPlaylistDataUpdate(['sort'])
+      viewPlaylistData.value = viewPlaylistDataShuffled
+    }
+    else
+    if (task === 'sort') {
+      if (index !== tasks.length - 1) { return }
+      viewPlaylistData.value = viewPlaylistSortingColumn.value === null ? viewPlaylistDataShuffled : await sort()
+    }
+  })
 }
 callOnce(() => viewPlaylistDataUpdate(['shuffle']))
 if (import.meta.client && useNuxtApp().isHydrating && useNuxtApp().payload.serverRendered) {
