@@ -211,8 +211,10 @@
                   {{ song.name }}
                   <ClientOnly>
                     <transition-group
+                      v-if="viewPlaylistCopySongNameState[song.$id]"
                       tag="span"
                       class="grid grid-areas-stack"
+                      appear
                       enter-from-class="opacity-0"
                       enter-active-class="transition-opacity"
                       leave-active-class="transition-opacity duration-300"
@@ -450,7 +452,7 @@ if (import.meta.client && useNuxtApp().isHydrating && useNuxtApp().payload.serve
 }
 
 const viewPlaylistCopySongNameState = ref<{
-  [key: Song['$id']]: 'succeeded' | 'failed'
+  [key: Song['$id']]: 'succeeded' | 'failed' | 'stale'
 }>({})
 function viewPlaylistCopySongName (name: Song['name'], id: Song['$id']) {
   if (Object.keys(viewPlaylistCopySongNameState.value).includes(id)) { return }
@@ -461,11 +463,13 @@ function viewPlaylistCopySongName (name: Song['name'], id: Song['$id']) {
   clipboardWritePromise.then(
     () => {
       viewPlaylistCopySongNameState.value[id] = 'succeeded'
-      setTimeout(() => delete viewPlaylistCopySongNameState.value[id], 2000)
+      setTimeout(() => viewPlaylistCopySongNameState.value[id] = 'stale', 2000)
+      setTimeout(() => delete viewPlaylistCopySongNameState.value[id], 2300)
     },
     () => {
       viewPlaylistCopySongNameState.value[id] = 'failed'
-      setTimeout(() => delete viewPlaylistCopySongNameState.value[id], 5000)
+      setTimeout(() => viewPlaylistCopySongNameState.value[id] = 'stale', 5000)
+      setTimeout(() => delete viewPlaylistCopySongNameState.value[id], 5300)
     }
   )
 }
