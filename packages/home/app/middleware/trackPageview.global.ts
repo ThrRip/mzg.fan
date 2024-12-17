@@ -35,7 +35,7 @@ export default defineNuxtRouteMiddleware(() => {
       // url
       u: useRequestURL(),
       // referrer
-      r: useRequestHeader('referrer')
+      r: useRequestHeader('referer')
     }
   })
 })
