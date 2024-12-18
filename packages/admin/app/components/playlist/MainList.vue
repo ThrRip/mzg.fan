@@ -221,7 +221,7 @@
               >
               <span
                 key="text"
-                class="flex flex-row items-center w-full !h-2/3 rounded ring-2 ring-white-alta
+                class="flex flex-row items-center w-full h-2/3 rounded ring-2 ring-white-alta
                 group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta transition-[box-shadow,opacity] duration-200"
               >
                 {{ song.name }}
@@ -254,7 +254,7 @@
               >
               <span
                 key="text"
-                class="flex flex-row items-center w-full !h-2/3 rounded ring-2 ring-white-alta
+                class="flex flex-row items-center w-full h-2/3 rounded ring-2 ring-white-alta
                 group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta transition-[box-shadow,opacity] duration-200"
               >
                 {{ song.artist }}
@@ -291,7 +291,7 @@
               >
               <span
                 key="text"
-                class="flex flex-col justify-center h-full items-center !h-2/3 rounded ring-2 ring-white-alta
+                class="flex flex-col justify-center items-center h-2/3 rounded ring-2 ring-white-alta
                 group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta transition-[box-shadow,opacity] duration-200"
                 :title="song.payment_required && song.payment_amount ? `需要 ${song.payment_amount} 元 SC` : ''"
               >
@@ -330,7 +330,7 @@
               >
               <span
                 key="text"
-                class="flex flex-row items-center w-full h-full !h-2/3 rounded ring-2 ring-white-alta
+                class="flex flex-row items-center w-full h-2/3 rounded ring-2 ring-white-alta
                 group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta transition-[box-shadow,opacity] duration-200"
               >
                 {{ song.language }}
