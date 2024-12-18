@@ -21,7 +21,9 @@
         <input
           type="checkbox"
           class="hidden"
-          @click="selectedIds = selectedIds.size === selectableIds.length ? new Set() : new Set(selectableIds)"
+          @click="selectedIds = selectedIds.size === props.data.length ?
+            new Set() :
+            new Set(props.data.map(song => song.$id))"
         >
         <span class="grid place-items-center w-5">
           <svg class="hidden"><symbol id="far-square"><font-awesome-icon :icon="['far', 'square']" /></symbol></svg>
@@ -30,12 +32,12 @@
             <use href="#far-square" />
           </svg>
           <font-awesome-icon
-            v-if="selectedIds.size !== 0 && selectedIds.size !== selectableIds.length"
+            v-if="selectedIds.size !== 0 && selectedIds.size !== props.data.length"
             :icon="['fas', 'square-minus']"
             class="!h-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
           />
           <svg
-            v-if="selectedIds.size !== 0 && selectedIds.size === selectableIds.length"
+            v-if="selectedIds.size !== 0 && selectedIds.size === props.data.length"
             class="size-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
           >
             <use href="#fas-square-check" />
@@ -375,7 +377,6 @@ function scrollList (position: 'top' | 'bottom') {
   }
 }
 
-const selectableIds = computed<Array<Song['$id']>>(() => props.data.map(song => song.$id))
 const selectedIds = ref<Set<Song['$id']>>(new Set())
 
 interface ModifyTarget {
