@@ -167,12 +167,13 @@
         </span>
       </div>
       <svg class="hidden"><symbol id="fas-comment-dollar"><font-awesome-icon :icon="['fas', 'comment-dollar']" /></symbol></svg>
-      <div class="overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta">
+      <div class="relative overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta">
         <transition-group
           enter-from-class="opacity-0 -translate-x-full"
           enter-active-class="transition duration-700"
-          leave-active-class="transition duration-700"
-          leave-to-class="opacity-0 -translate-x-full"
+          leave-active-class="absolute pr-4 w-full transition-opacity"
+          leave-to-class="opacity-0"
+          move-class="transition-[opacity,transform] duration-[300ms,500ms] delay-[0s,150ms]"
         >
           <div
             v-for="song in props.dataChanges"
