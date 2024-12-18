@@ -350,7 +350,7 @@ const props = defineProps<{
   // Includes modifications
   data: Playlist
   sortingColumn: null | PlaylistColumn
-  sortingOrder: PlaylistSortingOrder
+  sortingOrder?: PlaylistSortingOrder
   countTotal: number
   countDisplayed: number
 }>()

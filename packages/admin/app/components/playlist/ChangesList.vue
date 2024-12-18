@@ -462,7 +462,7 @@ const props = defineProps<{
   dataChanges: Playlist
   publishingState: PlaylistPublishingState
   sortingColumn: null | PlaylistColumn
-  sortingOrder: PlaylistSortingOrder
+  sortingOrder?: PlaylistSortingOrder
   countTotal: number
 }>()
 const emit = defineEmits<{

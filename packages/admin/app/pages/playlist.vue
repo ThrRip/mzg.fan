@@ -20,8 +20,7 @@
       :data="viewPlaylistData"
       :sorting-column="viewPlaylistSortingColumn"
       :sorting-order="viewPlaylistSortingOrder"
-      :count-total="// @ts-ignore
-        backendPlaylist.length"
+      :count-total="backendPlaylist.length"
       :count-displayed="viewPlaylistData.length"
       @toggle-sorting="viewPlaylistToggleSorting"
       @stage-changes="viewPlaylistStageChanges"
@@ -67,10 +66,9 @@ export interface Song {
 }
 export type Playlist = Array<Song>
 
-const { data: backendPlaylist, refresh: backendPlaylistRefresh } = await useAsyncData<Playlist>(
+const { data: backendPlaylist, refresh: backendPlaylistRefresh, status: backendPlaylistStatus } = await useAsyncData(
   // Use a random key to avoid caching
   `backend-databases-home-playlist-${Math.random()}`,
-  // @ts-expect-error
   () => backendDatabases.listDocuments('home', 'playlist', [Query.limit(useAppConfig().backendQueryResultsLimit)]),
   {
     server: false,
@@ -116,7 +114,6 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
       // @ts-expect-error
       backendPlaylistPublishChangesState.value[
         backendPlaylistPublishChangesState.value.findIndex(_ => _.$id === changesId)
-      // @ts-expect-error
       ].old = backendPlaylist.value.find(song => song.$id === changesId)
     }
   }
@@ -142,6 +139,7 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
           // @ts-expect-error
           delete backendPlaylistPublishChangesState.value[index].newId
         })
+        viewPlaylistDataUpdate('backend')
       })
   }
 
@@ -159,7 +157,6 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
     else
 
     // Modify song
-    // @ts-expect-error
     if (backendPlaylist.value.find(song => song.$id === changes.$id) && Object.keys(changes).length > 1) {
       delete changes.$id
       backendDatabases.updateDocument('home', 'playlist', changesId, changes)
@@ -169,7 +166,6 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
     else
 
     // Delete song
-    // @ts-expect-error
     if (backendPlaylist.value.find(song => song.$id === changes.$id) && Object.keys(changes).length === 1) {
       backendDatabases.deleteDocument('home', 'playlist', changesId)
         .then(() => cleanup(changesId), err => fail(changesId, err))
@@ -187,117 +183,140 @@ interface SortingSong extends Song {
 }
 export type PlaylistSortingOrder = 'ascending' | 'descending'
 const viewPlaylistSortingColumn = ref<null | PlaylistColumn>(null)
-const viewPlaylistSortingOrder = ref<PlaylistSortingOrder>('ascending')
-const viewPlaylistSortingOrderOptions = computed<Array<PlaylistSortingOrder>>(() => {
-  return viewPlaylistSortingColumn.value === 'payment_amount' ?
-    ['descending', 'ascending'] :
-    ['ascending', 'descending']
-})
+const viewPlaylistSortingOrder = ref<PlaylistSortingOrder>()
+const viewPlaylistSortingOrderOptions: Record<PlaylistColumn, Array<PlaylistSortingOrder>> = {
+  name: ['ascending', 'descending'],
+  artist: ['ascending', 'descending'],
+  payment_amount: ['descending', 'ascending'],
+  language: ['ascending', 'descending']
+}
 function viewPlaylistToggleSorting (column: PlaylistColumn) {
   // Enable sorting or switch to another column
   if (viewPlaylistSortingColumn.value === null || column !== viewPlaylistSortingColumn.value) {
     viewPlaylistSortingColumn.value = column
-    // @ts-expect-error
-    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
+    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions[column][0]
   }
   else
   // Disable sorting because out of ordering options
   if (
     column === viewPlaylistSortingColumn.value &&
-    viewPlaylistSortingOrder.value === viewPlaylistSortingOrderOptions.value[viewPlaylistSortingOrderOptions.value.length - 1]
+    viewPlaylistSortingOrder.value ===
+      viewPlaylistSortingOrderOptions[column][viewPlaylistSortingOrderOptions[column].length - 1]
   ) {
     viewPlaylistSortingColumn.value = null
-    // @ts-expect-error
-    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[0]
+    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions[column][0]
+    viewPlaylistDataUpdate()
+    return
   }
   // Rotate between ordering options
   else {
-    // @ts-expect-error
-    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions.value[
-      viewPlaylistSortingOrderOptions.value.findIndex(option => option === viewPlaylistSortingOrder.value) + 1
+    viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions[column][
+      viewPlaylistSortingOrderOptions[column].findIndex(option => option === viewPlaylistSortingOrder.value) + 1
     ]
   }
   viewPlaylistDataUpdate()
 }
 
 const viewPlaylistChangesData = ref<Playlist>([])
-const viewPlaylistDataWithChanges = computed<Playlist>(() => {
-  // @ts-expect-error
-  const playlist: Playlist = backendPlaylist.value.slice()
-  viewPlaylistChangesData.value.forEach((changes: Song) => {
-    if (backendPlaylistPublishChangesState.value.find(_ => _.$id === changes.$id && _.state === 'succeeded')) { return }
+let viewPlaylistDataChangesMerged_: Playlist = []
+function viewPlaylistDataMergeChanges (data: Playlist, changes: Playlist) {
+  const playlist = data.slice()
+  changes.forEach((changes: Song) => {
+    if (
+      backendPlaylistPublishChangesState.value.findIndex(_ => _.$id === changes.$id && _.state === 'succeeded') !== -1
+    ) { return }
     if (Object.keys(changes).length === 1 && Object.keys(changes)[0] === '$id') {
       playlist.splice(playlist.findIndex(song => song.$id === changes.$id), 1)
     }
     else
-    if (playlist.find(song => song.$id === changes.$id)) {
+    if (playlist.findIndex(song => song.$id === changes.$id) !== -1) {
       playlist[playlist.findIndex(song => song.$id === changes.$id)] = changes
     }
     else {
       playlist.push(changes)
     }
   })
+  viewPlaylistDataChangesMerged_ = playlist
   return playlist
-})
-const viewPlaylistData = ref<Playlist>(viewPlaylistDataWithChanges.value)
-async function viewPlaylistDataUpdate () {
-  if (viewPlaylistSortingColumn.value === null) {
-    viewPlaylistData.value = viewPlaylistDataWithChanges.value
-  }
-  else {
-    const playlist: Array<SortingSong> = viewPlaylistDataWithChanges.value.map(song => ({ ...song }))
-    const orderModifier = viewPlaylistSortingOrder.value === 'ascending' ? 1 : -1
-
-    // Sort by song name or artist in alphabetical order
-    if (viewPlaylistSortingColumn.value === 'name' || viewPlaylistSortingColumn.value === 'artist') {
-      const pinyinPro = await import('pinyin-pro')
-      playlist.forEach((song, index) => {
-        // @ts-expect-error
-        playlist[index][`${viewPlaylistSortingColumn.value}Pinyin`] =
-          // @ts-expect-error
-          pinyinPro.pinyin(song[viewPlaylistSortingColumn.value], { toneType: 'none', nonZh: 'consecutive' })
-            .replaceAll(' ', '')
-      })
-      playlist.sort((a, b) => {
-        // @ts-expect-error
-        if (a[`${viewPlaylistSortingColumn.value}Pinyin`] < b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
-          return -1 * orderModifier
-        }
-        else
-        // @ts-expect-error
-        if (a[`${viewPlaylistSortingColumn.value}Pinyin`] > b[`${viewPlaylistSortingColumn.value}Pinyin`]) {
-          return 1 * orderModifier
-        }
-        else {
-          return 0
-        }
-      })
-    }
-    else
-
-    // Sort by payment requirement
-    if (viewPlaylistSortingColumn.value === 'payment_amount') {
-      playlist.sort((a, b) => {
-        if (a.payment_required === false || b.payment_required === false) {
-          return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
-        }
-        return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
-      })
-    }
-    else
-
-    // Sort by language
-    if (viewPlaylistSortingColumn.value === 'language') {
-      const languageOrder = ['国语', '粤语', '日语']
-      playlist.sort((a, b) => {
-        return (languageOrder.findIndex(language => a.language === language) -
-          languageOrder.findIndex(language => b.language === language)) * orderModifier
-      })
-    }
-    viewPlaylistData.value = playlist
-  }
 }
-watch(viewPlaylistDataWithChanges, () => viewPlaylistDataUpdate())
+async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, order: PlaylistSortingOrder) {
+  const playlist: Array<SortingSong> = data.slice()
+  const orderModifier = order === 'ascending' ? 1 : -1
+
+  // Sort by song name or artist in alphabetical order
+  if (column === 'name' || column === 'artist') {
+    const pinyinPro = await import('pinyin-pro')
+    playlist.forEach((song, index) => {
+      // @ts-expect-error
+      playlist[index][`${column}Pinyin`] =
+        // @ts-expect-error
+        pinyinPro.pinyin(song[column], { toneType: 'none', nonZh: 'consecutive' })
+          .replaceAll(' ', '')
+    })
+    playlist.sort((a, b) => {
+      // @ts-expect-error
+      if (a[`${column}Pinyin`] < b[`${column}Pinyin`]) {
+        return -1 * orderModifier
+      }
+      else
+      // @ts-expect-error
+      if (a[`${column}Pinyin`] > b[`${column}Pinyin`]) {
+        return 1 * orderModifier
+      }
+      else {
+        return 0
+      }
+    })
+  }
+  else
+
+  // Sort by payment requirement
+  if (column === 'payment_amount') {
+    playlist.sort((a, b) => {
+      if (a.payment_required === false || b.payment_required === false) {
+        return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
+      }
+      return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
+    })
+  }
+  else
+
+  // Sort by language
+  if (column === 'language') {
+    const languageOrder = ['国语', '粤语', '日语']
+    playlist.sort((a, b) => {
+      return (languageOrder.findIndex(language => a.language === language) -
+        languageOrder.findIndex(language => b.language === language)) * orderModifier
+    })
+  }
+
+  return playlist
+}
+const viewPlaylistData = ref<Playlist>([])
+function viewPlaylistDataUpdate (hint?: 'backend' | 'changes') {
+  let playlist: Playlist = hint === 'backend' ? backendPlaylist.value : viewPlaylistDataChangesMerged_
+  if (hint === 'backend' || hint === 'changes') {
+    playlist = viewPlaylistDataMergeChanges(backendPlaylist.value, viewPlaylistChangesData.value)
+  }
+  if (viewPlaylistSortingColumn.value && viewPlaylistSortingOrder.value) {
+    viewPlaylistDataSort(
+      playlist,
+      viewPlaylistSortingColumn.value,
+      viewPlaylistSortingOrder.value
+    ).then(dataSorted => {
+      playlist = dataSorted
+      viewPlaylistData.value = playlist
+    })
+  }
+  else { viewPlaylistData.value = playlist }
+}
+
+const viewPlaylistDataInitFinish = watch(backendPlaylistStatus, value => {
+  if (value === 'success') {
+    viewPlaylistDataUpdate('backend')
+    viewPlaylistDataInitFinish()
+  }
+})
 
 function viewPlaylistStageChanges (changes: Song) {
   if (backendPlaylistPublishChangesState.value.find(_ => _.$id === changes.$id)) {
@@ -307,7 +326,6 @@ function viewPlaylistStageChanges (changes: Song) {
     )
   }
 
-  // @ts-expect-error
   const songUnmodified = backendPlaylist.value.find(song => song.$id === changes.$id)
   const changesStaged = viewPlaylistChangesData.value.find(song => song.$id === changes.$id)
 
@@ -350,7 +368,7 @@ function viewPlaylistStageChanges (changes: Song) {
     if (changes.$id.includes('-')) { diffFromUnmodified = true }
     else {
       for (const field in changes) {
-      // @ts-expect-error
+        // @ts-expect-error
         if (field !== '$id' && changes[field] !== songUnmodified[field]) {
           diffFromUnmodified = true
           break
@@ -358,7 +376,7 @@ function viewPlaylistStageChanges (changes: Song) {
       }
       if (!changesStaged && diffFromUnmodified) {
         changesFieldsAccepted.forEach(field => {
-        // @ts-expect-error
+          // @ts-expect-error
           if (field !== 'payment_required' && changes[field] === undefined) { changes[field] = songUnmodified[field] }
         })
       }
@@ -397,6 +415,8 @@ function viewPlaylistStageChanges (changes: Song) {
       viewPlaylistChangesData.value.push(changes)
     }
   }
+
+  viewPlaylistDataUpdate('changes')
 }
 
 function viewPlaylistUndoChanges (changesIds: Set<Song['$id']>) {
@@ -406,18 +426,20 @@ function viewPlaylistUndoChanges (changesIds: Set<Song['$id']>) {
       1
     )
   })
+  viewPlaylistDataUpdate('changes')
 }
 
 function viewPlaylistClearPublishedChanges () {
-  const stateCleaned: PlaylistPublishingState = []
-  backendPlaylistPublishChangesState.value.forEach(_ => {
-    if (_.state === 'succeeded') {
-      viewPlaylistChangesData.value.splice(viewPlaylistChangesData.value.findIndex(changes => changes.$id === _.$id), 1)
+  for (let index = backendPlaylistPublishChangesState.value.length - 1; index >= 0; index--) {
+    if ((backendPlaylistPublishChangesState.value[index] as SongPublishingState).state === 'succeeded') {
+      viewPlaylistChangesData.value.splice(
+        viewPlaylistChangesData.value.findIndex(changes => (
+          changes.$id === (backendPlaylistPublishChangesState.value[index] as SongPublishingState).$id)
+        ),
+        1
+      )
+      backendPlaylistPublishChangesState.value.splice(index, 1)
     }
-    else {
-      stateCleaned.push(_)
-    }
-  })
-  backendPlaylistPublishChangesState.value = stateCleaned
+  }
 }
 </script>
