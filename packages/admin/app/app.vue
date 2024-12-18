@@ -221,7 +221,7 @@ function viewToggleFullNavigationBar (show?: boolean) {
     viewShowFullNavigationBar.value = !viewShowFullNavigationBar.value
     viewFullNavigationBarToggles.value++
   }
- else
+  else
   if (viewShowFullNavigationBar.value !== show) {
     viewShowFullNavigationBar.value = show
     viewFullNavigationBarToggles.value++
