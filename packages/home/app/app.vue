@@ -352,7 +352,7 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   // Rotate between ordering options
   else {
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions[column][
-      viewPlaylistSortingOrderOptions[column].findIndex(option => option === viewPlaylistSortingOrder.value) + 1
+      viewPlaylistSortingOrderOptions[column].indexOf(viewPlaylistSortingOrder.value as PlaylistSortingOrder) + 1
     ]
   }
   viewPlaylistDataSort(
@@ -411,10 +411,8 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
   // Sort by language
   if (column === 'language') {
     const languageOrder = ['国语', '粤语', '日语']
-    playlist.sort((a, b) => {
-      return (languageOrder.findIndex(language => a.language === language) -
-        languageOrder.findIndex(language => b.language === language)) * orderModifier
-    })
+    // @ts-expect-error
+    playlist.sort((a, b) => ((languageOrder.indexOf(a.language) - languageOrder.indexOf(b.language)) * orderModifier))
   }
 
   return playlist

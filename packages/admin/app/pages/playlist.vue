@@ -156,7 +156,10 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
     else
 
     // Modify song
-    if (backendPlaylist.value.find(song => song.$id === changes.$id) && Object.keys(changes).length > 1) {
+    if (
+      backendPlaylist.value.findIndex(song => song.$id === changes.$id) !== -1 &&
+      Object.keys(changes).length > 1
+    ) {
       delete changes.$id
       backendDatabases.updateDocument('home', 'playlist', changesId, changes)
         .then(() => succeed(changesId), err => fail(changesId, err))
@@ -165,7 +168,10 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
     else
 
     // Delete song
-    if (backendPlaylist.value.find(song => song.$id === changes.$id) && Object.keys(changes).length === 1) {
+    if (
+      backendPlaylist.value.findIndex(song => song.$id === changes.$id) !== -1 &&
+      Object.keys(changes).length === 1
+    ) {
       backendDatabases.deleteDocument('home', 'playlist', changesId)
         .then(() => succeed(changesId), err => fail(changesId, err))
         .finally(() => cleanup(changesId))
@@ -210,7 +216,7 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   // Rotate between ordering options
   else {
     viewPlaylistSortingOrder.value = viewPlaylistSortingOrderOptions[column][
-      viewPlaylistSortingOrderOptions[column].findIndex(option => option === viewPlaylistSortingOrder.value) + 1
+      viewPlaylistSortingOrderOptions[column].indexOf(viewPlaylistSortingOrder.value as PlaylistSortingOrder) + 1
     ]
   }
   viewPlaylistDataUpdate()
@@ -282,10 +288,8 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
   // Sort by language
   if (column === 'language') {
     const languageOrder = ['国语', '粤语', '日语']
-    playlist.sort((a, b) => {
-      return (languageOrder.findIndex(language => a.language === language) -
-        languageOrder.findIndex(language => b.language === language)) * orderModifier
-    })
+    // @ts-expect-error
+    playlist.sort((a, b) => ((languageOrder.indexOf(a.language) - languageOrder.indexOf(b.language)) * orderModifier))
   }
 
   return playlist
@@ -338,7 +342,7 @@ function viewPlaylistStageChanges (changes: Song) {
   else
 
   // Modify song
-  if (viewPlaylistData.value.find(song => song.$id === changes.$id) && Object.keys(changes).length > 1) {
+  if (viewPlaylistData.value.findIndex(song => song.$id === changes.$id) !== -1 && Object.keys(changes).length > 1) {
     if (changesStaged) {
       let diffFromStaged = false
       for (const field in changes) {
@@ -393,7 +397,7 @@ function viewPlaylistStageChanges (changes: Song) {
 
   // Delete song
   if (
-    viewPlaylistData.value.find(song => song.$id === changes.$id) &&
+    viewPlaylistData.value.findIndex(song => song.$id === changes.$id) !== -1 &&
     Object.keys(changes).length === 1 &&
     changes.$id
   ) {
@@ -415,7 +419,7 @@ function viewPlaylistStageChanges (changes: Song) {
 const viewPlaylistFurtherChangesIds = ref<Set<Song['$id']>>(new Set())
 function viewPlaylistFurtherChangeCheck (changesId: Song['$id']) {
   // If changes were made to a song with publishing history, mark for transition and clear its previous publishing state
-  if (backendPlaylistPublishChangesState.value.find(_ => _.$id === changesId)) {
+  if (backendPlaylistPublishChangesState.value.findIndex(_ => _.$id === changesId) !== -1) {
     viewPlaylistFurtherChangesIds.value.add(changesId)
     setTimeout(() => viewPlaylistFurtherChangesIds.value.delete(changesId), 200)
     backendPlaylistPublishChangesState.value.splice(

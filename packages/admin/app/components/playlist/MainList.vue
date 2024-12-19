@@ -405,7 +405,7 @@ function modifyNext (currentTarget: ModifyTarget) {
   const fields: Array<ModifyTarget['field']> = ['name', 'artist', 'payment_amount', 'language']
   modifyingInput.value?.[0]?.blur()
   modifyingTarget.value.id = currentTarget.id
-  modifyingTarget.value.field = fields[fields.findIndex(field => field === currentTarget.field) + 1] ?? null
+  modifyingTarget.value.field = fields[fields.indexOf(currentTarget.field) + 1] ?? null
   nextTick(() => modifyingInput.value?.[0]?.focus())
 }
 
