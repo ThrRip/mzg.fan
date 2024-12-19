@@ -171,9 +171,9 @@
         <transition-group
           enter-from-class="opacity-0 -translate-x-full"
           enter-active-class="transition duration-700"
-          leave-active-class="absolute pr-4 w-full transition-opacity"
+          leave-active-class="absolute pr-4 w-full transition-opacity duration-300"
           leave-to-class="opacity-0"
-          move-class="transition-[opacity,transform] duration-[300ms,500ms] delay-[0s,150ms]"
+          move-class="!transition-[opacity,transform] !duration-[300ms,500ms] delay-[0s,150ms]"
         >
           <div
             v-for="song in props.dataChanges"
