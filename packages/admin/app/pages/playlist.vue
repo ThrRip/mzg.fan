@@ -29,6 +29,7 @@
       :data="backendPlaylist"
       :data-changes="viewPlaylistChangesData"
       :publishing-state="backendPlaylistPublishChangesState"
+      :further-changes="viewPlaylistFurtherChangesIds"
       :sorting-column="viewPlaylistSortingColumn"
       :sorting-order="viewPlaylistSortingOrder"
       :count-total="viewPlaylistChangesData.length"
@@ -140,6 +141,8 @@ function backendPlaylistPublishChanges (changesIds: Set<Song['$id']>) {
   }
 
   changesIds.forEach(changesId => {
+    viewPlaylistFurtherChangesIds.value.delete(changesId)
+
     const changes = { ...viewPlaylistChangesData.value.find(_ => _.$id === changesId) }
 
     // New song - using a UUID for "$id" locally
@@ -213,7 +216,6 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   viewPlaylistDataUpdate()
 }
 
-const viewPlaylistChangesData = ref<Playlist>([])
 let viewPlaylistDataChangesMerged_: Playlist = []
 function viewPlaylistDataMergeChanges (data: Playlist, changes: Playlist) {
   const playlist = data.slice()
@@ -314,14 +316,8 @@ const viewPlaylistDataInitFinish = watch(backendPlaylistStatus, value => {
   }
 })
 
+const viewPlaylistChangesData = ref<Playlist>([])
 function viewPlaylistStageChanges (changes: Song) {
-  if (backendPlaylistPublishChangesState.value.find(_ => _.$id === changes.$id)) {
-    backendPlaylistPublishChangesState.value.splice(
-      backendPlaylistPublishChangesState.value.findIndex(_ => _.$id === changes.$id),
-      1
-    )
-  }
-
   const songUnmodified = backendPlaylist.value.find(song => song.$id === changes.$id)
   const changesStaged = viewPlaylistChangesData.value.find(song => song.$id === changes.$id)
 
@@ -386,6 +382,7 @@ function viewPlaylistStageChanges (changes: Song) {
       else {
         viewPlaylistChangesData.value.push(changes)
       }
+      viewPlaylistFurtherChangeCheck(changes.$id)
     }
     else
     if (changesStaged) {
@@ -410,9 +407,22 @@ function viewPlaylistStageChanges (changes: Song) {
     else {
       viewPlaylistChangesData.value.push(changes)
     }
+    viewPlaylistFurtherChangeCheck(changes.$id)
   }
 
   viewPlaylistDataUpdate('changes')
+}
+const viewPlaylistFurtherChangesIds = ref<Set<Song['$id']>>(new Set())
+function viewPlaylistFurtherChangeCheck (changesId: Song['$id']) {
+  // If changes were made to a song with publishing history, mark for transition and clear its previous publishing state
+  if (backendPlaylistPublishChangesState.value.find(_ => _.$id === changesId)) {
+    viewPlaylistFurtherChangesIds.value.add(changesId)
+    setTimeout(() => viewPlaylistFurtherChangesIds.value.delete(changesId), 200)
+    backendPlaylistPublishChangesState.value.splice(
+      backendPlaylistPublishChangesState.value.findIndex(_ => _.$id === changesId),
+      1
+    )
+  }
 }
 
 function viewPlaylistUndoChanges (changesIds: Set<Song['$id']>) {

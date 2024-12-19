@@ -214,10 +214,13 @@
                   `错误：${getPublishingStateById(song.$id)?.error?.message}\n\n` +
                   '请联系您的技术支持人员以获取帮助，或点击此图标以重新选择此项目，并再次尝试发布改动。' :
                   ''"
-              class="group grid portrait:row-span-2 place-items-center pl-2.5 portrait:pl-2.5 portrait:pr-1 py-2.5 h-full"
-              :class="[!getPublishingStateById(song.$id) ? 'cursor-pointer' :
-                getPublishingStateById(song.$id)?.state === 'failed' ? 'grid-areas-stack cursor-pointer' :
-                'grid-areas-stack']"
+              class="group grid grid-areas-stack portrait:row-span-2 place-items-center pl-2.5 portrait:pl-2.5 portrait:pr-1 py-2.5 h-full"
+              :class="{
+                'grid-areas-stack':
+                  getPublishingStateById(song.$id) || furtherChanges.has(song.$id),
+                'cursor-pointer':
+                  !getPublishingStateById(song.$id) || (getPublishingStateById(song.$id)?.state === 'failed')
+              }"
             >
               <input
                 v-if="!getPublishingStateById(song.$id) || getPublishingStateById(song.$id)?.state === 'failed'"
@@ -226,12 +229,20 @@
                 @click="selectedIds.has(song.$id) ? selectedIds.delete(song.$id) : selectedIds.add(song.$id)"
               >
               <ClientOnly>
-                <svg
-                  v-if="!selectedIds.has(song.$id) && !getPublishingStateById(song.$id)"
-                  class="size-5 transition group-active:scale-90"
+                <transition
+                  :css="furtherChanges.has(song.$id)"
+                  enter-from-class="opacity-0"
+                  enter-active-class="duration-200"
+                  leave-active-class="duration-200"
+                  leave-to-class="opacity-0"
                 >
-                  <use href="#far-square" />
-                </svg>
+                  <svg
+                    v-if="!selectedIds.has(song.$id) && !getPublishingStateById(song.$id)"
+                    class="size-5 transition group-active:scale-90"
+                  >
+                    <use href="#far-square" />
+                  </svg>
+                </transition>
                 <transition
                   :css="Boolean(getPublishingStateById(song.$id))"
                   enter-from-class="opacity-0"
@@ -462,6 +473,7 @@ const props = defineProps<{
   // Modifications
   dataChanges: Playlist
   publishingState: PlaylistPublishingState
+  furtherChanges: Set<Song['$id']>
   sortingColumn: null | PlaylistColumn
   sortingOrder?: PlaylistSortingOrder
   countTotal: number
