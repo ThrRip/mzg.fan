@@ -196,103 +196,103 @@
                 </svg>
               </ClientOnly>
             </label>
-            <transition-group
-              tag="span"
+            <span
               class="group grid grid-areas-stack items-center px-4 portrait:px-3 h-full portrait:leading-snug cursor-text"
-              enter-from-class="opacity-0"
-              enter-active-class="transition-opacity"
-              leave-active-class="transition-opacity"
-              leave-to-class="opacity-0"
               @click="modifyStart({ id: song.$id, field: 'name' })"
             >
-              <input
-                v-if="modifyingTarget.id === song.$id && modifyingTarget.field === 'name'"
-                key="input"
-                ref="modifyingInput"
-                type="text"
-                class="z-10 w-full h-2/3 bg-white
-                rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
-                :value="song.name"
-                @blur="// @ts-ignore
-                  modifyFinish({ $id: song.$id, name: $event.target.value })"
-                @keydown.enter="// @ts-ignore
-                  $event.target.blur()"
-                @keydown.esc="// @ts-ignore
-                  $event.target.blur()"
-                @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'name' })"
+              <transition
+                enter-from-class="opacity-0"
+                enter-active-class="transition-opacity"
+                leave-active-class="transition-opacity"
+                leave-to-class="opacity-0"
               >
+                <input
+                  v-if="modifyingTarget.id === song.$id && modifyingTarget.field === 'name'"
+                  ref="modifyingInput"
+                  type="text"
+                  class="z-10 w-full h-2/3 bg-white
+                  rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
+                  :value="song.name"
+                  @blur="// @ts-ignore
+                    modifyFinish({ $id: song.$id, name: $event.target.value })"
+                  @keydown.enter="// @ts-ignore
+                    $event.target.blur()"
+                  @keydown.esc="// @ts-ignore
+                    $event.target.blur()"
+                  @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'name' })"
+                >
+              </transition>
               <span
-                key="text"
                 class="flex flex-row items-center w-full h-2/3 rounded ring-2 ring-white-alta
                 group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta transition-[box-shadow,opacity] duration-200"
               >
                 {{ song.name }}
               </span>
-            </transition-group>
-            <transition-group
-              tag="span"
+            </span>
+            <span
               class="group grid grid-areas-stack portrait:order-4 items-center px-4 portrait:px-3 h-full portrait:text-xs cursor-text"
-              enter-from-class="opacity-0"
-              enter-active-class="transition-opacity"
-              leave-active-class="transition-opacity"
-              leave-to-class="opacity-0"
               @click="modifyStart({ id: song.$id, field: 'artist' })"
             >
-              <input
-                v-if="modifyingTarget.id === song.$id && modifyingTarget.field === 'artist'"
-                key="input"
-                ref="modifyingInput"
-                type="text"
-                class="z-10 w-full h-2/3 bg-white
-                rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
-                :value="song.artist"
-                @blur="// @ts-ignore
-                  modifyFinish({ $id: song.$id, artist: $event.target.value })"
-                @keydown.enter="// @ts-ignore
-                  $event.target.blur()"
-                @keydown.esc="// @ts-ignore
-                  $event.target.blur()"
-                @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'artist' })"
+              <transition
+                enter-from-class="opacity-0"
+                enter-active-class="transition-opacity"
+                leave-active-class="transition-opacity"
+                leave-to-class="opacity-0"
               >
+                <input
+                  v-if="modifyingTarget.id === song.$id && modifyingTarget.field === 'artist'"
+                  ref="modifyingInput"
+                  type="text"
+                  class="z-10 w-full h-2/3 bg-white
+                  rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
+                  :value="song.artist"
+                  @blur="// @ts-ignore
+                    modifyFinish({ $id: song.$id, artist: $event.target.value })"
+                  @keydown.enter="// @ts-ignore
+                    $event.target.blur()"
+                  @keydown.esc="// @ts-ignore
+                    $event.target.blur()"
+                  @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'artist' })"
+                >
+              </transition>
               <span
-                key="text"
                 class="flex flex-row items-center w-full h-2/3 rounded ring-2 ring-white-alta
                 group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta transition-[box-shadow,opacity] duration-200"
               >
                 {{ song.artist }}
               </span>
-            </transition-group>
-            <transition-group
-              tag="span"
+            </span>
+            <span
               class="group grid grid-areas-stack portrait:row-span-2 items-center px-4 portrait:px-3 h-full"
               :class="{ 'cursor-text': song.payment_required }"
-              enter-from-class="opacity-0"
-              enter-active-class="transition-opacity"
-              leave-active-class="transition-opacity"
-              leave-to-class="opacity-0"
               @click="modifyStart({ id: song.$id, field: 'payment_amount' })"
             >
-              <input
-                v-if="modifyingTarget.id === song.$id && modifyingTarget.field === 'payment_amount'"
-                key="input"
-                ref="modifyingInput"
-                type="text"
-                class="z-10 w-full h-2/3 text-center bg-white
-                rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
-                :value="song.payment_amount"
-                @blur="modifyFinish({
-                  $id: song.$id,
-                  // @ts-ignore
-                  payment_amount: ($event.target.value === '' || $event.target.value === '0') ? null : Number($event.target.value)
-                })"
-                @keydown.enter="// @ts-ignore
-                  $event.target.blur()"
-                @keydown.esc="// @ts-ignore
-                  $event.target.blur()"
-                @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'payment_amount' })"
+              <transition
+                enter-from-class="opacity-0"
+                enter-active-class="transition-opacity"
+                leave-active-class="transition-opacity"
+                leave-to-class="opacity-0"
               >
+                <input
+                  v-if="modifyingTarget.id === song.$id && modifyingTarget.field === 'payment_amount'"
+                  ref="modifyingInput"
+                  type="text"
+                  class="z-10 w-full h-2/3 text-center bg-white
+                  rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
+                  :value="song.payment_amount"
+                  @blur="modifyFinish({
+                    $id: song.$id,
+                    // @ts-ignore
+                    payment_amount: ($event.target.value === '' || $event.target.value === '0') ? null : Number($event.target.value)
+                  })"
+                  @keydown.enter="// @ts-ignore
+                    $event.target.blur()"
+                  @keydown.esc="// @ts-ignore
+                    $event.target.blur()"
+                  @keydown.tab.prevent="modifyNext({ id: song.$id, field: 'payment_amount' })"
+                >
+              </transition>
               <span
-                key="text"
                 class="flex flex-col justify-center items-center h-2/3 rounded ring-2 ring-white-alta
                 group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta transition-[box-shadow,opacity] duration-200"
                 :title="song.payment_required && song.payment_amount ? `需要 ${song.payment_amount} 元 SC` : ''"
@@ -305,39 +305,39 @@
                   ¥{{ song.payment_amount }}
                 </span>
               </span>
-            </transition-group>
-            <transition-group
-              tag="span"
+            </span>
+            <span
               class="group grid grid-areas-stack portrait:row-span-2 items-center pl-4 portrait:pl-3 h-full cursor-text"
-              enter-from-class="opacity-0"
-              enter-active-class="transition-opacity"
-              leave-active-class="transition-opacity"
-              leave-to-class="opacity-0"
               @click="modifyStart({ id: song.$id, field: 'language' })"
             >
-              <input
-                v-if="modifyingTarget.id === song.$id && modifyingTarget.field === 'language'"
-                key="input"
-                ref="modifyingInput"
-                type="text"
-                class="z-10 w-full h-2/3 bg-white
-                rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
-                :value="song.language"
-                @blur="// @ts-ignore
-                  modifyFinish({ $id: song.$id, language: $event.target.value })"
-                @keydown.enter="// @ts-ignore
-                  $event.target.blur()"
-                @keydown.esc="// @ts-ignore
-                  $event.target.blur()"
+              <transition
+                enter-from-class="opacity-0"
+                enter-active-class="transition-opacity"
+                leave-active-class="transition-opacity"
+                leave-to-class="opacity-0"
               >
+                <input
+                  v-if="modifyingTarget.id === song.$id && modifyingTarget.field === 'language'"
+                  ref="modifyingInput"
+                  type="text"
+                  class="z-10 w-full h-2/3 bg-white
+                  rounded focus:outline-none ring-2 ring-blue ring-offset-[4.5px] ring-offset-white"
+                  :value="song.language"
+                  @blur="// @ts-ignore
+                    modifyFinish({ $id: song.$id, language: $event.target.value })"
+                  @keydown.enter="// @ts-ignore
+                    $event.target.blur()"
+                  @keydown.esc="// @ts-ignore
+                    $event.target.blur()"
+                >
+              </transition>
               <span
-                key="text"
                 class="flex flex-row items-center w-full h-2/3 rounded ring-2 ring-white-alta
                 group-hover:ring-blue ring-offset-[4.5px] ring-offset-white-alta transition-[box-shadow,opacity] duration-200"
               >
                 {{ song.language }}
               </span>
-            </transition-group>
+            </span>
           </div>
         </transition-group>
       </div>
