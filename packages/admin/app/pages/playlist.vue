@@ -392,6 +392,7 @@ function viewPlaylistStageChanges (changes: Song) {
     if (changesStaged) {
       viewPlaylistChangesData.value.splice(viewPlaylistChangesData.value.findIndex(_ => _.$id === changes.$id), 1)
     }
+    else { return }
   }
   else
 
