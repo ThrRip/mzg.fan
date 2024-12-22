@@ -219,7 +219,7 @@
                 'grid-areas-stack':
                   getPublishingStateById(song.$id) || furtherChanges.has(song.$id),
                 'cursor-pointer':
-                  !getPublishingStateById(song.$id) || (getPublishingStateById(song.$id)?.state === 'failed')
+                  !getPublishingStateById(song.$id) || getPublishingStateById(song.$id)?.state === 'failed'
               }"
             >
               <input
