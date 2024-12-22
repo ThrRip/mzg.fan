@@ -361,7 +361,7 @@ const emit = defineEmits<{
   stageChanges: [changes: Song]
 }>()
 
-const listArea = ref<HTMLDivElement>()
+const listArea = shallowRef<HTMLDivElement>()
 function scrollList (position: 'top' | 'bottom') {
   if (position === 'top') {
     nextTick(() => listArea.value?.scroll({
@@ -389,7 +389,7 @@ const modifyingTarget = ref<{
   id: null,
   field: null
 })
-const modifyingInput = ref<Array<HTMLInputElement>>()
+const modifyingInput = shallowRef<Array<HTMLInputElement>>()
 
 function modifyStart (target: ModifyTarget) {
   modifyingTarget.value.id = target.id

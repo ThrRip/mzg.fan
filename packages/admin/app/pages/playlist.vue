@@ -294,7 +294,7 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
 
   return playlist
 }
-const viewPlaylistData = ref<Playlist>([])
+const viewPlaylistData = shallowRef<Playlist>([])
 function viewPlaylistDataUpdate (hint?: 'backend' | 'changes') {
   let playlist: Playlist = hint === 'backend' ? backendPlaylist.value : viewPlaylistDataChangesMerged
   if (hint === 'backend' || hint === 'changes') {
