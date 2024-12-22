@@ -222,7 +222,7 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   viewPlaylistDataUpdate()
 }
 
-let viewPlaylistDataChangesMerged_: Playlist = []
+let viewPlaylistDataChangesMerged: Playlist = []
 function viewPlaylistDataMergeChanges (data: Playlist, changes: Playlist) {
   const playlist = data.slice()
   changes.forEach((changes: Song) => {
@@ -240,7 +240,7 @@ function viewPlaylistDataMergeChanges (data: Playlist, changes: Playlist) {
       playlist.push(changes)
     }
   })
-  viewPlaylistDataChangesMerged_ = playlist
+  viewPlaylistDataChangesMerged = playlist
   return playlist
 }
 async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, order: PlaylistSortingOrder) {
@@ -296,7 +296,7 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
 }
 const viewPlaylistData = ref<Playlist>([])
 function viewPlaylistDataUpdate (hint?: 'backend' | 'changes') {
-  let playlist: Playlist = hint === 'backend' ? backendPlaylist.value : viewPlaylistDataChangesMerged_
+  let playlist: Playlist = hint === 'backend' ? backendPlaylist.value : viewPlaylistDataChangesMerged
   if (hint === 'backend' || hint === 'changes') {
     playlist = viewPlaylistDataMergeChanges(backendPlaylist.value, viewPlaylistChangesData.value)
   }
