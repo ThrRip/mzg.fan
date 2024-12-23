@@ -42,7 +42,8 @@ export default {
         alta: '#f3f1f6'
       },
       gray: {
-        DEFAULT: '#e7e2e9'
+        DEFAULT: '#e7e2e9',
+        alt: '#cec8d0'
       },
       black: {
         DEFAULT: '#433a47',

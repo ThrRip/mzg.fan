@@ -11,8 +11,7 @@
   <div class="overflow-hidden grid grid-rows-[auto_1fr] text-black rounded-2xl">
     <div
       class="landscape:overflow-y-scroll grid grid-cols-[1.875rem_0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[2.125rem_1fr_3.5rem_4.5rem]
-      grid-rows-1 portrait:grid-rows-[1.625rem_1rem] content-center px-2 h-12 portrait:h-16
-      bg-gray scrollbar scrollbar-thumb-transparent scrollbar-track-transparent"
+      grid-rows-1 portrait:grid-rows-[1.625rem_1rem] content-center px-2 h-12 portrait:h-16 bg-gray scrollbar scrollbar-thumb-transparent"
     >
       <label
         title="全选"
@@ -167,7 +166,10 @@
         </span>
       </div>
       <svg class="hidden"><symbol id="fas-comment-dollar"><font-awesome-icon :icon="['fas', 'comment-dollar']" /></symbol></svg>
-      <div class="relative overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta">
+      <div
+        class="relative overflow-x-hidden overflow-y-scroll flex flex-col portrait:gap-y-5
+        px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta scrollbar scrollbar-thumb-gray-alt"
+      >
         <transition-group
           enter-from-class="opacity-0 -translate-x-full"
           enter-active-class="transition duration-700"

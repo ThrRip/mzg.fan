@@ -85,8 +85,7 @@
           <div
             class="landscape:overflow-y-scroll grid grid-cols-[0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[1fr_3.5rem_4.5rem]
             grid-rows-1 portrait:grid-rows-[0.55fr_0.45fr] content-center px-2 h-12 portrait:h-16 bg-gray
-            scrollbar scrollbar-thumb-transparent scrollbar-track-transparent
-            *:flex *:flex-row *:gap-x-2 *:items-center *:h-full *:pl-4 portrait:*:pl-3"
+            scrollbar scrollbar-thumb-transparent *:flex *:flex-row *:gap-x-2 *:items-center *:h-full *:pl-4 portrait:*:pl-3"
           >
             <button
               class="portrait:pt-3 portrait:pb-0.5 portrait:leading-snug"
@@ -198,7 +197,8 @@
             <transition-group
               tag="div"
               move-class="transition-transform duration-[1300ms]"
-              class="overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta"
+              class="overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta
+              scrollbar scrollbar-thumb-gray-alt"
             >
               <div
                 v-for="song in viewPlaylistData"
