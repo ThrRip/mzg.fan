@@ -25,9 +25,8 @@
         <NuxtLink
           to="/"
           title="首页"
-          class="aspect-square flex flex-row justify-center items-center h-14 bg-blue hover:bg-blue-a
-          rounded-xl focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition duration-300
-          active:scale-95"
+          class="flex flex-row justify-center items-center size-14 bg-blue hover:bg-blue-a rounded-xl
+          focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition duration-300 active:scale-95"
           :class="{ 'bg-blue-a': route.path === '/' }"
           @click="viewToggleFullNavigationBar(false)"
         >
@@ -54,7 +53,7 @@
           </span>
         </NuxtLink>
       </section>
-      <section class="z-50 flex flex-row gap-x-12 justify-between">
+      <section class="z-50 grid grid-cols-[1fr_auto] gap-x-12 justify-between">
         <button
           class="flex flex-row gap-x-1 items-center px-2 w-full h-14 bg-blue hover:bg-blue-a
           rounded-xl focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition duration-300
@@ -89,9 +88,8 @@
         </button>
         <button
           :title="viewShowFullNavigationBar ? '收起导航栏' : '展开导航栏'"
-          class="aspect-square flex flex-row justify-center items-center h-14 bg-blue hover:bg-blue-a
-          rounded-xl focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition duration-300
-          active:scale-95"
+          class="flex flex-row justify-center items-center size-14 bg-blue hover:bg-blue-a rounded-xl
+          focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition duration-300 active:scale-95"
           @click="viewToggleFullNavigationBar()"
         >
           <font-awesome-icon
