@@ -209,31 +209,29 @@
               >
                 <span class="flex flex-row gap-x-3 items-center px-4 portrait:px-3 portrait:py-0.5 portrait:leading-snug h-full">
                   {{ song.name }}
-                  <ClientOnly>
-                    <transition-group
-                      v-if="viewPlaylistCopySongNameState[song.$id]"
-                      tag="span"
-                      class="grid grid-areas-stack"
-                      appear
-                      enter-from-class="opacity-0"
-                      enter-active-class="transition-opacity"
-                      leave-active-class="transition-opacity duration-300"
-                      leave-to-class="opacity-0"
-                    >
-                      <font-awesome-icon
-                        v-if="viewPlaylistCopySongNameState[song.$id] === 'succeeded'"
-                        key="copied"
-                        :icon="['fas', 'clipboard-check']"
-                        class="!h-5"
-                      />
-                      <font-awesome-icon
-                        v-if="viewPlaylistCopySongNameState[song.$id] === 'failed'"
-                        key="copying-failed"
-                        :icon="['fas', 'clipboard-question']"
-                        class="!h-5"
-                      />
-                    </transition-group>
-                  </ClientOnly>
+                  <transition-group
+                    v-if="viewPlaylistCopySongNameState[song.$id]"
+                    tag="span"
+                    class="grid grid-areas-stack"
+                    appear
+                    enter-from-class="opacity-0"
+                    enter-active-class="transition-opacity"
+                    leave-active-class="transition-opacity duration-300"
+                    leave-to-class="opacity-0"
+                  >
+                    <font-awesome-icon
+                      v-if="viewPlaylistCopySongNameState[song.$id] === 'succeeded'"
+                      key="copied"
+                      :icon="['fas', 'clipboard-check']"
+                      class="!h-5"
+                    />
+                    <font-awesome-icon
+                      v-if="viewPlaylistCopySongNameState[song.$id] === 'failed'"
+                      key="copying-failed"
+                      :icon="['fas', 'clipboard-question']"
+                      class="!h-5"
+                    />
+                  </transition-group>
                 </span>
                 <span class="flex flex-row portrait:order-4 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs">
                   {{ song.artist }}
