@@ -54,10 +54,10 @@
           @click="submit"
         >
           <span v-if="props.authState === ''" key="idle">登录</span>
-          <font-awesome-icon v-if="props.authState === 'processing'" key="processing" :icon="['fas', 'circle-notch']" spin class="!h-5" />
-          <font-awesome-icon v-if="props.authState === 'succeeded'" key="succeeded" :icon="['fas', 'check']" class="!h-5" />
+          <FontAwesomeIcon v-if="props.authState === 'processing'" key="processing" :icon="['fas', 'circle-notch']" spin class="!h-5" />
+          <FontAwesomeIcon v-if="props.authState === 'succeeded'" key="succeeded" :icon="['fas', 'check']" class="!h-5" />
           <span v-if="props.authState === 'failed'" key="failed" class="flex flex-row gap-x-2 items-center">
-            <font-awesome-icon :icon="['fas', 'circle-exclamation']" class="!h-5" />
+            <FontAwesomeIcon :icon="['fas', 'circle-exclamation']" class="!h-5" />
             请重试
           </span>
         </transition-group>

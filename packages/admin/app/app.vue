@@ -30,7 +30,7 @@
           :class="{ 'bg-blue-a': route.path === '/' }"
           @click="viewToggleFullNavigationBar(false)"
         >
-          <font-awesome-icon :icon="['fas', 'house']" class="max-lg:landscape:!h-4 !h-5" />
+          <FontAwesomeIcon :icon="['fas', 'house']" class="max-lg:landscape:!h-4 !h-5" />
         </NuxtLink>
       </section>
       <section class="z-50 flex flex-col max-lg:landscape:gap-y-2 gap-y-4 items-end">
@@ -46,7 +46,7 @@
           @click="viewToggleFullNavigationBar(false)"
         >
           <span class="aspect-square flex flex-row justify-center items-center pl-0.5 h-14">
-            <font-awesome-icon :icon="['fas', 'pen-to-square']" class="max-lg:landscape:!h-5 !h-6" />
+            <FontAwesomeIcon :icon="['fas', 'pen-to-square']" class="max-lg:landscape:!h-5 !h-6" />
           </span>
           <span class="min-w-max">
             歌单编辑
@@ -68,10 +68,10 @@
             leave-active-class="transition-opacity duration-200"
             leave-to-class="opacity-0"
           >
-            <font-awesome-icon v-if="backendAuthState === ''" key="idle" :icon="['fas', 'right-from-bracket']" />
-            <font-awesome-icon v-if="backendAuthState === 'processing'" key="processing" :icon="['fas', 'circle-notch']" spin />
-            <font-awesome-icon v-if="backendAuthState === 'succeeded'" key="succeeded" :icon="['fas', 'check']" />
-            <font-awesome-icon v-if="backendAuthState === 'failed'" key="failed" :icon="['fas', 'circle-exclamation']" />
+            <FontAwesomeIcon v-if="backendAuthState === ''" key="idle" :icon="['fas', 'right-from-bracket']" />
+            <FontAwesomeIcon v-if="backendAuthState === 'processing'" key="processing" :icon="['fas', 'circle-notch']" spin />
+            <FontAwesomeIcon v-if="backendAuthState === 'succeeded'" key="succeeded" :icon="['fas', 'check']" />
+            <FontAwesomeIcon v-if="backendAuthState === 'failed'" key="failed" :icon="['fas', 'circle-exclamation']" />
           </transition-group>
           <transition-group
             tag="span"
@@ -92,7 +92,7 @@
           focus-visible:outline outline-2 outline-offset-3 outline-blue-a transition duration-300 active:scale-95"
           @click="viewToggleFullNavigationBar()"
         >
-          <font-awesome-icon
+          <FontAwesomeIcon
             :icon="['fas', 'angle-right']"
             class="max-lg:landscape:!h-4 !h-5 transition-transform duration-300"
             :style="[viewFullNavigationBarToggles === 0 ?

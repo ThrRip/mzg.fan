@@ -34,35 +34,35 @@
             target="_blank"
             class="*:flex *:flex-row *:justify-center *:items-center *:size-8"
           >
-            <span><font-awesome-icon :icon="['fab', 'bilibili']" /></span>
+            <span><FontAwesomeIcon :icon="['fab', 'bilibili']" /></span>
             哔哩哔哩主页
-            <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
+            <span><FontAwesomeIcon :icon="['fas', 'arrow-up-right-from-square']" /></span>
           </NuxtLink>
           <NuxtLink
             :to="`https://live.bilibili.com/${useAppConfig().appHomeBiliRoomId}`"
             target="_blank"
             class="*:flex *:justify-center *:items-center *:size-8"
           >
-            <span v-if="!biliApiLiveStatus" class="flex-row"><font-awesome-icon :icon="['fas', 'podcast']" class="!h-5" /></span>
+            <span v-if="!biliApiLiveStatus" class="flex-row"><FontAwesomeIcon :icon="['fas', 'podcast']" class="!h-5" /></span>
             <span v-else class="flex-col">
               <span class="overflow-hidden min-h-[1.2rem] max-h-[1.2rem]">
-                <font-awesome-icon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
+                <FontAwesomeIcon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
               </span>
               <span class="text-[0.5rem] leading-snug">
                 直播中
               </span>
             </span>
             直播间
-            <span><font-awesome-icon :icon="['fas', 'arrow-up-right-from-square']" /></span>
+            <span><FontAwesomeIcon :icon="['fas', 'arrow-up-right-from-square']" /></span>
           </NuxtLink>
           <NuxtLink
             to="#playlist"
             :external="true"
             class="landscape:hidden *:flex *:flex-row *:justify-center *:items-center *:size-8"
           >
-            <span><font-awesome-icon :icon="['fas', 'list']" /></span>
+            <span><FontAwesomeIcon :icon="['fas', 'list']" /></span>
             歌单
-            <span><font-awesome-icon :icon="['fas', 'arrow-down']" /></span>
+            <span><FontAwesomeIcon :icon="['fas', 'arrow-down']" /></span>
           </NuxtLink>
         </div>
       </section>
@@ -76,7 +76,7 @@
           class="grid grid-areas-stack place-items-center
           h-36 landscape:h-20 landscape:xl:h-36 landscape:2xl:h-40 landscape:3xl:h-48 landscape:5xl:h-52"
         >
-          <font-awesome-icon :icon="['fas', 'music']" class="min-h-full text-pink-l" />
+          <FontAwesomeIcon :icon="['fas', 'music']" class="min-h-full text-pink-l" />
           <h2 class="-mr-2 max-xl:landscape:text-3xl portrait:text-5xl text-6xl font-light tracking-wider text-brown">
             歌单
           </h2>
@@ -102,7 +102,7 @@
                 enter-from-class="opacity-0"
                 leave-to-class="opacity-0"
               >
-                <font-awesome-icon
+                <FontAwesomeIcon
                   v-if="viewPlaylistSortingColumn === 'name'"
                   :icon="['fas', 'caret-up']"
                   class="mt-px transition"
@@ -125,7 +125,7 @@
                 enter-from-class="opacity-0"
                 leave-to-class="opacity-0"
               >
-                <font-awesome-icon
+                <FontAwesomeIcon
                   v-if="viewPlaylistSortingColumn === 'artist'"
                   :icon="['fas', 'caret-up']"
                   class="mt-px transition"
@@ -148,7 +148,7 @@
                 enter-from-class="opacity-0"
                 leave-to-class="opacity-0"
               >
-                <font-awesome-icon
+                <FontAwesomeIcon
                   v-if="viewPlaylistSortingColumn === 'payment_amount'"
                   :icon="['fas', 'caret-up']"
                   class="mt-px transition"
@@ -168,7 +168,7 @@
             >
               语言
               <transition enter-from-class="opacity-0" leave-to-class="opacity-0">
-                <font-awesome-icon
+                <FontAwesomeIcon
                   v-if="viewPlaylistSortingColumn === 'language'"
                   :icon="['fas', 'caret-up']"
                   class="mt-px transition"
@@ -190,10 +190,10 @@
                 title="随机排列"
                 @click="viewPlaylistShuffle"
               >
-                <font-awesome-icon :icon="['fas', 'dice']" />
+                <FontAwesomeIcon :icon="['fas', 'dice']" />
               </button>
             </div>
-            <svg class="hidden"><symbol id="fas-comment-dollar"><font-awesome-icon :icon="['fas', 'comment-dollar']" /></symbol></svg>
+            <svg class="hidden"><symbol id="fas-comment-dollar"><FontAwesomeIcon :icon="['fas', 'comment-dollar']" /></symbol></svg>
             <transition-group
               tag="div"
               move-class="transition-transform duration-[1300ms]"
@@ -219,13 +219,13 @@
                     leave-active-class="transition-opacity duration-300"
                     leave-to-class="opacity-0"
                   >
-                    <font-awesome-icon
+                    <FontAwesomeIcon
                       v-if="viewPlaylistCopySongNameState[song.$id] === 'succeeded'"
                       key="copied"
                       :icon="['fas', 'clipboard-check']"
                       class="!h-5"
                     />
-                    <font-awesome-icon
+                    <FontAwesomeIcon
                       v-if="viewPlaylistCopySongNameState[song.$id] === 'failed'"
                       key="copying-failed"
                       :icon="['fas', 'clipboard-question']"

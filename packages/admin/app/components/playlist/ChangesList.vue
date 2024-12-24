@@ -23,21 +23,21 @@
           @click="selectedIds = selectedIds.size === selectableIds.length ? new Set() : new Set(selectableIds)"
         >
         <span class="grid place-items-center w-5">
-          <svg class="hidden"><symbol id="far-square"><font-awesome-icon :icon="['far', 'square']" /></symbol></svg>
-          <svg class="hidden"><symbol id="fas-square-check"><font-awesome-icon :icon="['fas', 'square-check']" /></symbol></svg>
+          <svg class="hidden"><symbol id="far-square"><FontAwesomeIcon :icon="['far', 'square']" /></symbol></svg>
+          <svg class="hidden"><symbol id="fas-square-check"><FontAwesomeIcon :icon="['fas', 'square-check']" /></symbol></svg>
           <svg class="hidden"><symbol id="fas-circle-notch">
-            <font-awesome-icon :icon="['fas', 'circle-notch']" />
+            <FontAwesomeIcon :icon="['fas', 'circle-notch']" />
           </symbol></svg>
           <svg class="hidden"><symbol id="fas-check">
-            <font-awesome-icon :icon="['fas', 'check']" />
+            <FontAwesomeIcon :icon="['fas', 'check']" />
           </symbol></svg>
           <svg class="hidden"><symbol id="fas-exclamation">
-            <font-awesome-icon :icon="['fas', 'exclamation']" />
+            <FontAwesomeIcon :icon="['fas', 'exclamation']" />
           </symbol></svg>
           <svg v-if="selectedIds.size === 0" class="size-5 transition group-active:scale-90">
             <use href="#far-square" />
           </svg>
-          <font-awesome-icon
+          <FontAwesomeIcon
             v-if="selectedIds.size !== 0 && selectedIds.size !== selectableIds.length"
             :icon="['fas', 'square-minus']"
             class="!h-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
@@ -65,7 +65,7 @@
           enter-from-class="opacity-0"
           leave-to-class="opacity-0"
         >
-          <font-awesome-icon
+          <FontAwesomeIcon
             v-if="props.sortingColumn === 'name'"
             :icon="['fas', 'caret-up']"
             class="mt-px transition"
@@ -88,7 +88,7 @@
           enter-from-class="opacity-0"
           leave-to-class="opacity-0"
         >
-          <font-awesome-icon
+          <FontAwesomeIcon
             v-if="props.sortingColumn === 'artist'"
             :icon="['fas', 'caret-up']"
             class="mt-px transition"
@@ -111,7 +111,7 @@
           enter-from-class="opacity-0"
           leave-to-class="opacity-0"
         >
-          <font-awesome-icon
+          <FontAwesomeIcon
             v-if="props.sortingColumn === 'payment_amount'"
             :icon="['fas', 'caret-up']"
             class="mt-px transition"
@@ -134,7 +134,7 @@
           enter-from-class="opacity-0"
           leave-to-class="opacity-0"
         >
-          <font-awesome-icon
+          <FontAwesomeIcon
             v-if="props.sortingColumn === 'language'"
             :icon="['fas', 'caret-up']"
             class="mt-px transition"
@@ -155,17 +155,17 @@
           *:transition active:*:scale-95 *:duration-200"
         >
           <button title="撤销改动" @click="emit('undoChanges', selectedIds); selectedIds.clear()">
-            <font-awesome-icon :icon="['fas', 'rotate-left']" />
+            <FontAwesomeIcon :icon="['fas', 'rotate-left']" />
           </button>
           <button title="清除已发布的改动" @click="emit('clearPublishedChanges')">
-            <font-awesome-icon :icon="['fas', 'broom']" />
+            <FontAwesomeIcon :icon="['fas', 'broom']" />
           </button>
           <button title="发布改动" @click="emit('publishChanges', selectedIds); selectedIds.clear()">
-            <font-awesome-icon :icon="['fas', 'cloud-arrow-up']" />
+            <FontAwesomeIcon :icon="['fas', 'cloud-arrow-up']" />
           </button>
         </span>
       </div>
-      <svg class="hidden"><symbol id="fas-comment-dollar"><font-awesome-icon :icon="['fas', 'comment-dollar']" /></symbol></svg>
+      <svg class="hidden"><symbol id="fas-comment-dollar"><FontAwesomeIcon :icon="['fas', 'comment-dollar']" /></symbol></svg>
       <div
         class="relative overflow-x-hidden overflow-y-scroll flex flex-col portrait:gap-y-5
         px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta scrollbar scrollbar-thumb-gray-alt"
