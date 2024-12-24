@@ -249,12 +249,12 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
 
   // Sort by song name or artist in alphabetical order
   if (column === 'name' || column === 'artist') {
-    const pinyinPro = await import('pinyin-pro')
+    const { pinyin } = await import('pinyin-pro')
     playlist.forEach((song, index) => {
       // @ts-expect-error
       playlist[index][`${column}Pinyin`] =
         // @ts-expect-error
-        pinyinPro.pinyin(song[column], { toneType: 'none', nonZh: 'consecutive' })
+        pinyin(song[column], { toneType: 'none', nonZh: 'consecutive' })
           .replaceAll(' ', '')
     })
     playlist.sort((a, b) => {
