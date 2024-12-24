@@ -373,10 +373,7 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
     const { pinyin } = await import('pinyin-pro')
     playlist.forEach((song, index) => {
       // @ts-expect-error
-      playlist[index][`${column}Pinyin`] =
-        // @ts-expect-error
-        pinyin(song[column], { toneType: 'none', nonZh: 'consecutive' })
-          .replaceAll(' ', '')
+      playlist[index][`${column}Pinyin`] = pinyin(song[column], { toneType: 'none', nonZh: 'consecutive' })
     })
     playlist.sort((a, b) => {
       // @ts-expect-error
