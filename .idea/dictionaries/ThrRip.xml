@@ -7,6 +7,7 @@
       <w>dscreen</w>
       <w>fortawesome</w>
       <w>getline</w>
+      <w>minisearch</w>
       <w>mktemp</w>
       <w>mzgfan</w>
       <w>nuxtjs</w>
@@ -14,6 +15,7 @@
       <w>singleline</w>
       <w>typecheck</w>
       <w>webmanifest</w>
+      <w>xmark</w>
       <w>zstd</w>
     </words>
   </dictionary>

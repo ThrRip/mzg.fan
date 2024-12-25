@@ -19,6 +19,8 @@ import {
   faClipboardQuestion,
   faClipboardCheck,
   faCommentDollar,
+  faMagnifyingGlass,
+  faXmark,
   faDice
 } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -38,6 +40,8 @@ library.add(
   faClipboardQuestion,
   faClipboardCheck,
   faCommentDollar,
+  faMagnifyingGlass,
+  faXmark,
   faDice
 )
 

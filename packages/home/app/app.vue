@@ -179,26 +179,120 @@
           </div>
           <div class="overflow-y-hidden grid grid-areas-stack h-full">
             <div
-              class="flex flex-row order-2 justify-between items-center self-end pl-6 pr-2.5 py-1.5 h-12
-              bg-white-alta/75 border-t border-gray backdrop-blur"
+              class="overflow-y-hidden grid grid-cols-[1fr_auto_auto] portrait:grid-rows-[2.25rem_2.625rem] order-2
+              gap-x-0.5 gap-y-1.5 items-center self-end px-2 py-1.5 h-12 bg-white-alta/75 border-t border-gray
+              transition-[height] duration-300 backdrop-blur"
+              :class="{ 'portrait:h-24': viewPlaylistSearchActive }"
             >
-              {{ `共 ${viewPlaylistCountTotal} 首歌` +
-                (viewPlaylistCountTotal !== viewPlaylistCountDisplayed ? `，已显示 ${viewPlaylistCountDisplayed} 首` : '') }}
+              <span class="pl-4 portrait:pl-3">
+                {{
+                  viewPlaylistCountTotal === viewPlaylistCountDisplayed ?
+                    `共 ${viewPlaylistCountTotal} 首歌` :
+                    `搜索到 ${viewPlaylistCountDisplayed} 首歌`
+                }}
+              </span>
+              <div class="portrait:hidden grid grid-areas-stack justify-items-end">
+                <transition
+                  enter-from-class="!w-0 opacity-0"
+                  enter-active-class="transition-[width,opacity] duration-[300ms,100ms]"
+                  leave-active-class="transition-[width,opacity] duration-[300ms,400ms]"
+                  leave-to-class="!w-0 opacity-0"
+                >
+                  <input
+                    v-if="viewPlaylistSearchActive"
+                    ref="viewPlaylistSearchInputElementLandscape"
+                    v-model="viewPlaylistSearchInput"
+                    placeholder="搜索关键词（支持拼音首字母）"
+                    class="pl-0.5 pr-8 w-64 h-9 bg-transparent border-b-2 border-blue focus:outline-none"
+                    @keydown.esc="viewPlaylistToggleSearch('landscape')"
+                  >
+                </transition>
+                <button
+                  class="z-30 overflow-hidden grid grid-areas-stack justify-self-end hover:bg-gray/75 rounded-lg
+                  transition-[max-width,height,background-color,transform] duration-300 active:scale-90"
+                  :class="[viewPlaylistSearchActive ? 'max-w-8 h-8' : 'max-w-24 h-full']"
+                  :title="viewPlaylistSearchActive ? '关闭搜索' : ''"
+                  @click="viewPlaylistToggleSearch('landscape')"
+                >
+                  <span
+                    class="flex flex-row gap-x-0.5 items-center pr-2.5 text-nowrap transition-[padding-left] duration-200"
+                    :class="{ 'pl-0.5': !viewPlaylistSearchActive }"
+                  >
+                    <transition-group
+                      tag="span"
+                      class="grid grid-areas-stack place-items-center size-9 transition-[width,height] duration-200"
+                      :class="{ '!size-8': viewPlaylistSearchActive }"
+                      enter-from-class="opacity-0"
+                      enter-active-class="transition-opacity duration-300"
+                      leave-active-class="transition-opacity duration-200"
+                      leave-to-class="opacity-0"
+                    >
+                      <FontAwesomeIcon v-if="!viewPlaylistSearchActive" :icon="['fas', 'magnifying-glass']" />
+                      <FontAwesomeIcon v-else :icon="['fas', 'xmark']" />
+                    </transition-group>
+                    搜索
+                  </span>
+                </button>
+              </div>
               <button
-                class="aspect-square flex flex-row justify-center items-center h-full rounded-lg hover:bg-gray
-                transition active:scale-95 duration-200"
-                title="随机排列"
+                class="landscape:hidden overflow-x-hidden grid grid-areas-stack justify-self-end rounded-lg
+                transition-[width,background-color,transform] duration-200 active:scale-95"
+                :class="[viewPlaylistSearchActive ? 'bg-gray/75' : 'hover:bg-gray/75']"
+                @click="viewPlaylistToggleSearch('portrait')"
+              >
+                <span class="flex flex-row gap-x-0.5 items-center pl-0.5 pr-2.5">
+                  <span class="grid place-items-center size-9">
+                    <FontAwesomeIcon :icon="['fas', 'magnifying-glass']" />
+                  </span>
+                  搜索
+                </span>
+              </button>
+              <button
+                class="flex flex-row gap-x-0.5 items-center pl-0.5 pr-2.5 rounded-lg hover:bg-gray/75
+                transition duration-200 active:scale-95"
                 @click="viewPlaylistShuffle"
               >
-                <FontAwesomeIcon :icon="['fas', 'dice']" />
+                <span class="grid place-items-center size-9">
+                  <FontAwesomeIcon :icon="['fas', 'dice']" />
+                </span>
+                随机
               </button>
+              <transition
+                enter-from-class="opacity-0"
+                enter-active-class="transition-opacity duration-300"
+                leave-active-class="transition-opacity duration-200"
+                leave-to-class="opacity-0"
+              >
+                <div
+                  v-if="viewPlaylistSearchActive"
+                  class="landscape:hidden overflow-y-hidden grid grid-areas-stack col-span-3 pl-3 pr-2.5 pb-0.5 h-full"
+                >
+                  <button
+                    class="z-30 grid place-items-center justify-self-end self-center size-8 rounded-lg hover:bg-gray/75
+                    transition duration-200 active:scale-90"
+                    @click="viewPlaylistSearchInput = ''"
+                  >
+                    <FontAwesomeIcon :icon="['fas', 'xmark']" />
+                  </button>
+                  <input
+                    ref="viewPlaylistSearchInputElementPortrait"
+                    v-model="viewPlaylistSearchInput"
+                    placeholder="搜索关键词（支持拼音首字母）"
+                    class="pr-8 bg-transparent border-b-2 border-blue focus:outline-none"
+                    @keydown.esc="viewPlaylistToggleSearch('portrait')"
+                  >
+                </div>
+              </transition>
             </div>
             <svg class="hidden"><symbol id="fas-comment-dollar"><FontAwesomeIcon :icon="['fas', 'comment-dollar']" /></symbol></svg>
             <transition-group
               tag="div"
-              move-class="transition-transform duration-[1300ms]"
+              :css="viewPlaylistCountTotal === viewPlaylistCountDisplayed"
               class="overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta
               scrollbar scrollbar-thumb-gray-alt"
+              enter-from-class="opacity-0 translate-y-[100vh]"
+              enter-active-class="transition duration-700"
+              move-class="transition-transform duration-[1300ms]"
             >
               <div
                 v-for="song in viewPlaylistData"
@@ -262,6 +356,7 @@
 </template>
 
 <script setup lang="ts">
+import type MiniSearch from 'minisearch'
 import type { Omits } from './utils/types'
 
 const omits = useState<Omits>('omits')
@@ -360,8 +455,115 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
   ).then(dataSorted => viewPlaylistDataUpdate(dataSorted))
 }
 
+interface SearchingSong extends Song {
+  namePinyinFirstChars?: string
+  artistPinyinFirstChars?: string
+}
+const viewPlaylistSearchActive = ref(false)
+const viewPlaylistSearchInputElementLandscape = ref<HTMLInputElement>()
+const viewPlaylistSearchInputElementPortrait = ref<HTMLInputElement>()
+const viewPlaylistSearchInput = ref('')
+let viewPlaylistSearchEngine: MiniSearch | undefined = undefined
+const viewPlaylistSearchReady = ref(false)
+let viewPlaylistSearchPending: undefined | string = undefined
+function viewPlaylistToggleSearch (mediaOrientation: 'landscape' | 'portrait') {
+  viewPlaylistSearchActive.value = !viewPlaylistSearchActive.value
+  if (viewPlaylistSearchActive.value) {
+    nextTick(() => {
+      if (mediaOrientation === 'landscape') {
+        viewPlaylistSearchInputElementLandscape.value?.focus()
+      }
+      else
+      if (mediaOrientation === 'portrait') {
+        viewPlaylistSearchInputElementPortrait.value?.focus({ preventScroll: true })
+      }
+    })
+    viewPlaylistSearchPrepare().then(() => viewPlaylistSearchReady.value = true)
+  }
+  else { viewPlaylistSearchInput.value = '' }
+}
+async function viewPlaylistSearchPrepare () {
+  if (viewPlaylistSearchEngine) { return }
+  const { default: MiniSearch } = await import('minisearch')
+  viewPlaylistSearchEngine = new MiniSearch({
+    idField: '$id',
+    fields: ['name', 'artist', 'namePinyinFirstChars', 'artistPinyinFirstChars'],
+    tokenize: string => {
+      return string
+        // Split CJK characters by character
+        .replace(/(\p{sc=Han})/gu, ' $1 ')
+        // Delete all leading and trailing invisible characters and punctuations
+        .match(/[^\s\p{Z}\p{P}](.*[^\s\p{Z}\p{P}])?/u)?.[0]
+        // Split by invisible characters and punctuations
+        .split(/[\s\p{Z}\p{P}]+/u) ?? []
+    },
+    searchOptions: { prefix: true }
+  })
+  const playlist: Array<SearchingSong> = viewPlaylistData.value.slice()
+  const { pinyin } = await import('pinyin-pro')
+  playlist.forEach((song, index) => {
+    const nameZhPinyinFirstChars = pinyin(
+      // @ts-expect-error
+      song.name,
+      { pattern: 'first', toneType: 'none', nonZh: 'consecutive', type: 'array' }
+    )
+    const artistZhPinyinFirstChars = pinyin(
+      // @ts-expect-error
+      song.artist,
+      { pattern: 'first', toneType: 'none', nonZh: 'consecutive', type: 'array' }
+    )
+    // @ts-expect-error
+    playlist[index].namePinyinFirstChars =
+      // @ts-expect-error
+      pinyin(song.name, { pattern: 'first', toneType: 'none', nonZh: 'consecutive' })
+        .replace(nameZhPinyinFirstChars.join(' '), nameZhPinyinFirstChars.join(''))
+    // @ts-expect-error
+    playlist[index].artistPinyinFirstChars =
+      // @ts-expect-error
+      pinyin(song.artist, { pattern: 'first', toneType: 'none', nonZh: 'consecutive' })
+        .replace(artistZhPinyinFirstChars.join(' '), artistZhPinyinFirstChars.join(''))
+  })
+  await viewPlaylistSearchEngine.addAllAsync(playlist)
+}
+watch(viewPlaylistSearchInput, keyword => {
+  if (/^\s*$/.test(keyword)) {
+    if (viewPlaylistCountTotal.value !== viewPlaylistCountDisplayed.value) {
+      if (viewPlaylistSortingColumn.value && viewPlaylistSortingOrder.value) {
+        viewPlaylistDataSort(
+          backendPlaylist.value,
+          viewPlaylistSortingColumn.value,
+          viewPlaylistSortingOrder.value
+        ).then(dataSorted => viewPlaylistDataUpdate(dataSorted))
+      }
+      else {
+        viewPlaylistDataUpdate(viewPlaylistDataShuffled)
+      }
+    }
+    return
+  }
+  if (viewPlaylistSearchEngine && viewPlaylistSearchReady.value) {
+    viewPlaylistDataUpdate(
+      viewPlaylistDataSearch(backendPlaylist.value, viewPlaylistSearchEngine, keyword),
+      'searchResults'
+    )
+  }
+  else {
+    viewPlaylistSearchPending = keyword
+  }
+})
+watch(viewPlaylistSearchReady, ready => {
+  if (ready && viewPlaylistSearchPending && viewPlaylistSearchEngine) {
+    viewPlaylistSearchReady.value = false
+    viewPlaylistDataUpdate(
+      viewPlaylistDataSearch(backendPlaylist.value, viewPlaylistSearchEngine, viewPlaylistSearchPending),
+      'searchResults'
+    )
+    viewPlaylistSearchReady.value = true
+  }
+})
+
 function viewPlaylistShuffle () {
-  viewPlaylistDataUpdate(viewPlaylistDataShuffle(viewPlaylistData.value), 'shuffled')
+  viewPlaylistDataUpdate(viewPlaylistDataShuffle(backendPlaylist.value), 'shuffled')
 }
 
 async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, order: PlaylistSortingOrder) {
@@ -412,6 +614,11 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
 
   return playlist
 }
+function viewPlaylistDataSearch (data: Playlist, engine: MiniSearch, keyword: string) {
+  const searchedPlaylist: Playlist = []
+  engine.search(keyword).forEach(result => searchedPlaylist.push(data.find(song => song.$id === result.id) as Song))
+  return searchedPlaylist
+}
 let viewPlaylistDataShuffled: Playlist = []
 function viewPlaylistDataShuffle (data: Playlist) {
   const playlist = data.slice()
@@ -427,8 +634,15 @@ function viewPlaylistDataShuffle (data: Playlist) {
   return playlist
 }
 const viewPlaylistData = useState<Playlist>('viewPlaylistData', () => shallowRef([]))
-function viewPlaylistDataUpdate (newData: Playlist, newDataHint?: 'shuffled') {
-  if (newDataHint === 'shuffled') { viewPlaylistSortingColumn.value = null }
+function viewPlaylistDataUpdate (newData: Playlist, newDataHint?: 'shuffled' | 'searchResults') {
+  if (newDataHint === 'shuffled') {
+    viewPlaylistSortingColumn.value = null
+    viewPlaylistSearchActive.value = false
+  }
+  else
+  if (newDataHint === 'searchResults') {
+    viewPlaylistSortingColumn.value = null
+  }
   viewPlaylistData.value = newData
 }
 
