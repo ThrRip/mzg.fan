@@ -488,34 +488,35 @@ async function viewPlaylistSearchPrepare () {
   viewPlaylistSearchEngine = new MiniSearch({
     idField: '$id',
     fields: ['name', 'artist', 'namePinyinFirstChars', 'artistPinyinFirstChars'],
-    tokenize: string => {
-      return string
-        // Split CJK characters by character
-        .replace(/(\p{sc=Han})/gu, ' $1 ')
-        // Delete all leading and trailing invisible characters and punctuations
-        .match(/[^\s\p{Z}\p{P}](.*[^\s\p{Z}\p{P}])?/u)?.[0]
-        // Split by invisible characters and punctuations
-        .split(/[\s\p{Z}\p{P}]+/u) ?? []
+    tokenize: (string, fieldName) => {
+      if (fieldName === 'name' || fieldName === 'artist') {
+        return string
+          // Split CJK characters by character
+          .replace(/(\p{sc=Han})/gu, ' $1 ')
+          // Delete all leading and trailing invisible characters and punctuations
+          .match(/[^\s\p{Z}\p{P}](.*[^\s\p{Z}\p{P}])?/u)?.[0]
+          // Split by invisible characters and punctuations
+          .split(/[\s\p{Z}\p{P}]+/u) ?? []
+      }
+      else {
+        return string.split(/[\s\p{Z}\p{P}]+/u)
+      }
     },
     searchOptions: { prefix: true }
   })
   const playlist: Array<SearchingSong> = viewPlaylistData.value.slice()
   const { pinyin } = await import('pinyin-pro')
   playlist.forEach(song => {
-    const nameZhPinyinFirstChars = pinyin(
-      song.name,
-      { pattern: 'first', toneType: 'none', nonZh: 'consecutive', type: 'array' }
-    )
-    const artistZhPinyinFirstChars = pinyin(
-      song.artist,
-      { pattern: 'first', toneType: 'none', nonZh: 'consecutive', type: 'array' }
-    )
-    song.namePinyinFirstChars =
-      pinyin(song.name, { pattern: 'first', toneType: 'none', nonZh: 'consecutive' })
-        .replace(nameZhPinyinFirstChars.join(' '), nameZhPinyinFirstChars.join(''))
-    song.artistPinyinFirstChars =
-      pinyin(song.artist, { pattern: 'first', toneType: 'none', nonZh: 'consecutive' })
-        .replace(artistZhPinyinFirstChars.join(' '), artistZhPinyinFirstChars.join(''))
+    song.name.match(/[\p{sc=Han}0-9]+/gu)?.forEach((cjkChars, matchIndex) => {
+      song.namePinyinFirstChars =
+        (matchIndex === 0 ? '' : `${song.namePinyinFirstChars} `) +
+        pinyin(cjkChars, { pattern: 'first', toneType: 'none', type: 'array' }).join('')
+    })
+    song.artist.match(/[\p{sc=Han}0-9]+/gu)?.forEach((cjkChars, matchIndex) => {
+      song.artistPinyinFirstChars =
+        (matchIndex === 0 ? '' : `${song.namePinyinFirstChars} `) +
+        pinyin(cjkChars, { pattern: 'first', toneType: 'none', type: 'array' }).join('')
+    })
   })
   await viewPlaylistSearchEngine.addAllAsync(playlist)
 }
