@@ -356,6 +356,7 @@
 </template>
 
 <script setup lang="ts">
+import type { Models } from 'appwrite'
 import type MiniSearch from 'minisearch'
 import type { Omits } from './utils/types'
 
@@ -375,14 +376,13 @@ const { data: biliApiLiveStatus } = await useFetch(
   }
 )
 
-interface Song {
-  hidden?: false
-  name?: string
-  artist?: string
-  language?: string
-  payment_required?: boolean
+interface Song extends Models.Document {
+  hidden: false
+  name: string
+  artist: string
+  language: string
+  payment_required: boolean
   payment_amount?: null | number
-  $id: string
 }
 type Playlist = Array<Song>
 
@@ -395,11 +395,11 @@ const { data: backendPlaylist } = await useAsyncData(
     const client = new Client()
     const databases = new Databases(client)
     client.setEndpoint(appConfig.backendBase).setProject(appConfig.backendProjectId)
-    return databases.listDocuments('home', 'playlist', [
+    return await databases.listDocuments('home', 'playlist', [
       omits.value.playlistMin ?
         Query.limit(1) :
         Query.limit(appConfig.backendQueryResultsLimit)
-    ])
+    ]) as Models.DocumentList<Song>
   },
   {
     immediate: !omits.value.playlist,
@@ -501,25 +501,19 @@ async function viewPlaylistSearchPrepare () {
   })
   const playlist: Array<SearchingSong> = viewPlaylistData.value.slice()
   const { pinyin } = await import('pinyin-pro')
-  playlist.forEach((song, index) => {
+  playlist.forEach(song => {
     const nameZhPinyinFirstChars = pinyin(
-      // @ts-expect-error
       song.name,
       { pattern: 'first', toneType: 'none', nonZh: 'consecutive', type: 'array' }
     )
     const artistZhPinyinFirstChars = pinyin(
-      // @ts-expect-error
       song.artist,
       { pattern: 'first', toneType: 'none', nonZh: 'consecutive', type: 'array' }
     )
-    // @ts-expect-error
-    playlist[index].namePinyinFirstChars =
-      // @ts-expect-error
+    song.namePinyinFirstChars =
       pinyin(song.name, { pattern: 'first', toneType: 'none', nonZh: 'consecutive' })
         .replace(nameZhPinyinFirstChars.join(' '), nameZhPinyinFirstChars.join(''))
-    // @ts-expect-error
-    playlist[index].artistPinyinFirstChars =
-      // @ts-expect-error
+    song.artistPinyinFirstChars =
       pinyin(song.artist, { pattern: 'first', toneType: 'none', nonZh: 'consecutive' })
         .replace(artistZhPinyinFirstChars.join(' '), artistZhPinyinFirstChars.join(''))
   })
@@ -573,23 +567,16 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
   // Sort by song name or artist in alphabetical order
   if (column === 'name' || column === 'artist') {
     const { pinyin } = await import('pinyin-pro')
-    playlist.forEach((song, index) => {
-      // @ts-expect-error
-      playlist[index][`${column}Pinyin`] = pinyin(song[column], { toneType: 'none', nonZh: 'consecutive' })
+    playlist.forEach(song => {
+      song[`${column}Pinyin`] = pinyin(song[column], { toneType: 'none', nonZh: 'consecutive' })
     })
     playlist.sort((a, b) => {
       // @ts-expect-error
-      if (a[`${column}Pinyin`] < b[`${column}Pinyin`]) {
-        return -1 * orderModifier
-      }
+      if (a[`${column}Pinyin`] < b[`${column}Pinyin`]) { return -1 * orderModifier }
       else
       // @ts-expect-error
-      if (a[`${column}Pinyin`] > b[`${column}Pinyin`]) {
-        return 1 * orderModifier
-      }
-      else {
-        return 0
-      }
+      if (a[`${column}Pinyin`] > b[`${column}Pinyin`]) { return 1 * orderModifier }
+      else { return 0 }
     })
   }
   else
@@ -597,7 +584,7 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
   // Sort by payment requirement
   if (column === 'payment_amount') {
     playlist.sort((a, b) => {
-      if (a.payment_required === false || b.payment_required === false) {
+      if (!a.payment_required || !b.payment_required) {
         return (Number(a.payment_required ?? 0) - Number(b.payment_required ?? 0)) * orderModifier
       }
       return ((a.payment_amount ?? 0) - (b.payment_amount ?? 0)) * orderModifier
@@ -608,7 +595,6 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
   // Sort by language
   if (column === 'language') {
     const languageOrder = ['国语', '粤语', '日语']
-    // @ts-expect-error
     playlist.sort((a, b) => ((languageOrder.indexOf(a.language) - languageOrder.indexOf(b.language)) * orderModifier))
   }
 
