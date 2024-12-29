@@ -466,19 +466,19 @@ const viewPlaylistSearchInput = ref('')
 let viewPlaylistSearchEngine: MiniSearch | undefined = undefined
 const viewPlaylistSearchReady = ref(false)
 let viewPlaylistSearchPending: undefined | string = undefined
-function viewPlaylistToggleSearch (mediaOrientation: 'landscape' | 'portrait') {
+async function viewPlaylistToggleSearch (mediaOrientation: 'landscape' | 'portrait') {
   viewPlaylistSearchActive.value = !viewPlaylistSearchActive.value
   if (viewPlaylistSearchActive.value) {
-    nextTick(() => {
-      if (mediaOrientation === 'landscape') {
-        viewPlaylistSearchInputElementLandscape.value?.focus()
-      }
-      else
-      if (mediaOrientation === 'portrait') {
-        viewPlaylistSearchInputElementPortrait.value?.focus({ preventScroll: true })
-      }
-    })
-    viewPlaylistSearchPrepare().then(() => viewPlaylistSearchReady.value = true)
+    await nextTick()
+    if (mediaOrientation === 'landscape') {
+      viewPlaylistSearchInputElementLandscape.value?.focus()
+    }
+    else
+    if (mediaOrientation === 'portrait') {
+      viewPlaylistSearchInputElementPortrait.value?.focus({ preventScroll: true })
+    }
+    await viewPlaylistSearchPrepare()
+    viewPlaylistSearchReady.value = true
   }
   else { viewPlaylistSearchInput.value = '' }
 }
@@ -518,7 +518,7 @@ async function viewPlaylistSearchPrepare () {
         pinyin(cjkChars, { pattern: 'first', toneType: 'none', type: 'array' }).join('')
     })
   })
-  await viewPlaylistSearchEngine.addAllAsync(playlist)
+  viewPlaylistSearchEngine.addAll(playlist)
 }
 watch(viewPlaylistSearchInput, keyword => {
   if (/^\s*$/.test(keyword)) {
