@@ -505,7 +505,7 @@ async function viewPlaylistSearchPrepare () {
     searchOptions: { prefix: true }
   })
   const playlist: Array<SearchingSong> = viewPlaylistData.value.slice()
-  const { pinyin } = await import('pinyin-pro')
+  const pinyin = await usePinyin()
   playlist.forEach(song => {
     song.name.match(/[\p{sc=Han}0-9]+/gu)?.forEach((cjkChars, matchIndex) => {
       song.namePinyinFirstChars =
@@ -567,7 +567,7 @@ async function viewPlaylistDataSort (data: Playlist, column: PlaylistColumn, ord
 
   // Sort by song name or artist in alphabetical order
   if (column === 'name' || column === 'artist') {
-    const { pinyin } = await import('pinyin-pro')
+    const pinyin = await usePinyin()
     playlist.forEach(song => {
       song[`${column}Pinyin`] = pinyin(song[column], { toneType: 'none', nonZh: 'consecutive' })
     })

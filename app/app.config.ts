@@ -19,5 +19,10 @@ export default defineAppConfig({
 
   statsBase: 'https://stats.mzg.fan',
 
+  pinyinProCustomPinyin: {
+    单依纯: 'shan yi chun',
+    乐正绫: 'yue zheng ling'
+  },
+
   biliApiRoomPlayInfoEndpoint: 'https://api.live.bilibili.com/xlive/web-room/v2/index/getRoomPlayInfo'
 })

@@ -8,6 +8,10 @@
 
 export default defineNuxtConfig({
   // Nuxt
+  imports: {
+    dirs: ['../../../app/composables']
+  },
+
   devtools: {
     enabled: false
   },
