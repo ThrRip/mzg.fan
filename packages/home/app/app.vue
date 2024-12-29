@@ -288,8 +288,10 @@
             <transition-group
               tag="div"
               :css="viewPlaylistCountTotal === viewPlaylistCountDisplayed"
-              class="overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16 bg-white-alta
-              scrollbar scrollbar-thumb-gray-alt"
+              class="overflow-y-scroll flex flex-col portrait:gap-y-5 px-2 pt-2.5 portrait:pt-4 pb-14 portrait:pb-16
+              bg-white-alta scrollbar scrollbar-thumb-gray-alt
+              *:grid *:grid-cols-[0.55fr_0.45fr_5rem_5.5rem] *:portrait:grid-cols-[1fr_3.5rem_4.5rem]
+              *:grid-rows-1 *:portrait:grid-rows-[auto_auto]"
               enter-from-class="opacity-0 translate-y-[100vh]"
               enter-active-class="transition duration-700"
               move-class="transition-transform duration-[1300ms]"
@@ -297,11 +299,10 @@
               <div
                 v-for="song in viewPlaylistData"
                 :key="song.$id"
-                class="grid grid-cols-[0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[1fr_3.5rem_4.5rem]
-                grid-rows-1 portrait:grid-rows-[auto_auto]"
+                class="*:flex *:flex-row *:h-full"
                 @click="viewPlaylistCopySongName(song.name, song.$id)"
               >
-                <span class="flex flex-row gap-x-3 items-center px-4 portrait:px-3 portrait:py-0.5 portrait:leading-snug h-full">
+                <span class="gap-x-3 items-center px-4 portrait:px-3 portrait:py-0.5 portrait:leading-snug">
                   {{ song.name }}
                   <transition-group
                     v-if="viewPlaylistCopySongNameState[song.$id]"
@@ -327,10 +328,10 @@
                     />
                   </transition-group>
                 </span>
-                <span class="flex flex-row portrait:order-4 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs">
+                <span class="portrait:order-4 items-center px-4 portrait:px-3 landscape:py-2 portrait:text-xs">
                   {{ song.artist }}
                 </span>
-                <span v-if="song.payment_required" class="flex flex-row portrait:row-span-2 px-4 portrait:px-3 h-full">
+                <span v-if="song.payment_required" class="portrait:row-span-2 px-4 portrait:px-3">
                   <span
                     class="flex flex-col justify-center items-center"
                     :title="song.payment_amount ? `需要 ${song.payment_amount} 元 SC` : ''"
@@ -341,7 +342,7 @@
                     </span>
                   </span>
                 </span>
-                <span class="col-start-4 portrait:col-start-3 flex flex-row portrait:row-span-2 items-center pl-4 portrait:pl-3 py-2 h-full">
+                <span class="col-start-4 portrait:col-start-3 portrait:row-span-2 items-center pl-4 portrait:pl-3 py-2">
                   {{ song.language }}
                 </span>
               </div>
