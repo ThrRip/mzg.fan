@@ -9,6 +9,9 @@
   },
   "author": "ThrRip <coding@thrrip.space>",
   "private": true,
+  "scripts": {
+    "dev": "nuxt dev"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
