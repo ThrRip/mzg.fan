@@ -92,12 +92,12 @@ jobs:
         with:
           file: Dockerfile
           context: packages/${{ inputs.package }}
-          tags: ghcr.io/${{ github.repository }}-${{ inputs.package }}
+          tags: ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
           push: true
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: ghcr.io/${{ github.repository }}-${{ inputs.package }}
+          subject-name: ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
 
@@ -124,11 +124,11 @@ jobs:
             -p ${{ secrets.PROD_CLOUD_SSH_PORT }} \
             ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
           set -e
-          sudo docker pull ghcr.io/ThrRip/mzg.fan-${{ inputs.package }}
+          sudo docker pull ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
           sudo docker stop mzg-fan-${{ inputs.package }}
           sudo docker rm mzg-fan-${{ inputs.package }}
           sudo docker run \
             --name mzg-fan-${{ inputs.package }} \
             ${{ secrets[format('PROD_{0}_DOCKER_RUN_EXTRA_PARAMS', inputs.package_cap)] }}
-            ghcr.io/ThrRip/mzg.fan-${{ inputs.package }}
+            ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
           END
