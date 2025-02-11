@@ -51,6 +51,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      attestations: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -73,41 +76,30 @@ jobs:
           check-latest: true
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
-      - name: Setup utilities
-        run: |
-          sudo apt-get update
-          sudo apt-get -y install zstd
       - name: Install dependencies
         run: pnpm -F ${{ inputs.package }} install
       - name: Build standalone server
         run: 'pnpm run build:${{ inputs.package }}'
-      - name: Replace environment variables
-        run: |
-          [ -z "${{ secrets[format('PROD_{0}_PM2_CONF_ENV', inputs.package_cap)] }}" ] || (
-            temp=$(mktemp)
-            echo "${{ secrets[format('PROD_{0}_PM2_CONF_ENV', inputs.package_cap)] }}" |
-              awk '
-                /env: {/,/}/ {
-                  if (/env: {/ || /}/) print;
-                  while((getline < "/dev/stdin") > 0) print;
-                  next
-                }
-                { print }
-              ' packages/${{ inputs.package }}/ecosystem.config.js > "$temp"
-            cp --no-preserve=all "$temp" packages/${{ inputs.package }}/ecosystem.config.js
-            rm -f "$temp"
-          )
-      - name: Package the build
-        run: |
-          cd packages/${{ inputs.package }}
-          tar -cvf build.tar .output ecosystem.config.js
-          zstd -11 -T0 build.tar
-      - name: Store the build as an artifact
-        uses: actions/upload-artifact@v4
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
         with:
-          name: build-${{ github.ref_name }}_${{ inputs.package }}-${{ github.sha }}
-          path: packages/${{ inputs.package }}/build.tar.zst
-          compression-level: 0
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push the Docker image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          file: Dockerfile
+          context: packages/${{ inputs.package }}
+          tags: ${{ github.repository }}-${{ inputs.package }}
+          push: true
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ghcr.io/${{ github.repository }}-${{ inputs.package }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
 
   deploy-prod:
     name: Deploy to production
@@ -118,27 +110,13 @@ jobs:
     env:
       MASKING_PROD_CLOUD_SSH_HOST: ${{ secrets.PROD_CLOUD_SSH_HOST }}
     steps:
-      - name: Setup utilities
-        run: |
-          sudo apt-get update
-          sudo apt-get -y install rsync
-      - name: Retrieve the build
-        uses: actions/download-artifact@v4
-        with:
-          name: build-${{ github.ref_name }}_${{ inputs.package }}-${{ github.sha }}
       - name: Retrieve the SSH key
         run: |
           mkdir ~/.ssh
           chmod 700 ~/.ssh
           echo "${{ secrets.PROD_CLOUD_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-      - name: Upload the build
-        run: |
-          rsync -ahP \
-            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -p ${{ secrets.PROD_CLOUD_SSH_PORT }}" \
-            build.tar.zst \
-            ${{ secrets.PROD_CLOUD_SSH_URI }}:"${{ secrets.PROD_CLOUD_PROJECT_ROOT }}/${{ inputs.package }}"
-      - name: Replace the last build
+      - name: Replace the container
         run: |
           ssh \
             -i ~/.ssh/id_ed25519 \
@@ -146,12 +124,11 @@ jobs:
             -p ${{ secrets.PROD_CLOUD_SSH_PORT }} \
             ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
           set -e
-          cd "${{ secrets.PROD_CLOUD_PROJECT_ROOT }}/${{ inputs.package }}"
-          pm2 delete mzg.fan-${{ inputs.package }}
-          rm -fr .output ecosystem.config.js
-          zstd -d build.tar.zst
-          tar -xvf build.tar
-          rm -f build.tar.zst build.tar
-          pm2 start ecosystem.config.js
-          pm2 save
+          sudo docker pull ghcr.io/ThrRip/mzg.fan-${{ inputs.package }}
+          sudo docker stop mzg-fan-${{ inputs.package }}
+          sudo docker rm mzg-fan-${{ inputs.package }}
+          sudo docker run \
+            --name mzg-fan-${{ inputs.package }} \
+            ${{ secrets[format('PROD_{0}_DOCKER_RUN_EXTRA_PARAMS', inputs.package_cap)] }}
+            ghcr.io/ThrRip/mzg.fan-${{ inputs.package }}
           END
