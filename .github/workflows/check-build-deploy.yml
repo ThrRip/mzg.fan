@@ -92,7 +92,7 @@ jobs:
         with:
           file: Dockerfile
           context: packages/${{ inputs.package }}
-          tags: ${{ github.repository }}-${{ inputs.package }}
+          tags: ghcr.io/${{ github.repository }}-${{ inputs.package }}
           push: true
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
