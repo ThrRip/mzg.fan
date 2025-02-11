@@ -17,3 +17,4 @@ jobs:
     permissions:
       packages: write
       attestations: write
+      id-token: write
