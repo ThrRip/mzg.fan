@@ -27,3 +27,6 @@ jobs:
       package: ${{ matrix.package }}
       package_cap: ${{ matrix.package_cap }}
     secrets: inherit
+    permissions:
+      packages: write
+      attestations: write

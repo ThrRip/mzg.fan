@@ -14,3 +14,6 @@ jobs:
       package: admin
       package_cap: ADMIN
     secrets: inherit
+    permissions:
+      packages: write
+      attestations: write

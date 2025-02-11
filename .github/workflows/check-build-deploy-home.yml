@@ -14,3 +14,6 @@ jobs:
       package: home
       package_cap: HOME
     secrets: inherit
+    permissions:
+      packages: write
+      attestations: write
