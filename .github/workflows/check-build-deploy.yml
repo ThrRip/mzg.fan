@@ -19,8 +19,8 @@ on:
       PROD_CLOUD_PROJECT_ROOT:
         required: true
       PROD_ASSETS_REPO_PAT:
-      PROD_HOME_PM2_CONF_ENV:
-      PROD_ADMIN_PM2_CONF_ENV:
+      PROD_HOME_DOCKER_RUN_CMD_EXTRA:
+      PROD_ADMIN_DOCKER_RUN_CMD_EXTRA:
 
 jobs:
   check:
@@ -88,7 +88,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push the Docker image
-        id: push
+        id: build-docker
         uses: docker/build-push-action@v6
         with:
           file: Dockerfile
@@ -99,7 +99,7 @@ jobs:
         uses: actions/attest-build-provenance@v2
         with:
           subject-name: ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
-          subject-digest: ${{ steps.push.outputs.digest }}
+          subject-digest: ${{ steps.build-docker.outputs.digest }}
           push-to-registry: true
 
   deploy-prod:
@@ -129,7 +129,7 @@ jobs:
           sudo docker stop mzg-fan-${{ inputs.package }}
           sudo docker rm mzg-fan-${{ inputs.package }}
           sudo docker run \
-            --name mzg-fan-${{ inputs.package }} \
-            ${{ secrets[format('PROD_{0}_DOCKER_RUN_EXTRA_PARAMS', inputs.package_cap)] }}
+            --name mzg-fan-${{ inputs.package }} --init -d \
+            ${{ secrets[format('PROD_{0}_DOCKER_RUN_CMD_EXTRA', inputs.package_cap)] }} \
             ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
           END
