@@ -89,7 +89,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Get the current date and time
         id: date
-        run: node -e "console.log(`date=${new Date().toISOString()}`)" >> $GITHUB_OUTPUT
+        run: node -e 'console.log(`date=${new Date().toISOString()}`)' >> $GITHUB_OUTPUT
       - name: Build and push the Docker image
         id: build-docker
         uses: docker/build-push-action@v6
