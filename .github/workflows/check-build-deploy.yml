@@ -138,4 +138,5 @@ jobs:
             --name mzg-fan-${{ inputs.package }} --init -d \
             ${{ secrets[format('PROD_{0}_DOCKER_RUN_CMD_EXTRA', inputs.package_cap)] }} \
             ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
+          sudo docker image prune -f
           END
