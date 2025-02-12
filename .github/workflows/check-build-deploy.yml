@@ -123,7 +123,7 @@ jobs:
             -i ~/.ssh/id_ed25519 \
             -o StrictHostKeyChecking=no \
             -p ${{ secrets.PROD_CLOUD_SSH_PORT }} \
-            ${{ secrets.PROD_CLOUD_SSH_URI }} <<END
+            ${{ secrets.PROD_CLOUD_SSH_URI }} <<'END'
           set -e
           sudo docker pull ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
           [ "$(sudo docker ps -qf name=mzg-fan-${{ inputs.package }})" ] && sudo docker stop mzg-fan-${{ inputs.package }}
