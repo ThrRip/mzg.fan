@@ -112,7 +112,7 @@ jobs:
     name: Deploy to production
     if: github.repository == 'ThrRip/mzg.fan' && github.ref == 'refs/heads/main'
     needs: [check, build]
-    concurrency: deploy-prod-${{ github.ref }}-${{ inputs.package }}
+    concurrency: deploy-prod-${{ github.ref }}
     runs-on: ubuntu-latest
     env:
       MASKING_PROD_CLOUD_SSH_HOST: ${{ secrets.PROD_CLOUD_SSH_HOST }}
