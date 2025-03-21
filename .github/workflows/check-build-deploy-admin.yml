@@ -4,7 +4,15 @@ run-name: Check & Build & Deploy (${{ github.ref_name }}/admin)
 on:
   push:
     paths:
+      - '.github/**'
+      - 'app/**'
       - 'packages/admin/**'
+      - 'Dockerfile'
+      - 'nuxt.config.ts'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'tailwind.config.ts'
 
 jobs:
   check-build-deploy-admin:
