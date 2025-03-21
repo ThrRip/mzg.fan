@@ -132,11 +132,13 @@ jobs:
             ${{ secrets.PROD_CLOUD_SSH_URI }} <<'END'
           set -e
           sudo docker pull ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
+          [ "$(sudo docker ps -qaf name=mzg-fan-${{ inputs.package }})" ] && \
+            _DOCKER_OLD_IMAGE=$(sudo docker container inspect -f '{{.Image}}' mzg-fan-${{ inputs.package }})
           [ "$(sudo docker ps -qf name=mzg-fan-${{ inputs.package }})" ] && sudo docker stop mzg-fan-${{ inputs.package }}
           [ "$(sudo docker ps -qaf name=mzg-fan-${{ inputs.package }})" ] && sudo docker rm mzg-fan-${{ inputs.package }}
           sudo docker run \
             --name mzg-fan-${{ inputs.package }} --init -d \
             ${{ secrets[format('PROD_{0}_DOCKER_RUN_CMD_EXTRA', inputs.package_cap)] }} \
             ${{ vars.PROD_DOCKER_IMAGE_TAG_PREFIX }}-${{ inputs.package }}
-          sudo docker image prune -f
+          [ "$_DOCKER_OLD_IMAGE" ] && sudo docker rmi $_DOCKER_OLD_IMAGE
           END
