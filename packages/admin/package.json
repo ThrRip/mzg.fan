@@ -18,9 +18,9 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
-    "appwrite": "^16.1.0",
-    "node-appwrite": "^14.2.0",
-    "nuxt": "^3.16.1",
+    "appwrite": "^17.0.1",
+    "node-appwrite": "^15.0.1",
+    "nuxt": "^3.16.2",
     "pinyin-pro": "^3.26.0",
     "vue": "^3.5.13"
   },
