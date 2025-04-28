@@ -1,4 +1,4 @@
-FROM oven/bun:1.2.9-slim
+FROM oven/bun:1.2.10-slim
 
 LABEL org.opencontainers.image.title="mzg.fan"
 LABEL org.opencontainers.image.description="洺知-故犯的主页 & 直播点唱歌单"
@@ -6,8 +6,8 @@ LABEL org.opencontainers.image.url="https://mzg.fan"
 LABEL org.opencontainers.image.source="https://github.com/ThrRip/mzg.fan"
 LABEL org.opencontainers.image.version="0.0.0"
 LABEL org.opencontainers.image.licenses="MPL-2.0"
-LABEL org.opencontainers.image.base.name="docker.io/oven/bun:1.2.9-slim"
-LABEL org.opencontainers.image.base.digest="sha256:a6dbfe86012fd4fd73cceba3d0e6f248e3d2072dea96b785aae4586bd18e70c1"
+LABEL org.opencontainers.image.base.name="docker.io/oven/bun:1.2.10-slim"
+LABEL org.opencontainers.image.base.digest="sha256:98fe81a0568f454cedff81ab7d4100654b3b787d312bb61d5ad28365e4290cff"
 
 WORKDIR /app
 COPY .output .
