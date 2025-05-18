@@ -19,9 +19,9 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "appwrite": "^17.0.2",
     "minisearch": "^7.1.2",
-    "nuxt": "^3.17.2",
+    "nuxt": "^3.17.3",
     "pinyin-pro": "^3.26.0",
-    "vue": "^3.5.13"
+    "vue": "^3.5.14"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
