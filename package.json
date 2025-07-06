@@ -25,9 +25,9 @@
     "postinstall": "nuxt prepare && pnpm -r exec nuxt prepare"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.5.0",
+    "@nuxt/eslint": "^1.5.2",
     "eslint": "^9.30.1",
     "nuxt": "^3.17.6",
-    "vue-tsc": "^3.0.0"
+    "vue-tsc": "^3.0.1"
   }
 }
