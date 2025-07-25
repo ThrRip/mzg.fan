@@ -27,17 +27,17 @@
         <span class="grid place-items-center w-5">
           <svg class="hidden"><symbol id="far-square"><FontAwesomeIcon :icon="['far', 'square']" /></symbol></svg>
           <svg class="hidden"><symbol id="fas-square-check"><FontAwesomeIcon :icon="['fas', 'square-check']" /></symbol></svg>
-          <svg v-if="selectedIds.size === 0" class="size-5 transition group-active:scale-90">
+          <svg v-if="selectedIds.size === 0" class="size-5 transition group-hover:text-blue-a group-active:scale-90">
             <use href="#far-square" />
           </svg>
           <FontAwesomeIcon
             v-if="selectedIds.size !== 0 && selectedIds.size !== props.data.length"
             :icon="['fas', 'square-minus']"
-            class="!h-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
+            class="!h-5 text-blue transition group-hover:text-blue-a group-active:scale-90"
           />
           <svg
             v-if="selectedIds.size !== 0 && selectedIds.size === props.data.length"
-            class="size-5 text-blue group-hover:text-blue-a transition group-active:scale-90"
+            class="size-5 text-blue transition group-hover:text-blue-a group-active:scale-90"
           >
             <use href="#fas-square-check" />
           </svg>
@@ -184,7 +184,7 @@
               <ClientOnly>
                 <svg
                   v-if="!selectedIds.has(song.$id)"
-                  class="size-5 transition group-active:scale-90"
+                  class="size-5 transition group-hover:text-blue group-active:scale-90"
                 >
                   <use href="#far-square" />
                 </svg>
