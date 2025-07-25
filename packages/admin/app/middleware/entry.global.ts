@@ -19,7 +19,6 @@ export default defineNuxtRouteMiddleware(async to => {
     httpOnly: true,
     path: useAppConfig().appAdminBasePath,
     sameSite: 'strict',
-    // @ts-expect-error
     secure: useRuntimeConfig().appSecureContext
   })
   const entryToken = entryTokenQuery ?? entryTokenCookie.value
@@ -30,7 +29,7 @@ export default defineNuxtRouteMiddleware(async to => {
   const backendDatabases = new Databases(backendClient)
   backendClient.setEndpoint(useAppConfig().backendBase)
     .setProject(useAppConfig().backendProjectId)
-    .setKey(useRuntimeConfig().backendApiKey as string)
+    .setKey(useRuntimeConfig().backendApiKey)
 
   const entryTokenMatches = (await backendDatabases.listDocuments(
     'admin',
