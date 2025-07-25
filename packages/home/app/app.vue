@@ -32,7 +32,7 @@
           <NuxtLink
             :to="`https://space.bilibili.com/${useAppConfig().appHomeBiliUid}`"
             target="_blank"
-            class="*:flex *:flex-row *:justify-center *:items-center *:size-8"
+            class="*:grid *:place-items-center *:size-8"
           >
             <span><FontAwesomeIcon :icon="['fab', 'bilibili']" /></span>
             哔哩哔哩主页
@@ -41,10 +41,10 @@
           <NuxtLink
             :to="`https://live.bilibili.com/${useAppConfig().appHomeBiliRoomId}`"
             target="_blank"
-            class="*:flex *:justify-center *:items-center *:size-8"
+            class="*:grid *:place-items-center *:size-8"
           >
             <span v-if="!biliApiLiveStatus" class="flex-row"><FontAwesomeIcon :icon="['fas', 'podcast']" class="!h-5" /></span>
-            <span v-else class="flex-col">
+            <span v-else class="!flex flex-col !justify-center">
               <span class="overflow-hidden min-h-[1.2rem] max-h-[1.2rem]">
                 <FontAwesomeIcon :icon="['fas', 'podcast']" class="!h-[1.125rem]" />
               </span>
@@ -58,7 +58,7 @@
           <NuxtLink
             to="#playlist"
             :external="true"
-            class="landscape:hidden *:flex *:flex-row *:justify-center *:items-center *:size-8"
+            class="landscape:hidden *:grid *:place-items-center *:size-8"
           >
             <span><FontAwesomeIcon :icon="['fas', 'list']" /></span>
             歌单
@@ -76,7 +76,7 @@
           class="grid grid-areas-stack place-items-center
           h-36 landscape:h-20 landscape:xl:h-36 landscape:2xl:h-40 landscape:3xl:h-48 landscape:5xl:h-52"
         >
-          <FontAwesomeIcon :icon="['fas', 'music']" class="min-h-full text-pink-l" />
+          <FontAwesomeIcon :icon="['fas', 'music']" class="!w-full min-h-full text-pink-l" />
           <h2 class="-mr-2 max-xl:landscape:text-3xl portrait:text-5xl text-6xl font-light tracking-wider text-brown">
             歌单
           </h2>
@@ -85,7 +85,7 @@
           <div
             class="landscape:overflow-y-scroll grid grid-cols-[0.55fr_0.45fr_5rem_5.5rem] portrait:grid-cols-[1fr_3.5rem_4.5rem]
             grid-rows-1 portrait:grid-rows-[0.55fr_0.45fr] content-center px-2 h-12 portrait:h-16 bg-gray
-            scrollbar scrollbar-thumb-transparent *:flex *:flex-row *:gap-x-2 *:items-center *:h-full *:pl-4 portrait:*:pl-3"
+            scrollbar scrollbar-thumb-transparent *:flex *:flex-row *:gap-x-1 *:items-center *:h-full *:pl-4 portrait:*:pl-3"
           >
             <button
               class="portrait:pt-3 portrait:pb-0.5 portrait:leading-snug"
@@ -105,7 +105,7 @@
                 <FontAwesomeIcon
                   v-if="viewPlaylistSortingColumn === 'name'"
                   :icon="['fas', 'caret-up']"
-                  class="mt-px transition"
+                  class="fa-sm transition"
                   :class="{ 'rotate-180': viewPlaylistSortingOrder === 'descending' }"
                 />
               </transition>
@@ -128,7 +128,7 @@
                 <FontAwesomeIcon
                   v-if="viewPlaylistSortingColumn === 'artist'"
                   :icon="['fas', 'caret-up']"
-                  class="mt-px transition"
+                  class="fa-sm transition"
                   :class="{ 'rotate-180': viewPlaylistSortingOrder === 'descending' }"
                 />
               </transition>
@@ -151,7 +151,7 @@
                 <FontAwesomeIcon
                   v-if="viewPlaylistSortingColumn === 'payment_amount'"
                   :icon="['fas', 'caret-up']"
-                  class="mt-px transition"
+                  class="fa-sm transition"
                   :class="{ 'rotate-180': viewPlaylistSortingOrder === 'descending' }"
                 />
               </transition>
@@ -171,7 +171,7 @@
                 <FontAwesomeIcon
                   v-if="viewPlaylistSortingColumn === 'language'"
                   :icon="['fas', 'caret-up']"
-                  class="mt-px transition"
+                  class="fa-sm transition"
                   :class="{ 'rotate-180': viewPlaylistSortingOrder === 'descending' }"
                 />
               </transition>

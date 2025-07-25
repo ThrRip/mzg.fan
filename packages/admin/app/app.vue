@@ -30,7 +30,7 @@
           :class="{ 'bg-blue-a': route.path === '/' }"
           @click="viewToggleFullNavigationBar(false)"
         >
-          <FontAwesomeIcon :icon="['fas', 'house']" class="max-lg:landscape:!h-4 !h-5" />
+          <FontAwesomeIcon :icon="['fas', 'house']" class="fa-xl" />
         </NuxtLink>
       </section>
       <section class="z-50 flex flex-col max-lg:landscape:gap-y-2 gap-y-4 items-end">
@@ -46,7 +46,7 @@
           @click="viewToggleFullNavigationBar(false)"
         >
           <span class="aspect-square flex flex-row justify-center items-center pl-0.5 h-14">
-            <FontAwesomeIcon :icon="['fas', 'pen-to-square']" class="max-lg:landscape:!h-5 !h-6" />
+            <FontAwesomeIcon :icon="['fas', 'pen-to-square']" class="fa-xl" />
           </span>
           <span class="min-w-max">
             歌单编辑
@@ -62,7 +62,7 @@
         >
           <transition-group
             tag="span"
-            class="grid grid-areas-stack place-items-center pl-0.5 size-14 max-lg:landscape:*:!h-5 *:!h-6"
+            class="grid grid-areas-stack place-items-center pl-0.5 size-14 fa-xl"
             enter-from-class="opacity-0"
             enter-active-class="transition-opacity duration-200"
             leave-active-class="transition-opacity duration-200"
@@ -94,7 +94,7 @@
         >
           <FontAwesomeIcon
             :icon="['fas', 'angle-right']"
-            class="max-lg:landscape:!h-4 !h-5 transition-transform duration-300"
+            class="fa-lg transition-transform duration-300"
             :style="[viewFullNavigationBarToggles === 0 ?
               '' :
               `transform: rotate(${180 * viewFullNavigationBarToggles}deg)`]"

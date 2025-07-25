@@ -44,7 +44,7 @@
         </span>
       </label>
       <button
-        class="flex flex-row gap-x-2 items-center px-4 portrait:px-3 py-2 portrait:py-0.5 portrait:leading-snug h-full"
+        class="flex flex-row gap-x-1 items-center px-4 portrait:px-3 py-2 portrait:py-0.5 portrait:leading-snug h-full"
         title="按歌名排序"
         :aria-label="`按歌名排序${props.sortingColumn === 'name' ?
           props.sortingOrder === 'ascending' ? ' - 当前按歌名升序排序' :
@@ -61,13 +61,13 @@
           <FontAwesomeIcon
             v-if="props.sortingColumn === 'name'"
             :icon="['fas', 'caret-up']"
-            class="mt-px transition"
+            class="fa-sm transition"
             :class="{ 'rotate-180': props.sortingOrder === 'descending' }"
           />
         </transition>
       </button>
       <button
-        class="flex flex-row portrait:order-4 gap-x-2 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs"
+        class="flex flex-row portrait:order-4 gap-x-1 items-center px-4 portrait:px-3 landscape:py-2 h-full portrait:text-xs"
         title="按歌手排序"
         :aria-label="`按歌手排序${props.sortingColumn === 'artist' ?
           props.sortingOrder === 'ascending' ? ' - 当前按歌手升序排序' :
@@ -84,13 +84,13 @@
           <FontAwesomeIcon
             v-if="props.sortingColumn === 'artist'"
             :icon="['fas', 'caret-up']"
-            class="mt-px transition"
+            class="fa-sm transition"
             :class="{ 'rotate-180': props.sortingOrder === 'descending' }"
           />
         </transition>
       </button>
       <button
-        class="flex flex-row portrait:row-span-2 gap-x-2 items-center px-4 portrait:px-3 h-full"
+        class="flex flex-row portrait:row-span-2 gap-x-1 items-center px-4 portrait:px-3 h-full"
         title="按 SC 要求排序"
         :aria-label="`按 SC 要求排序${props.sortingColumn === 'payment_amount' ?
           props.sortingOrder === 'descending' ? ' - 当前按 SC 要求降序排序' :
@@ -107,13 +107,13 @@
           <FontAwesomeIcon
             v-if="props.sortingColumn === 'payment_amount'"
             :icon="['fas', 'caret-up']"
-            class="mt-px transition"
+            class="fa-sm transition"
             :class="{ 'transition-opacity rotate-180': props.sortingOrder === 'descending' }"
           />
         </transition>
       </button>
       <button
-        class="flex flex-row portrait:row-span-2 gap-x-2 items-center pl-4 portrait:pl-3 py-2 h-full"
+        class="flex flex-row portrait:row-span-2 gap-x-1 items-center pl-4 portrait:pl-3 py-2 h-full"
         title="按语言排序"
         :aria-label="`按语言排序${props.sortingColumn === 'language' ?
           props.sortingOrder === 'ascending' ? ' - 当前按语言升序排序' :
@@ -130,7 +130,7 @@
           <FontAwesomeIcon
             v-if="props.sortingColumn === 'language'"
             :icon="['fas', 'caret-up']"
-            class="mt-px transition"
+            class="fa-sm transition"
             :class="{ 'rotate-180': props.sortingOrder === 'descending' }"
           />
         </transition>
