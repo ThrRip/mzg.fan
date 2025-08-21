@@ -20,9 +20,9 @@
     "@fortawesome/vue-fontawesome": "^3.1.1",
     "appwrite": "^17.0.2",
     "node-appwrite": "^16.0.0",
-    "nuxt": "^4.0.1",
-    "pinyin-pro": "^3.26.0",
-    "vue": "^3.5.18"
+    "nuxt": "^4.0.3",
+    "pinyin-pro": "^3.27.0",
+    "vue": "^3.5.19"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
