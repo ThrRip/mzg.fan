@@ -57,6 +57,10 @@ export default defineNuxtConfig({
     compatibilityVersion: 4
   },
 
+  experimental: {
+    entryImportMap: false
+  },
+
   compatibilityDate: '2024-07-19',
 
   // Nitro
