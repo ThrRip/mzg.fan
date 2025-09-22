@@ -450,7 +450,7 @@ function viewPlaylistToggleSorting (column: PlaylistColumn) {
     ]
   }
   viewPlaylistDataSort(
-    viewPlaylistData.value,
+    backendPlaylist.value,
     viewPlaylistSortingColumn.value,
     viewPlaylistSortingOrder.value as PlaylistSortingOrder
   ).then(dataSorted => viewPlaylistDataUpdate(dataSorted))
@@ -505,7 +505,7 @@ async function viewPlaylistSearchPrepare () {
     },
     searchOptions: { prefix: true }
   })
-  const playlist: Array<SearchingSong> = viewPlaylistData.value.slice()
+  const playlist: Array<SearchingSong> = backendPlaylist.value.slice()
   const pinyin = await usePinyin()
   playlist.forEach(song => {
     song.name.match(/[\p{sc=Han}0-9]+/gu)?.forEach((cjkChars, matchIndex) => {
