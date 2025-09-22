@@ -489,20 +489,7 @@ async function viewPlaylistSearchPrepare () {
   viewPlaylistSearchEngine = new MiniSearch({
     idField: '$id',
     fields: ['name', 'artist', 'namePinyinFirstChars', 'artistPinyinFirstChars'],
-    tokenize: (string, fieldName) => {
-      if (fieldName === 'name' || fieldName === 'artist') {
-        return string
-          // Split CJK characters by character
-          .replace(/(\p{sc=Han})/gu, ' $1 ')
-          // Delete all leading and trailing invisible characters and punctuations
-          .match(/[^\s\p{Z}\p{P}](.*[^\s\p{Z}\p{P}])?/u)?.[0]
-          // Split by invisible characters and punctuations
-          .split(/[\s\p{Z}\p{P}]+/u) ?? []
-      }
-      else {
-        return string.split(/[\s\p{Z}\p{P}]+/u)
-      }
-    },
+    tokenize: string => string.match(/\p{sc=Han}|[^\p{sc=Han}\s\p{Z}\p{P}]+/gu) ?? [],
     searchOptions: { prefix: true }
   })
   const playlist: Array<SearchingSong> = backendPlaylist.value.slice()
