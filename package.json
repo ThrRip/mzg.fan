@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.9.0",
-    "eslint": "^9.35.0",
+    "eslint": "^9.36.0",
     "nuxt": "^4.1.2",
-    "vue-tsc": "^3.0.7"
+    "vue-tsc": "^3.1.0"
   }
 }
