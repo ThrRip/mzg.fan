@@ -1,6 +1,7 @@
 import { fileRoutes } from "filesystem-routing/vite";
 import { defineConfig } from "vitest/config";
 import solid from "@solidjs/vite-plugin";
+import unocss from "unocss/vite";
 
 export default defineConfig({
   // Turnkey client mode: no index.html and no mount file — the plugin generates
@@ -11,6 +12,8 @@ export default defineConfig({
     // modules the fileRoutes plugin emits (their ids end in a query string).
     solid({ start: true, ssr: true, extensions: [".jsx", ".tsx"], diagnostics: true }),
     fileRoutes({ types: true }),
+
+    unocss(),
   ],
   server: {
     port: 3000,

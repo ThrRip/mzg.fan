@@ -1,0 +1,14 @@
+{
+  "name": "mzg.fan-unostyle",
+  "version": "0.1.0",
+  "license": "MPL-2.0",
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  },
+  "peerDependencies": {
+    "unocss": "^66.10.5"
+  }
+}

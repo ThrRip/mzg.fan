@@ -40,7 +40,9 @@
     "eslint-plugin-solid": "~0.18.0",
     "filesystem-routing": "0.4.0",
     "jsdom": "^25.0.1",
+    "mzg.fan-unostyle": "workspace:*",
     "typescript": "^5.9.2",
+    "unocss": "^66.10.5",
     "vite": "^8.1.5",
     "vitest": "^5.0.0"
   }
