@@ -1,0 +1,47 @@
+{
+  "name": "mzg.fan-home",
+  "version": "0.1.0",
+  "description": "洺知-故犯的主页 & 直播点唱歌单",
+  "keywords": [
+    "homepage",
+    "website"
+  ],
+  "license": "MPL-2.0",
+  "author": "ThrRip <coding@thrrip.space>",
+  "contributors": [
+    "Suu <suu@miao.ms>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThrRip/mzg.fan",
+    "directory": "apps/home"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "test": "vitest",
+    "lint": "oxlint",
+    "fix": "oxfmt",
+    "start": "node --env-file-if-exists=.env server.js"
+  },
+  "dependencies": {
+    "@solidjs/meta": "^1.0.0-next.2",
+    "@solidjs/router": "^2.0.0-next.31",
+    "@solidjs/web": "^2.0.0-rc.11",
+    "solid-js": "^2.0.0-rc.11"
+  },
+  "devDependencies": {
+    "@solidjs/diagnostics": "^2.0.0-rc.11",
+    "@solidjs/testing-library": "^1.0.0-beta.3",
+    "@solidjs/vite-plugin": "^3.0.0-next.46",
+    "@testing-library/jest-dom": "^7.0.0",
+    "eslint-plugin-solid": "~0.18.0",
+    "filesystem-routing": "0.4.0",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.9.2",
+    "vite": "^8.1.5",
+    "vitest": "^5.0.0"
+  }
+}

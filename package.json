@@ -1,0 +1,32 @@
+{
+  "name": "mzg.fan",
+  "version": "0.1.0",
+  "private": true,
+  "description": "洺知-故犯的主页 & 直播点唱歌单",
+  "license": "MPL-2.0",
+  "author": "ThrRip <coding@thrrip.space>",
+  "contributors": [
+    "Suu <suu@miao.ms>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThrRip/mzg.fan"
+  },
+  "type": "module",
+  "scripts": {
+    "lint": "oxlint",
+    "fix": "oxfmt"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.3.4",
+      "onFail": "warn"
+    }
+  },
+  "packageManager": "pnpm@12.3.4"
+}
