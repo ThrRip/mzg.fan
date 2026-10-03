@@ -130,6 +130,9 @@ importers:
       mzg.fan-core:
         specifier: workspace:*
         version: link:../../libs/core
+      mzg.fan-solidglue:
+        specifier: workspace:*
+        version: link:../../libs/solidglue
       solid-js:
         specifier: ^2.0.0-rc.11
         version: 2.0.0-rc.13
@@ -192,6 +195,12 @@ importers:
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
+
+  libs/solidglue:
+    dependencies:
+      mzg.fan-core:
+        specifier: workspace:*
+        version: link:../core
 
   libs/unostyle:
     dependencies:

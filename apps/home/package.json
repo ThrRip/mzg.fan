@@ -31,6 +31,7 @@
     "@solidjs/router": "^2.0.0-next.31",
     "@solidjs/web": "^2.0.0-rc.11",
     "mzg.fan-core": "workspace:*",
+    "mzg.fan-solidglue": "workspace:*",
     "solid-js": "^2.0.0-rc.11",
     "uuid": "^14.0.2"
   },

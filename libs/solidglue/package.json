@@ -1,0 +1,19 @@
+{
+  "name": "mzg.fan-solidglue",
+  "version": "0.1.0",
+  "keywords": [
+    "library"
+  ],
+  "license": "MPL-2.0",
+  "author": "Suu <suu@miao.ms>",
+  "contributors": [
+    "ThrRip <coding@thrrip.space>"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "mzg.fan-core": "workspace:*"
+  }
+}

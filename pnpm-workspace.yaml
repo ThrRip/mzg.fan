@@ -1,6 +1,7 @@
 packages:
   - apps/home
   - libs/core
+  - libs/solidglue
   - libs/unostyle
 allowBuilds:
   esbuild: false
