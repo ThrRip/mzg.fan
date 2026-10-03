@@ -46,10 +46,13 @@ export function createSong(
   artist: string,
   language: SongLanguage = defaultSongLanguage,
 ): Song {
+  validateSongName(name);
+  validateSongArtist(artist);
+  validateSongLanguage(language);
+
   let _id = v7();
   let _name = name;
   let _artist = artist;
-  validateSongLanguage(language);
   let _language = language;
 
   const song = {
@@ -62,6 +65,7 @@ export function createSong(
     },
 
     set name(newName) {
+      validateSongName(newName);
       _name = newName;
     },
 
@@ -70,6 +74,7 @@ export function createSong(
     },
 
     set artist(newArtist) {
+      validateSongArtist(newArtist);
       _artist = newArtist;
     },
 
