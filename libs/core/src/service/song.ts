@@ -7,7 +7,7 @@ export async function createSong(
   db: LibSQLDatabase,
   name: string,
   artist: string,
-  language: string,
+  language: domain.SongLanguage,
 ): Promise<domain.Song> {
   let song = domain.createSong(name, artist, language);
 

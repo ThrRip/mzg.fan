@@ -1,22 +1,26 @@
 import { v7 } from "uuid";
 
+export type SongLanguage = "zh-Hans" | "yue" | "ja" | "en";
+
 export interface SongLanguageRecord {
-  code: string;
+  code: SongLanguage;
   display: string;
 }
 
-export const availableSongLanguages: { [key: string]: SongLanguageRecord } = {
-  zh_CN: { code: "zh_CN", display: "国语" },
-  en_US: { code: "en_US", display: "美语" },
+export const availableSongLanguages: Record<SongLanguage, SongLanguageRecord> = {
+  "zh-Hans": { code: "zh-Hans", display: "国语" },
+  yue: { code: "yue", display: "粤语" },
+  ja: { code: "ja", display: "日语" },
+  en: { code: "en", display: "英语" },
 };
 
-export const defaultSongLanguage = availableSongLanguages.zh_CN.code;
+export const defaultSongLanguage: SongLanguage = availableSongLanguages["zh-Hans"].code;
 
 export interface Song {
   id: string;
   name: string;
   artist: string;
-  language: string;
+  language: SongLanguage;
 }
 
 export function validateSongName(name: string) {
@@ -31,14 +35,21 @@ export function validateSongArtist(artist: string) {
   }
 }
 
+export function validateSongLanguage(language: string) {
+  if (!(language in availableSongLanguages)) {
+    throw new Error("Validate song language: Unsupported language code.");
+  }
+}
+
 export function createSong(
   name: string,
   artist: string,
-  language: string = defaultSongLanguage,
+  language: SongLanguage = defaultSongLanguage,
 ): Song {
   let _id = v7();
   let _name = name;
   let _artist = artist;
+  validateSongLanguage(language);
   let _language = language;
 
   const song = {
@@ -67,6 +78,7 @@ export function createSong(
     },
 
     set language(newLanguage) {
+      validateSongLanguage(newLanguage);
       _language = newLanguage;
     },
   };
