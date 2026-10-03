@@ -9,9 +9,6 @@
   "contributors": [
     "ThrRip <coding@thrrip.space>"
   ],
-  "files": [
-    "dist"
-  ],
   "type": "module",
   "exports": {
     "./*": "./src/*/index.ts"
