@@ -1,0 +1,28 @@
+{
+  "name": "mzg.fan-core",
+  "version": "0.1.0",
+  "keywords": [
+    "library"
+  ],
+  "license": "MPL-2.0",
+  "author": "Suu <suu@miao.ms>",
+  "contributors": [
+    "ThrRip <coding@thrrip.space>"
+  ],
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    "./*": "./src/*/index.ts"
+  },
+  "devDependencies": {
+    "drizzle-kit": "1.0.0-rc.4",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.18.0",
+    "drizzle-orm": "1.0.0-rc.4",
+    "uuid": "^14.0.2"
+  }
+}

@@ -10,7 +10,13 @@ export default defineConfig({
   plugins: [
     // `extensions` makes @solidjs/vite-plugin also compile the `?pick=` route
     // modules the fileRoutes plugin emits (their ids end in a query string).
-    solid({ start: true, ssr: true, extensions: [".jsx", ".tsx"], diagnostics: true }),
+    solid({
+      start: true,
+      ssr: true,
+      serverFunctions: true,
+      extensions: [".jsx", ".tsx"],
+      diagnostics: true,
+    }),
     fileRoutes({ types: true }),
 
     unocss(),

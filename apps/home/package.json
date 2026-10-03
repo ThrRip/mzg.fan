@@ -30,7 +30,9 @@
     "@solidjs/meta": "^1.0.0-next.2",
     "@solidjs/router": "^2.0.0-next.31",
     "@solidjs/web": "^2.0.0-rc.11",
-    "solid-js": "^2.0.0-rc.11"
+    "mzg.fan-core": "workspace:*",
+    "solid-js": "^2.0.0-rc.11",
+    "uuid": "^14.0.2"
   },
   "devDependencies": {
     "@solidjs/diagnostics": "^2.0.0-rc.11",

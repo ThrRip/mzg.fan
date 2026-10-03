@@ -1,3 +1,6 @@
 packages:
   - apps/home
+  - libs/core
   - libs/unostyle
+allowBuilds:
+  esbuild: false

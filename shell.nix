@@ -8,6 +8,8 @@ pkgs.mkShell {
     nodejs_24
     pnpm_12
 
+    usql
+
     (pkgs.writeShellScriptBin "oxlint" /* bash */ ''
       pnpm exec oxlint "$@"
     '')
