@@ -5,12 +5,12 @@ export default function Home() {
     <>
       <Title>Home - Solid App</Title>
 
-      <main class="flex w-dvw h-dvh flex-col justify-center items-center">
+      <main class="flex h-dvh w-dvw flex-col items-center justify-center">
         <a
           href="https://v2.solidjs.com"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-2xl text-blue-500 underline underline-blue-200 hover:underline-blue-400 transition-colors"
+          class="underline-blue-200 hover:underline-blue-400 text-2xl text-blue-500 underline transition-colors"
         >
           Learn Solid
         </a>

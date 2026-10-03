@@ -14,8 +14,8 @@ export default function NotFound() {
     <>
       <Title>Not Found - Solid App</Title>
 
-      <main class="flex w-dvw h-dvh justify-center items-center">
-        <h1 class="text-4xl font-semibold font-italic text-blue-400">Page Not Found</h1>
+      <main class="flex h-dvh w-dvw items-center justify-center">
+        <h1 class="font-italic text-4xl font-semibold text-blue-400">Page Not Found</h1>
       </main>
     </>
   );
