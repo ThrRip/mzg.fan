@@ -16,13 +16,13 @@
   "exports": {
     "./*": "./src/*/index.ts"
   },
-  "devDependencies": {
-    "drizzle-kit": "1.0.0-rc.4",
-    "typescript": "^7.0.2"
-  },
   "dependencies": {
     "@libsql/client": "^0.18.0",
     "drizzle-orm": "1.0.0-rc.4",
     "uuid": "^14.0.2"
+  },
+  "devDependencies": {
+    "drizzle-kit": "1.0.0-rc.4",
+    "typescript": "^7.0.2"
   }
 }
