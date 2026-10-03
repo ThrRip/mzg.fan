@@ -45,30 +45,6 @@ declare module "virtual:file-routes" {
       page: true;
       $component: FileRouteLazyRef<typeof import("./src/routes/index")>;
       $$route?: undefined;
-    },
-    {
-      path: "/users";
-      page: true;
-      $component: FileRouteLazyRef<typeof import("./src/routes/users")>;
-      $$route?: undefined;
-    },
-    {
-      path: "/users/:id";
-      page: true;
-      $component: FileRouteLazyRef<typeof import("./src/routes/users/[id]")>;
-      $$route: FileRouteEagerRef<typeof import("./src/routes/users/[id]")>;
-    },
-    {
-      path: "/users/";
-      page: true;
-      $component: FileRouteLazyRef<typeof import("./src/routes/users/index")>;
-      $$route?: undefined;
-    },
-    {
-      path: "/songs";
-      page: true;
-      $component: FileRouteLazyRef<typeof import("./src/routes/songs")>;
-      $$route?: undefined;
     }
   ];
   export default routes;
@@ -90,39 +66,6 @@ declare module "virtual:file-routes" {
       $component: FileRouteLazyRef<typeof import("./src/routes/[...404]")>;
       $$route: FileRouteEagerRef<typeof import("./src/routes/[...404]")>;
       children?: undefined;
-    },
-    {
-      path: "/songs";
-      id: "/songs";
-      page: true;
-      $component: FileRouteLazyRef<typeof import("./src/routes/songs")>;
-      $$route?: undefined;
-      children?: undefined;
-    },
-    {
-      path: "/users";
-      id: "/users";
-      page: true;
-      $component: FileRouteLazyRef<typeof import("./src/routes/users")>;
-      $$route?: undefined;
-      children: readonly [
-        {
-          path: "/";
-          id: "/";
-          page: true;
-          $component: FileRouteLazyRef<typeof import("./src/routes/users/index")>;
-          $$route?: undefined;
-          children?: undefined;
-        },
-        {
-          path: "/:id";
-          id: "/:id";
-          page: true;
-          $component: FileRouteLazyRef<typeof import("./src/routes/users/[id]")>;
-          $$route: FileRouteEagerRef<typeof import("./src/routes/users/[id]")>;
-          children?: undefined;
-        }
-      ];
     }
   ];
 }
