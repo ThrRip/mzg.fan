@@ -1,0 +1,25 @@
+/*
+ * Global base styles for mzg.fan apps.
+ *
+ * Ported from the legacy app's main.css (@layer base) and
+ * tailwind-scrollbar@3.1.0's base reset:
+ * - The standard scrollbar property reset makes browsers that support both
+ *   mechanisms (Chrome 121+) fall back to the webkit pseudo-element styling
+ *   controlled by the `.scrollbar` utility, so the two never fight.
+ * - html: page background (white-alt), no text selection, transparent
+ *   page-level scrollbar track.
+ */
+
+* {
+  scrollbar-color: initial;
+  scrollbar-width: initial;
+}
+
+html {
+  background-color: #efeaf1;
+  user-select: none;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: transparent;
+}

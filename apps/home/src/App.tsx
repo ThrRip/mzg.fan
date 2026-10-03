@@ -8,7 +8,7 @@ export default function App() {
     <Router>
       {(props) => (
         <>
-          <Title>Solid App</Title>
+          <Title>洺知-故犯</Title>
           <Loading fallback={<main>Loading…</main>}>{props.children}</Loading>
         </>
       )}

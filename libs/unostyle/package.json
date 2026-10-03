@@ -6,6 +6,9 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "devDependencies": {
+    "@iconify-json/fa6-brands": "^1.2.6",
+    "@iconify-json/fa6-solid": "^1.2.4",
+    "@types/node": "^26.6.4",
     "typescript": "^7.0.2"
   },
   "peerDependencies": {
